@@ -1,0 +1,22 @@
+collection: Vanilla_Outsider
+mod_name: True Sleep (Time Warp)
+filename: concept_true_sleep.md
+content: |
+  # True Sleep (Time Warp)
+  ## Philosophy Fit
+  This fits **Vanilla Outsider** perfectly because it repairs a broken simulation loop. In vanilla, sleeping "deletes" time—furnaces don't smelt, crops don't grow, and turtle eggs don't crack during the skipped night. By **Fast-Forwarding** ticks instead of skipping them, we preserve the "World Logic." It adds a tiny bit of friction (you have to wait a few seconds) in exchange for a massive consistency payoff (your machines actually worked while you slept).
+
+  ## Mechanics
+  ### Core: Tick Acceleration
+  - **Mechanic:** When all players are in bed, the game does not set time to Morning. 
+  - **Action:** Instead, it increases the `tick rate` (MSP) drastically (e.g., 100x or 200x speed) until Morning is reached.
+  - **Visuals:** The sun/moon visibly streak across the sky. Shadows move rapidly.
+
+  ### Immersive Benefits
+  - **Production:** Furnaces, Blast Furnaces, and Smokers continue processing fuel/items at the accelerated rate.
+  - **Growth:** Crops, Saplings, and Baby Animals age rapidly during the sleep cycle.
+  - **World:** Entities move in fast-forward (funny but logical).
+
+  ## Assets Needed
+  - [Visual: Motion Blur shader for the sky (Optional)]
+  - [Logic: Tick Rate Handler (similar to Carpet Mod's warp)]

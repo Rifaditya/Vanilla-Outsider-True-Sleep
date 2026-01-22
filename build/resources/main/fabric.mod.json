@@ -1,0 +1,30 @@
+{
+    "schemaVersion": 1,
+    "id": "vanilla-outsider-true-sleep",
+    "version": "1.0.0",
+    "name": "Vanilla Outsider: True Sleep",
+    "description": "Preserves world simulation by accelerating ticks during sleep instead of skipping time.",
+    "authors": [
+        "DasikIgaijin"
+    ],
+    "contact": {
+        "homepage": "https://github.com/Rifaditya",
+        "sources": "https://github.com/Rifaditya/Vanilla-Outsider-True-Sleep"
+    },
+    "license": "GPL-3.0",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "net.vanillaoutsider.truesleep.TrueSleep"
+        ]
+    },
+    "mixins": [
+        "truesleep.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.16.9",
+        "minecraft": "~26.1-",
+        "java": ">=25",
+        "fabric-api": "*"
+    }
+}

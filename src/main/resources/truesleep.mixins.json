@@ -1,0 +1,13 @@
+{
+    "required": true,
+    "package": "net.vanillaoutsider.truesleep.mixin",
+    "compatibilityLevel": "JAVA_21",
+    "mixins": [
+        "ServerLevelMixin",
+        "PlayerMixin",
+        "CatMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}
