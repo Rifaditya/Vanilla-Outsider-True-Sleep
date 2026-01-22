@@ -4,6 +4,7 @@
     "version": "${version}",
     "name": "Vanilla Outsider: True Sleep",
     "description": "Preserves world simulation by accelerating ticks during sleep instead of skipping time.",
+    "icon": "assets/vanilla-outsider-true-sleep/icon.png",
     "authors": [
         "DasikIgaijin"
     ],
