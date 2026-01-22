@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "net.vanillaoutsider.truesleep.mixin.client",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "GuiMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,7 +1,7 @@
 {
     "schemaVersion": 1,
     "id": "vanilla-outsider-true-sleep",
-    "version": "1.0.0",
+    "version": "1.0.1-26.1",
     "name": "Vanilla Outsider: True Sleep",
     "description": "Preserves world simulation by accelerating ticks during sleep instead of skipping time.",
     "authors": [
@@ -19,7 +19,11 @@
         ]
     },
     "mixins": [
-        "truesleep.mixins.json"
+        "truesleep.mixins.json",
+        {
+            "config": "truesleep.client.mixins.json",
+            "environment": "client"
+        }
     ],
     "depends": {
         "fabricloader": ">=0.16.9",

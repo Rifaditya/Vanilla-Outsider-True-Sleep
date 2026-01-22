@@ -1,6 +1,6 @@
 <div align="center">
 
-![PLACEHOLDER: True Sleep Banner](https://placehold.co/1200x300?text=True+Sleep+Banner)
+![True Sleep Banner](https://files.catbox.moe/9hc07g.png)
 
 </div>
 <p align="center">
@@ -19,39 +19,39 @@ In vanilla Minecraft, sleeping is a "cheat code" that deletes time. You right-cl
 
 ---
 
-## ✨ Key Features
+## ✨ Features
 
-### 🕰️ True Simulation
+### 🕰️ Simulation
 
 The world doesn't pause. Furnaces continue to smelt, crops continue to grow, and copper continues to oxidize while you sleep. Everything simulates at hyper-speed.
 
 > [!NOTE]
 > Unlike other "Time Skip" mods, this literally runs the game loop faster. Your machines will process materials while you sleep!
 
-### 🎞️ Immersive Visuals
+### 🎞️ Visuals
 
 Watch the passage of time from your bed. No jarring "fade to black." The transition from night to day is seamless and grounded in the world.
 
-### ⚖️ Multiplayer Fairness
+### ⚖️ Multiplayer
 
 One player sleeping accelerates time for *everyone* on the server.
 
 * **No more arguments:** "1/2 players sleeping" doesn't force a skip.
 * **No disruption:** Other players just see the world speed up for a few seconds.
 
-### 🐈 Cat Gift Support (New!)
+### 🐈 Cat Gifts
 
 We've patched the vanilla Cat logic!
 Normally, cats only give gifts if you sleep for 5+ seconds. True Sleep is so fast the night passes in 1 second.
 **We fixed this:** Your cats now recognize the "Time Warp" and will still grant you Morning Gifts (Phantom Membranes, Rabbit Feet, etc.).
 
-### 🛡️ Nether Safety
+### 🛡️ Safety
 
 Sleeping in the Overworld works perfectly even if other players are exploring the Nether or End. The mod intelligently ignores empty dimensions to prevent logic bugs.
 
 ---
 
-## ⚙️ Configuration
+## ⚙️ Config
 
 The mod works out of the box with zero setup.
 
@@ -60,7 +60,7 @@ The mod works out of the box with zero setup.
 
 ---
 
-## 📦 Installation
+## 📦 Install
 
 1. Download **[Fabric Loader](https://fabricmc.net/)** for Minecraft **26.1+** (Snapshot).
 2. Install **[Fabric API](https://modrinth.com/mod/fabric-api)**.
@@ -79,7 +79,7 @@ The mod works out of the box with zero setup.
 
 ---
 
-## ☕ Support the Development
+## ☕ Support
 
 If you enjoy **True Sleep** and the **Vanilla Outsider** philosophy, consider fueling the next update with a coffee!
 
@@ -87,7 +87,7 @@ If you enjoy **True Sleep** and the **Vanilla Outsider** philosophy, consider fu
 
 ---
 
-## 📜 Legal & Credits
+## 📜 Credits
 
 | Role | Author |
 | :--- | :--- |

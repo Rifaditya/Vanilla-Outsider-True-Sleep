@@ -38,6 +38,11 @@ The project is organized into the following packages:
   - **`CatMixin.java`**: Logic patch for gameplay parity.
     - **Redirects**: Bypasses the 5-second sleep timer requirement for Cat Gifts if a Time Warp was active (since Time Warps are faster than 5 seconds).
 
+### `net.vanillaoutsider.truesleep.mixin.client`
+
+- **`GuiMixin.java`**: Client-side visual adjustments.
+  - **Injects**: Cancels `renderSleepOverlay` in `Gui` to prevent the screen from darkening, allowing players to watch the time warp.
+
 ## Dependencies
 
 - **Fabric Loader**: Modding platform.

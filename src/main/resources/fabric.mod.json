@@ -19,7 +19,11 @@
         ]
     },
     "mixins": [
-        "truesleep.mixins.json"
+        "truesleep.mixins.json",
+        {
+            "config": "truesleep.client.mixins.json",
+            "environment": "client"
+        }
     ],
     "depends": {
         "fabricloader": ">=0.16.9",

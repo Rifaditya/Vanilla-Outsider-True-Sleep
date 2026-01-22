@@ -78,3 +78,19 @@ In Minecraft 26.1, `GameRules.getInt` was replaced by a generic `get`.
 
 - **Old**: `getGameRules().getInt(KEY)`
 - **26.1**: `getGameRules().get(KEY)` (Auto-unboxing handles the Integer return).
+
+## Client-Side Mixins
+
+### `GuiMixin`
+
+**Target Class**: `net.minecraft.client.gui.Gui`
+**Purpose**: Remove the visual obstruction when sleeping.
+
+```java
+@Inject(method = "renderSleepOverlay", at = @At("HEAD"), cancellable = true)
+private void removeSleepDarkening(CallbackInfo ci) {
+    // Unconditionally cancel the overlay.
+    // We want players to see the accelerated time passing.
+    ci.cancel();
+}
+```
