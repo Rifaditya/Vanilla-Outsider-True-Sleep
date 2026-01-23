@@ -53,6 +53,10 @@ The output jar will be in `build/libs/`.
 | **VO: Better Dogs** | ✅ | Wolves cool down faster during warp. |
 | **Fabric Seasons** | ❓ | Untested, but likely compatible (time advances naturally). |
 
+## ☕ Support the Development
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D81SP3P7)
+
 ## 📜 License
 
 This project is licensed under the **GNU General Public License v3.0**.
