@@ -1,0 +1,13 @@
+{
+    "gamerule.category.truesleep.config": "True Sleep",
+    "gamerule.minecraft.truesleep_engine_tps": "Engine TPS (Quantum Warp)",
+    "gamerule.minecraft.truesleep_engine_tps.description": "Controls the server's tick rate during the Time Warp sequence. Lower values (e.g., 50) ensure high stability and smooth sky movement. Higher values (e.g., 100+) increase simulation speed but may cause server lag. Recommended: 50.",
+    "gamerule.minecraft.truesleep_virtual_tps": "Virtual TPS (Time Dilation)",
+    "gamerule.minecraft.truesleep_virtual_tps.description": "Target Game Speed. Determines how many game ticks pass for every real-world second during sleep. A value of 1000 means 1 second of real time = 1000 ticks (~50s) of game time. Controls how fast the night passes.",
+    "gamerule.minecraft.truesleep_sleep_threshold": "Sleep Threshold",
+    "gamerule.minecraft.truesleep_sleep_threshold.description": "The precise time of day (in ticks) when players are allowed to start sleeping. Vanilla default is dusk (~12542). Lowering this allows sleeping earlier in the day.",
+    "gamerule.minecraft.truesleep_wake_time": "Wake Time",
+    "gamerule.minecraft.truesleep_wake_time.description": "The target time of day (in ticks) that the Time Warp aims to reach before waking the player. Default is 0 (Dawn). Adjusting this changes when the 'night' effectively ends.",
+    "gamerule.minecraft.truesleep_drown_immunity": "Quantum Drown Immunity",
+    "gamerule.minecraft.truesleep_drown_immunity.description": "Safety Protocol: If enabled, grants temporary water-breathing to all entities during the Time Warp. Prevents players and mobs from drowning due to the accelerated passage of time while swimming."
+}

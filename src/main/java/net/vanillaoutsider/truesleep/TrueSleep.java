@@ -1,7 +1,7 @@
 package net.vanillaoutsider.truesleep;
 
 import net.fabricmc.api.ModInitializer;
-import net.vanillaoutsider.truesleep.config.TrueSleepConfig;
+import net.vanillaoutsider.truesleep.config.TrueSleepRules;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +12,6 @@ public class TrueSleep implements ModInitializer {
     @Override
     public void onInitialize() {
         LOGGER.info("Initializing True Sleep (Time Warp)...");
-        TrueSleepConfig.load();
+        TrueSleepRules.init();
     }
 }

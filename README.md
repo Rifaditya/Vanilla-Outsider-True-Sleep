@@ -14,13 +14,15 @@
 
 ## 📖 About
 
-**True Sleep** is a Minecraft mod that changes how sleeping works. Instead of instantly skipping the night (fade to black), it **accelerates** the passage of time (Time Warp).
+**True Sleep** is a Minecraft mod that changes how sleeping works. Instead of instantly skipping the night (fade to black), it **accelerates** the passage of time (Quantum Warp).
 
-* **Logic**: Uses a custom `TimeWarpManager` to boost tick rate to ~500 TPS.
-* **Immersion**: Watch the moon/sun move across the sky.
+* **Quantum Stride**: Boosts game logic to **1000 Virtual TPS** while keeping the server stable at **50 TPS**.
+* **Dreamweaver Engine**: Configurable sleep thresholds and wake times.
+* **Immersion**: Watch the moon/sun move across the sky smoothly.
 * **Simulation**: Furnaces, crops, and entities continue to tick rapidly.
-* **Vanilla Parity**: Includes `CatMixin` to ensure cats still give morning gifts despite the short night duration.
-* **Safety**: Explicitly handles multi-dimension logic (Nether/End) to prevent aborts.
+* **Vanilla Parity**: Includes `CatMixin` to ensure cats still give morning gifts.
+* **Safety**: Handles multi-dimension logic and prevents drowning during warp.
+* **Compatibility**: Supports **Golden Dandelion** (age-locked mobs won't die).
 
 ## 🛠️ Building from Source
 
@@ -55,7 +57,11 @@ The output jar will be in `build/libs/`.
 
 ## ☕ Support the Development
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D81SP3P7)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20Me-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/dasikigaijin/tip)
+[![SocioBuzz](https://img.shields.io/badge/SocioBuzz-Local_Support-7BB32E?style=for-the-badge)](https://sociabuzz.com/dasikigaijin/tribe)
+
+> [!NOTE]
+> **Indonesian Users:** SocioBuzz supports local payment methods (Gopay, OVO, Dana, etc.) if you want to support me without using PayPal/Ko-fi!
 
 ## 📜 License
 

@@ -94,3 +94,16 @@ private void removeSleepDarkening(CallbackInfo ci) {
     ci.cancel();
 }
 ```
+
+## `AgeableMobMixin`
+
+**Target Class**: `net.minecraft.world.entity.AgeableMob`
+**Purpose**: Support "Golden Dandelion" features (Age Locking).
+
+```java
+@Inject(method = "aiStep", at = @At("HEAD"), cancellable = true)
+private void injectGrowth(CallbackInfo ci) {
+    if (this.isAgeLocked()) return; // Respect age lock
+    // ... custom aging logic (Quantum Stride)
+}
+```

@@ -13,14 +13,14 @@ public class PlayerMixin {
 
     @Inject(method = "stopSleepInBed", at = @At("HEAD"))
     private void debugStopSleep(boolean wakeImmediatly, boolean updateLevelForSleepingPlayers, CallbackInfo ci) {
-        System.out.println("TrueSleep: Player.stopSleepInBed called! WakeImmediately: " + wakeImmediatly
-                + ", UpdateLevel: " + updateLevelForSleepingPlayers);
-        // Print stack trace to see WHO called it
-        new Throwable("TrueSleep Stack Trace").printStackTrace();
+        // Log removed for performance and cleanliness
     }
 
     @Inject(method = "startSleepInBed", at = @At("HEAD"))
     private void debugStartSleep(BlockPos pos, CallbackInfoReturnable<?> cir) {
-        System.out.println("TrueSleep: Player.startSleepInBed called at " + pos);
+        // Log removed for performance and cleanliness
     }
+
+    // Dreamweaver: Custom sleep check moved to BedRuleMixin
+    // due to vanilla logic shift from Level.isDay() to BedRule.test().
 }

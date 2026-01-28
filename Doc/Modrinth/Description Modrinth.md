@@ -15,22 +15,32 @@
 
 In vanilla Minecraft, sleeping is a "cheat code" that deletes time. You right-click a bed, the screen fades to black, and the game instantly skips forward 12,000 ticks.
 
-**Vanilla Outsider: True Sleep** changes this foundation. When you sleep, the world **accelerates**. Instead of skipping the night, the game tick rate boosts to **500 TPS** (25x speed). You watch the moon zoom across the sky, stars streak by, and the sun rise rapidly.
+**Vanilla Outsider: True Sleep** changes this foundation. When you sleep, the world **accelerates**. Instead of skipping the night, the game tick rate boosts to **Quantum Speeds** (variable TPS). You watch the moon zoom across the sky, stars streak by, and the sun rise rapidly.
 
 ---
 
 ## ✨ Features
 
-### 🕰️ Simulation
+### 🕰️ Quantum Warp (Simulation)
 
 The world doesn't pause. Furnaces continue to smelt, crops continue to grow, and copper continues to oxidize while you sleep. Everything simulates at hyper-speed.
 
 > [!NOTE]
-> Unlike other "Time Skip" mods, this literally runs the game loop faster. Your machines will process materials while you sleep!
+> **Quantum Stride Technology**: We use a variable tick stride to ensure high performance.
+> Default Engine Speed: **50 TPS** (Double standard speed) ensures buttery smooth sky movement without server lag.
+> Virtual Speed: **1000 TPS** (50x speed) is achieved by simulating multiple ticks per server tick.
 
 ### 🎞️ Visuals
 
 Watch the passage of time from your bed. No jarring "fade to black." The transition from night to day is seamless and grounded in the world.
+
+### 💤 Dreamweaver Engine
+
+Fine-tune your sleep schedule with precision:
+
+* **Sleep Threshold**: Configure exactly when you can get into bed (dusk, midnight, etc.).
+* **Wake Time**: Decide when the warp ends (dawn, noon, etc.).
+* **Hybrid Config**: Use `/gamerule` for per-world settings, or `config/truesleep.json` for global defaults.
 
 ### ⚖️ Multiplayer
 
@@ -41,13 +51,15 @@ One player sleeping accelerates time for *everyone* on the server.
 
 ### 🐈 Cat Gifts
 
-I have patched the vanilla Cat logic!
+We have patched the vanilla Cat logic!
 Normally, cats only give gifts if you sleep for 5+ seconds. True Sleep is so fast the night passes in 1 second.
-*I fixed this:** Your cats now recognize the "Time Warp" and will still grant you Morning Gifts (Phantom Membranes, Rabbit Feet, etc.).
+**We fixed this:** Your cats now recognize the "Time Warp" and will still grant you Morning Gifts (Phantom Membranes, Rabbit Feet, etc.).
 
-### 🛡️ Safety
+### 🛡️ Quantum Safety
 
-Sleeping in the Overworld works perfectly even if other players are exploring the Nether or End. The mod intelligently ignores empty dimensions to prevent logic bugs.
+* **Empty Dimensions**: The mod intelligently ignores empty dimensions to prevent logic bugs.
+* **Drown Immunity**: Entities in water are granted biological stasis (water breathing) during the warp to prevent drowning due to physics acceleration.
+* **Golden Dandelion**: Compatible with age-locked mobs (from other mods); they won't age to death instantly.
 
 ---
 
@@ -55,16 +67,21 @@ Sleeping in the Overworld works perfectly even if other players are exploring th
 
 The mod works out of the box with zero setup.
 
-* **Config File**: `config/truesleep.json`
-* **Warp Speed**: Defaults to ~500 TPS (25x speed). Adjustable in config.
+* **Global Template**: `config/truesleep.json` (Sets defaults for new worlds)
+* **In-Game**: Use `/gamerule truesleep_` to configure per-world settings.
+  * `truesleep_engine_tps`: Server stability (Default: 50)
+  * `truesleep_virtual_tps`: Game speed (Default: 1000)
+  * `truesleep_sleep_threshold`: when to sleep
+  * `truesleep_wake_time`: when to wake
+
+![Config Screen](https://cdn.modrinth.com/data/AYb0NDWE/images/6b87fd550f4277bef67bdd707787ed947e8f0f33.png)
 
 ---
 
 ## 📦 Install
 
-1. Download **[Fabric Loader](https://fabricmc.net/)** for Minecraft **26.1+** (Snapshot).
-2. Install **[Fabric API](https://modrinth.com/mod/fabric-api)**.
-3. Download `Vanilla-Outsider-True-Sleep.jar` and place it in your `mods` folder.
+1. Install **[Fabric API](https://modrinth.com/mod/fabric-api)**.
+2. Download `Vanilla-Outsider-True-Sleep.jar` and place it in your `mods` folder.
 
 ---
 
@@ -84,6 +101,10 @@ The mod works out of the box with zero setup.
 If you enjoy **True Sleep** and the **Vanilla Outsider** philosophy, consider fueling the next update with a coffee!
 
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20Me-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/dasikigaijin/tip)
+[![SocioBuzz](https://img.shields.io/badge/SocioBuzz-Local_Support-7BB32E?style=for-the-badge)](https://sociabuzz.com/dasikigaijin/tribe)
+
+> [!NOTE]
+> **Indonesian Users:** SocioBuzz supports local payment methods (Gopay, OVO, Dana, etc.) if you want to support me without using PayPal/Ko-fi!
 
 ---
 

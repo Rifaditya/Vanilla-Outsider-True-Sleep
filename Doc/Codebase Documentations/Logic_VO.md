@@ -19,8 +19,8 @@ The manager operates as a singleton State Machine driven by the server tick loop
     * **Trigger**: All players in the dimension are sleeping (`sleepStatus.areEnoughSleeping()`).
     * **Action**:
         * Set `isWarping = true`.
-        * Call `server.tickRateManager().setTickRate(500.0f)`.
-        * Server accelerates to ~500 TPS.
+        * Call `server.tickRateManager().setTickRate(50.0f)`.
+        * **Quantum Stride**: The logic simulates multiple game ticks per server tick to achieve **1000 Virtual TPS**.
 
 3. **WARPING (Active)**
     * **Condition**: `isWarping = true` **AND** `areEnoughSleeping = true`.

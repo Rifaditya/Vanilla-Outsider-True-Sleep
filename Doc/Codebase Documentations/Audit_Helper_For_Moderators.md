@@ -2,7 +2,7 @@
 
 **Mod Name:** True Sleep
 **Mod ID:** `truesleep` (Fabric)
-**Version:** 1.0.0 (Targeting Minecraft 26.1 Snapshot 4)
+**Version:** 1.1.4 (Targeting Minecraft 26.1 Snapshots)
 
 ## 🛡️ Safety & Compliance Statement
 
@@ -43,6 +43,11 @@ Moderators looking at Mixins might flag the following patterns. Here is the just
 * **Location**: `CatMixin.java` -> `bypassSleepTimerForGifts`
 * **Code**: Returns `100` instead of actual sleep timer.
 * **Reason**: **Gameplay Parity.** Time Warp makes the night pass too quickly for the vanilla "5 second minimum sleep" check to trigger. This mixin ensures players still get cat gifts (phantom membrane, rabbit foot, etc.) even if the night passed instantly.
+
+### 4. AgeableMobMixin preventing growth
+
+* **Location**: `AgeableMobMixin.java`
+* **Reason**: **Compatibility.** Some mods (Golden Dandelion) lock mob ages. Time Warp would otherwise rapidly age these mobs to death or adulthood. This mixin respects the lock.
 
 ## 🛠️ Build & dependencies
 

@@ -1,11 +1,20 @@
 {
     "required": true,
     "package": "net.vanillaoutsider.truesleep.mixin",
-    "compatibilityLevel": "JAVA_21",
+    "compatibilityLevel": "JAVA_25",
     "mixins": [
         "ServerLevelMixin",
         "PlayerMixin",
-        "CatMixin"
+        "CatMixin",
+        "MobMixin",
+        "SocialCoreMixin",
+        "EntityMixin",
+        "AgeableMobMixin",
+        "LivingEntityMixin",
+        "ServerClockManagerMixin",
+        "ClockInstanceMixin",
+        "GameRulesInvoker",
+        "BedRuleMixin"
     ],
     "injectors": {
         "defaultRequire": 1

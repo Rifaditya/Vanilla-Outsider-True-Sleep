@@ -7,9 +7,9 @@ content: |
   This fits **Vanilla Outsider** perfectly because it repairs a broken simulation loop. In vanilla, sleeping "deletes" time—furnaces don't smelt, crops don't grow, and turtle eggs don't crack during the skipped night. By **Fast-Forwarding** ticks instead of skipping them, we preserve the "World Logic." It adds a tiny bit of friction (you have to wait a few seconds) in exchange for a massive consistency payoff (your machines actually worked while you slept).
 
   ## Mechanics
-  ### Core: Tick Acceleration
-  - **Mechanic:** When all players are in bed, the game does not set time to Morning. 
-  - **Action:** Instead, it increases the `tick rate` (MSP) drastically (e.g., 100x or 200x speed) until Morning is reached.
+  ### Core: Quantum Stride
+  - **Mechanic:** When all players are in bed, the game uses a "Stride" system.
+  - **Action:** it boosts game logic to **1000 Virtual TPS** (50x speed) while capping the server engine at **50 TPS** to prevent lag.
   - **Visuals:** The sun/moon visibly streak across the sky. Shadows move rapidly.
 
   ### Immersive Benefits
