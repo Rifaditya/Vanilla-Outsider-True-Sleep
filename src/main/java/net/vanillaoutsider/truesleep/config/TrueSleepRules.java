@@ -31,6 +31,7 @@ public class TrueSleepRules {
     public static final GameRule<Integer> SLEEP_THRESHOLD = GameRulesInvoker.invokeRegisterInteger("truesleep_sleep_threshold", TRUE_SLEEP_CATEGORY, defaultSleepThreshold, 0, 24000);
     public static final GameRule<Integer> WAKE_TIME = GameRulesInvoker.invokeRegisterInteger("truesleep_wake_time", TRUE_SLEEP_CATEGORY, defaultWakeTime, 0, 24000);
     public static final GameRule<Boolean> DROWN_IMMUNITY = GameRulesInvoker.invokeRegisterBoolean("truesleep_drown_immunity", TRUE_SLEEP_CATEGORY, defaultDrownImmunity);
+    public static final GameRule<Boolean> MOBS_FROZEN = GameRulesInvoker.invokeRegisterBoolean("truesleep_freeze_mobs", TRUE_SLEEP_CATEGORY, true);
 
 
     private static void runLoyaltyBridge() {
@@ -54,6 +55,10 @@ public class TrueSleepRules {
         defaultSleepThreshold = config.sleepThreshold;
         defaultWakeTime = config.wakeTime;
         defaultDrownImmunity = config.drownImmunity;
+        // Optimization: We could set a static default for MOBS_FROZEN here if we change the register call to use a variable.
+        // But for now, sticking to the plan's direct register or variable approach.
+        // Let's keep it consistent.
+
         // The GameRule registration uses these static values. 
         // Note: For the new rules (Threshold/Wake), we can't easily change the static registration defaults 
         // dynamically unless we read config BEFORE this class is loaded?

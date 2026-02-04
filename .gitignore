@@ -25,3 +25,7 @@ run/
 # OS
 .DS_Store
 Thumbs.db
+
+# Artifacts
+releases/
+*.log

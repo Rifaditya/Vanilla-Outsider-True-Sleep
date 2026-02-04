@@ -1,0 +1,166 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.3.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.14.7
+
+> Task :compileJava FAILED
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:28: error: package GameRules does not exist
+    public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> ENGINE_TPS = GameRulesInvoker.invokeRegisterInteger("truesleep_engine_tps", TRUE_SLEEP_CATEGORY, defaultEngineTps, 1, 1000);
+                                 ^
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:28: error: cannot find symbol
+    public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> ENGINE_TPS = GameRulesInvoker.invokeRegisterInteger("truesleep_engine_tps", TRUE_SLEEP_CATEGORY, defaultEngineTps, 1, 1000);
+                                                                                   ^
+  symbol:   class IntegerValue
+  location: class GameRules
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:29: error: package GameRules does not exist
+    public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> VIRTUAL_TPS_TARGET = GameRulesInvoker.invokeRegisterInteger("truesleep_virtual_tps", TRUE_SLEEP_CATEGORY, defaultVirtualTps, 1, 10000);
+                                 ^
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:29: error: cannot find symbol
+    public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> VIRTUAL_TPS_TARGET = GameRulesInvoker.invokeRegisterInteger("truesleep_virtual_tps", TRUE_SLEEP_CATEGORY, defaultVirtualTps, 1, 10000);
+                                                                                   ^
+  symbol:   class IntegerValue
+  location: class GameRules
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:31: error: package GameRules does not exist
+    public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> SLEEP_THRESHOLD = GameRulesInvoker.invokeRegisterInteger("truesleep_sleep_threshold", TRUE_SLEEP_CATEGORY, defaultSleepThreshold, 0, 24000);
+                                 ^
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:31: error: cannot find symbol
+    public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> SLEEP_THRESHOLD = GameRulesInvoker.invokeRegisterInteger("truesleep_sleep_threshold", TRUE_SLEEP_CATEGORY, defaultSleepThreshold, 0, 24000);
+                                                                                   ^
+  symbol:   class IntegerValue
+  location: class GameRules
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:32: error: package GameRules does not exist
+    public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> WAKE_TIME = GameRulesInvoker.invokeRegisterInteger("truesleep_wake_time", TRUE_SLEEP_CATEGORY, defaultWakeTime, 0, 24000);
+                                 ^
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:32: error: cannot find symbol
+    public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> WAKE_TIME = GameRulesInvoker.invokeRegisterInteger("truesleep_wake_time", TRUE_SLEEP_CATEGORY, defaultWakeTime, 0, 24000);
+                                                                                   ^
+  symbol:   class IntegerValue
+  location: class GameRules
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:33: error: package GameRules does not exist
+    public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.BooleanValue> DROWN_IMMUNITY = GameRulesInvoker.invokeRegisterBoolean("truesleep_drown_immunity", TRUE_SLEEP_CATEGORY, defaultDrownImmunity);
+                                 ^
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:33: error: cannot find symbol
+    public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.BooleanValue> DROWN_IMMUNITY = GameRulesInvoker.invokeRegisterBoolean("truesleep_drown_immunity", TRUE_SLEEP_CATEGORY, defaultDrownImmunity);
+                                                                                   ^
+  symbol:   class BooleanValue
+  location: class GameRules
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:34: error: package GameRules does not exist
+    public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.BooleanValue> MOBS_FROZEN = GameRulesInvoker.invokeRegisterBoolean("truesleep_freeze_mobs", TRUE_SLEEP_CATEGORY, true);
+                                 ^
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:34: error: cannot find symbol
+    public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.BooleanValue> MOBS_FROZEN = GameRulesInvoker.invokeRegisterBoolean("truesleep_freeze_mobs", TRUE_SLEEP_CATEGORY, true);
+                                                                                   ^
+  symbol:   class BooleanValue
+  location: class GameRules
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\mixin\GameRulesInvoker.java:12: error: cannot find symbol
+    static GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> invokeRegisterInteger(String id, GameRuleCategory category, int defaultValue, int min, int max) {
+                    ^
+  symbol:   class Key
+  location: class GameRules
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\mixin\GameRulesInvoker.java:12: error: cannot find symbol
+    static GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> invokeRegisterInteger(String id, GameRuleCategory category, int defaultValue, int min, int max) {
+                                                                      ^
+  symbol:   class IntegerValue
+  location: class GameRules
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\mixin\GameRulesInvoker.java:17: error: cannot find symbol
+    static GameRules.Key<net.minecraft.world.level.gamerules.GameRules.BooleanValue> invokeRegisterBoolean(String id, GameRuleCategory category, boolean defaultValue) {
+                    ^
+  symbol:   class Key
+  location: class GameRules
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\mixin\GameRulesInvoker.java:17: error: cannot find symbol
+    static GameRules.Key<net.minecraft.world.level.gamerules.GameRules.BooleanValue> invokeRegisterBoolean(String id, GameRuleCategory category, boolean defaultValue) {
+                                                                      ^
+  symbol:   class BooleanValue
+  location: class GameRules
+16 errors
+
+[Incubating] Problems report is available at: file:///E:/Minecraft%20Project/Vanilla%20Outsider%20Collections/True%20Sleep/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler output below.
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:28: error: cannot find symbol
+      public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> ENGINE_TPS = GameRulesInvoker.invokeRegisterInteger("truesleep_engine_tps", TRUE_SLEEP_CATEGORY, defaultEngineTps, 1, 1000);
+                                                                                     ^
+    symbol:   class IntegerValue
+    location: class GameRules
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:29: error: cannot find symbol
+      public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> VIRTUAL_TPS_TARGET = GameRulesInvoker.invokeRegisterInteger("truesleep_virtual_tps", TRUE_SLEEP_CATEGORY, defaultVirtualTps, 1, 10000);
+                                                                                     ^
+    symbol:   class IntegerValue
+    location: class GameRules
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:31: error: cannot find symbol
+      public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> SLEEP_THRESHOLD = GameRulesInvoker.invokeRegisterInteger("truesleep_sleep_threshold", TRUE_SLEEP_CATEGORY, defaultSleepThreshold, 0, 24000);
+                                                                                     ^
+    symbol:   class IntegerValue
+    location: class GameRules
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:32: error: cannot find symbol
+      public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> WAKE_TIME = GameRulesInvoker.invokeRegisterInteger("truesleep_wake_time", TRUE_SLEEP_CATEGORY, defaultWakeTime, 0, 24000);
+                                                                                     ^
+    symbol:   class IntegerValue
+    location: class GameRules
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:33: error: cannot find symbol
+      public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.BooleanValue> DROWN_IMMUNITY = GameRulesInvoker.invokeRegisterBoolean("truesleep_drown_immunity", TRUE_SLEEP_CATEGORY, defaultDrownImmunity);
+                                                                                     ^
+    symbol:   class BooleanValue
+    location: class GameRules
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:34: error: cannot find symbol
+      public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.BooleanValue> MOBS_FROZEN = GameRulesInvoker.invokeRegisterBoolean("truesleep_freeze_mobs", TRUE_SLEEP_CATEGORY, true);
+                                                                                     ^
+    symbol:   class BooleanValue
+    location: class GameRules
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\mixin\GameRulesInvoker.java:12: error: cannot find symbol
+      static GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> invokeRegisterInteger(String id, GameRuleCategory category, int defaultValue, int min, int max) {
+                      ^
+    symbol:   class Key
+    location: class GameRules
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\mixin\GameRulesInvoker.java:12: error: cannot find symbol
+      static GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> invokeRegisterInteger(String id, GameRuleCategory category, int defaultValue, int min, int max) {
+                                                                        ^
+    symbol:   class IntegerValue
+    location: class GameRules
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\mixin\GameRulesInvoker.java:17: error: cannot find symbol
+      static GameRules.Key<net.minecraft.world.level.gamerules.GameRules.BooleanValue> invokeRegisterBoolean(String id, GameRuleCategory category, boolean defaultValue) {
+                      ^
+    symbol:   class Key
+    location: class GameRules
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\mixin\GameRulesInvoker.java:17: error: cannot find symbol
+      static GameRules.Key<net.minecraft.world.level.gamerules.GameRules.BooleanValue> invokeRegisterBoolean(String id, GameRuleCategory category, boolean defaultValue) {
+                                                                        ^
+    symbol:   class BooleanValue
+    location: class GameRules
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:28: error: package GameRules does not exist
+      public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> ENGINE_TPS = GameRulesInvoker.invokeRegisterInteger("truesleep_engine_tps", TRUE_SLEEP_CATEGORY, defaultEngineTps, 1, 1000);
+                                   ^
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:29: error: package GameRules does not exist
+      public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> VIRTUAL_TPS_TARGET = GameRulesInvoker.invokeRegisterInteger("truesleep_virtual_tps", TRUE_SLEEP_CATEGORY, defaultVirtualTps, 1, 10000);
+                                   ^
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:31: error: package GameRules does not exist
+      public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> SLEEP_THRESHOLD = GameRulesInvoker.invokeRegisterInteger("truesleep_sleep_threshold", TRUE_SLEEP_CATEGORY, defaultSleepThreshold, 0, 24000);
+                                   ^
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:32: error: package GameRules does not exist
+      public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.IntegerValue> WAKE_TIME = GameRulesInvoker.invokeRegisterInteger("truesleep_wake_time", TRUE_SLEEP_CATEGORY, defaultWakeTime, 0, 24000);
+                                   ^
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:33: error: package GameRules does not exist
+      public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.BooleanValue> DROWN_IMMUNITY = GameRulesInvoker.invokeRegisterBoolean("truesleep_drown_immunity", TRUE_SLEEP_CATEGORY, defaultDrownImmunity);
+                                   ^
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\config\TrueSleepRules.java:34: error: package GameRules does not exist
+      public static final GameRules.Key<net.minecraft.world.level.gamerules.GameRules.BooleanValue> MOBS_FROZEN = GameRulesInvoker.invokeRegisterBoolean("truesleep_freeze_mobs", TRUE_SLEEP_CATEGORY, true);
+                                   ^
+  16 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.3.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 8s
+1 actionable task: 1 executed
