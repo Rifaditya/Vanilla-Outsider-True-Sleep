@@ -17,12 +17,13 @@ public class TrueSleepConfig {
 
     public float engineTps = 50.0f; // Stable engine speed for lag-free simulation
     public float virtualTps = 1000.0f; // Target time speed (Stride = Virtual / Engine)
-    
+
     // Dreamweaver (v1.1.0)
     public int sleepThreshold = 12542; // Vanilla default. Set to 0 for all-day sleep.
     public int wakeTime = 0; // Vanilla default (Sunrise). Set to 13000 for Sunset.
     public boolean drownImmunity = true; // Prevents drowning during warp.
-    public boolean freezeMobs = true; // Default: true.Freezes mobs during warp to prevent lag/death.
+    public boolean freezeMobs = true; // Default: true. Freezes mobs during warp to prevent lag/death.
+    public boolean freezeWorkers = false; // Default: false. Allow worker mobs (Villagers, Allays, etc) to move.
 
     public boolean wakeAtMorning = true; // Legacy flag, effectively replaced by wakeTime logic but kept for safety
 
