@@ -13,6 +13,7 @@ base {
 repositories {
 	maven { url "https://maven.shedaniel.me/" }
 	maven { url "https://maven.terraformersmc.com/releases/" }
+    mavenLocal()
 }
 
 dependencies {
@@ -25,6 +26,9 @@ dependencies {
 
     // Config
     implementation("com.google.code.gson:gson:2.10.1")
+
+    // DasikLibrary
+    implementation "net.dasik.social:dasik-library:${project.dasik_library_version}"
 }
 
 processResources {

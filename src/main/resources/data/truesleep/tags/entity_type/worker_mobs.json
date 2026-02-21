@@ -2,7 +2,6 @@
     "replace": false,
     "values": [
         "minecraft:allay",
-        "minecraft:villager",
-        "minecraft:copper_golem"
+        "minecraft:villager"
     ]
 }

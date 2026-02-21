@@ -1,5 +1,17 @@
 # History
 
+## [1.3.2-26.1] - 2026-02-05
+
+### Fixed
+
+- Finalized stability for Snapshot 6.
+
+## [1.3.1-26.1] - 2026-02-05
+
+### Fixed
+
+- Critical Startup Crash: Removed redundant and malformed `LivingEntityMixin`.
+
 ## [1.3.0-26.1] - 2026-02-05
 
 ### Added (Worker Freedom)

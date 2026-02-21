@@ -2,7 +2,43 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.3.0-26.1] - 2026-02-05
+## [1.3.2+build.3] - 2026-02-21
+
+### Fixed
+
+- **Build**: Updated Minecraft target from `26.1-snapshot-4` to `26.1-snapshot-8`.
+- **Build**: Updated DasikLibrary to `1.6.9+build.5`.
+- **Bug**: `EntityMixin` now respects the `DROWN_IMMUNITY` GameRule (was unconditionally resetting air supply).
+- **Data**: Removed invalid `minecraft:copper_golem` from `worker_mobs` entity tag.
+- **Localization**: Added missing `en_us.json` entries for `truesleep_freeze_mobs` and `truesleep_freeze_workers` GameRules.
+
+### Removed
+
+- **Dead Code**: Deleted `PlayerMixin.java` (contained only empty debug injection methods).
+
+## [1.3.2+build.2] - 2026-02-19
+
+### Changed
+
+- **Code Refactor**: Migrated cycle-distance and day calculation logic to `DasikLibrary.TimeUtil`.
+- **Performance**: Switched to native `GlobalSocialSystem.setThrottle` API for regulated performance during Time Warping.
+- **Dependencies**: Updated `DasikLibrary` to `1.6.9+build.3`.
+
+### Fixed
+
+- **Social Throttling**: Corrected Mixin target package for `GlobalSocialSystem`.
+
+### Fixed
+
+- Finalized stability for Snapshot 6.
+
+## [1.3.1-26.1] - 2026-02-05
+
+### Fixed
+
+- Critical Startup Crash: Removed redundant and malformed `LivingEntityMixin`.
+
+## [1.3.0-26.1] - 2026-02-04
 
 ### Added (Worker Freedom)
 

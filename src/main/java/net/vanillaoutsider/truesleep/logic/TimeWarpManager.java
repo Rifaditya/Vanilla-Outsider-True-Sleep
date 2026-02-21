@@ -3,8 +3,9 @@ package net.vanillaoutsider.truesleep.logic;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.vanillaoutsider.truesleep.TrueSleep;
-// import net.vanillaoutsider.truesleep.config.TrueSleepConfig;
 import net.vanillaoutsider.truesleep.config.TrueSleepRules;
+import net.dasik.social.util.TimeUtil;
+import net.dasik.social.core.GlobalSocialSystem;
 
 public class TimeWarpManager {
     private static final TimeWarpManager INSTANCE = new TimeWarpManager();
@@ -49,6 +50,10 @@ public class TimeWarpManager {
     private void startWarp(ServerLevel level) {
         isWarping = true;
         this.originalRandomTickSpeed = level.getGameRules().get(GameRules.RANDOM_TICK_SPEED);
+        
+        // Regulate Social Hive-Mind during intensive simulation
+        GlobalSocialSystem.setThrottle(20);
+        
         updateWarpSpeed(level);
     }
 
@@ -67,8 +72,7 @@ public class TimeWarpManager {
         // We should adjust it to be relative to "wakeTime".
         // Tapering logic: If we are close to wakeTime, slow down.
         
-        long dist = (wakeTime - timeOfDay); // e.g. 0 - 23500 = -23500. 
-        if (dist < 0) dist += 24000L; // 500 ticks left.
+        long dist = TimeUtil.getCycleDistance(timeOfDay, wakeTime, 24000L);
         
         if (dist < 1000) { 
              // Slow down near arrival
@@ -89,6 +93,9 @@ public class TimeWarpManager {
         lastWarpTime = level.getGameTime();
         this.stride = 1;
         
+        // Restore Social Hive-Mind to native 20 TPS
+        GlobalSocialSystem.setThrottle(1);
+        
         level.getGameRules().set(GameRules.RANDOM_TICK_SPEED, originalRandomTickSpeed, level.getServer());
         
         setTickRate(level, 20.0f);
@@ -101,20 +108,8 @@ public class TimeWarpManager {
         // We need to check if we hit our target time.
         // Vanilla sleeping wakes at time = 0.
         
-        long timeOfDay = level.getDefaultClockTime() % 24000L;
-        
-        // We stop if we just passed the wakeTime. 
-        // Since we jump by 'stride', we might overshoot slightly. 
-        // We check if current time is within [wakeTime, wakeTime + stride + buffer].
-        
-        // Simplified check: If we are effectively "at" the target time.
-        // However, standard sleep logic sets time to x000.
-        // Actually, vanilla sleep sets time to 'next morning'. our warp just runs time forward.
-        // We stop if we are "close enough" or past it compared to when we started?
-        // No, simplest: use distance check from updateWarpSpeed logic.
-        
-        long dist = (wakeTime - timeOfDay);
-        if (dist < 0) dist += 24000L;
+        long currentTimeOfDay = level.getDefaultClockTime() % 24000L;
+        long dist = TimeUtil.getCycleDistance(currentTimeOfDay, wakeTime, 24000L);
         
         // If distance is extremely small (we caught up) or very large (we just passed it)
         // Wait, if we just passed it, dist would be 23990 (ish).

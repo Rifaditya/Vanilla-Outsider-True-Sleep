@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * The Shadow Governor: Externally regulates the Social Hive-Mind pulse
  * during a TimeWarp to prevent performance collapse at 1000 TPS.
  */
-@Mixin(targets = "net.vanillaoutsider.social.core.GlobalSocialSystem", remap = false)
+@Mixin(targets = "net.dasik.social.core.GlobalSocialSystem", remap = false)
 public class SocialCoreMixin {
 
     @Inject(method = "pulse", at = @At("HEAD"), cancellable = true)

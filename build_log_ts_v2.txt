@@ -1,0 +1,58 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.3.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.14.7
+
+> Task :compileJava FAILED
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\logic\TimeWarpManager.java:35: error: package TrueSleep does not exist
+                TrueSleep.LOGGER.info("TrueSleep: Quantum Warp ENGAGED. Initiating Stride Engine.");
+                         ^
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\logic\TimeWarpManager.java:43: error: package TrueSleep does not exist
+                TrueSleep.LOGGER.info("TrueSleep: Warp Aborted - Sleep interrupted.");
+                         ^
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\logic\TimeWarpManager.java:122: error: variable timeOfDay is already defined in method checkMorning(ServerLevel,Runnable)
+        long timeOfDay = level.getDefaultClockTime() % 24000L;
+             ^
+E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\logic\TimeWarpManager.java:131: error: package TrueSleep does not exist
+             TrueSleep.LOGGER.info("TrueSleep: Destination reached: Target Time {}. Stopping Hyperspace.", wakeTime);
+                      ^
+Note: E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\mixin\MobMixin.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+4 errors
+
+[Incubating] Problems report is available at: file:///E:/Minecraft%20Project/Vanilla%20Outsider%20Collections/True%20Sleep/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler output below.
+  Note: E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\mixin\MobMixin.java uses or overrides a deprecated API.
+  Note: Recompile with -Xlint:deprecation for details.
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\logic\TimeWarpManager.java:122: error: variable timeOfDay is already defined in method checkMorning(ServerLevel,Runnable)
+          long timeOfDay = level.getDefaultClockTime() % 24000L;
+               ^
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\logic\TimeWarpManager.java:35: error: package TrueSleep does not exist
+                  TrueSleep.LOGGER.info("TrueSleep: Quantum Warp ENGAGED. Initiating Stride Engine.");
+                           ^
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\logic\TimeWarpManager.java:43: error: package TrueSleep does not exist
+                  TrueSleep.LOGGER.info("TrueSleep: Warp Aborted - Sleep interrupted.");
+                           ^
+  E:\Minecraft Project\Vanilla Outsider Collections\True Sleep\src\main\java\net\vanillaoutsider\truesleep\logic\TimeWarpManager.java:131: error: package TrueSleep does not exist
+               TrueSleep.LOGGER.info("TrueSleep: Destination reached: Target Time {}. Stopping Hyperspace.", wakeTime);
+                        ^
+  4 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.3.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 13s
+1 actionable task: 1 executed

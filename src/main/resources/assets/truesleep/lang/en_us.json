@@ -9,5 +9,9 @@
     "gamerule.minecraft.truesleep_wake_time": "Wake Time",
     "gamerule.minecraft.truesleep_wake_time.description": "The target time of day (in ticks) that the Time Warp aims to reach before waking the player. Default is 0 (Dawn). Adjusting this changes when the 'night' effectively ends.",
     "gamerule.minecraft.truesleep_drown_immunity": "Quantum Drown Immunity",
-    "gamerule.minecraft.truesleep_drown_immunity.description": "Safety Protocol: If enabled, grants temporary water-breathing to all entities during the Time Warp. Prevents players and mobs from drowning due to the accelerated passage of time while swimming."
+    "gamerule.minecraft.truesleep_drown_immunity.description": "Safety Protocol: If enabled, grants temporary water-breathing to all entities during the Time Warp. Prevents players and mobs from drowning due to the accelerated passage of time while swimming.",
+    "gamerule.minecraft.truesleep_freeze_mobs": "Freeze Mobs During Warp",
+    "gamerule.minecraft.truesleep_freeze_mobs.description": "Stasis Field: If enabled, completely freezes all non-worker mobs during the Time Warp. Prevents pathfinding lag, metabolic death, and chaotic movement. Allows the engine to focus on Redstone and Furnace simulation.",
+    "gamerule.minecraft.truesleep_freeze_workers": "Freeze Worker Mobs During Warp",
+    "gamerule.minecraft.truesleep_freeze_workers.description": "Controls whether worker mobs (Villagers, Allays) are also frozen during the Time Warp. Default: false (workers continue operating). Enable to freeze all mobs including workers for maximum performance."
 }
