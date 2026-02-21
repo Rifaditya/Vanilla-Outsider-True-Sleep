@@ -1,5 +1,9 @@
 # History
 
+## v1.3.2+build.5 - 2026-02-21
+
+- **Feature**: Added dynamic GameRule toggles for *every* individual entity type in the game under a new "True Sleep Mobs" category, allowing players to explicitly unfrozen specific mobs (like Villagers, Iron Golems, or modded creatures) during the time warp to preserve redstone mechanisms.
+
 ## [1.3.2+build.4] - 2026-02-21
 
 ### Fixed

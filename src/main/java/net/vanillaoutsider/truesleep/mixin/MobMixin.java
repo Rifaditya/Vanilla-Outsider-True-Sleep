@@ -8,6 +8,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.level.gamerules.GameRule;
+import net.dasik.social.api.gamerule.DynamicGameRuleManager;
 import net.vanillaoutsider.truesleep.TrueSleepTags;
 
 @Mixin(Mob.class)
@@ -23,6 +27,23 @@ public abstract class MobMixin {
         Mob mob = (Mob) (Object) this;
         if (TimeWarpManager.get().isWarping()
                 && mob.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+
+            // 1. Check Dynamic Unfreeze Rule for this specific Mob Type
+            Identifier id = BuiltInRegistries.ENTITY_TYPE.getKey(mob.getType());
+            if (id != null) {
+                String ruleName = "ts_unfreeze_" + id.getNamespace() + "_" + id.getPath();
+                GameRule<?> ruleObj = DynamicGameRuleManager.getDynamicRules().get(ruleName);
+                if (ruleObj != null) {
+                    @SuppressWarnings("unchecked")
+                    boolean isCustomUnfrozen = DynamicGameRuleManager.getBoolean(serverLevel,
+                            (GameRule<Boolean>) ruleObj);
+                    if (isCustomUnfrozen) {
+                        return; // Mob is allowed to tick normally
+                    }
+                }
+            }
+
+            // 2. Fallback to Tags and Global Settings
             boolean isWorker = mob.getType().builtInRegistryHolder().is(TrueSleepTags.WORKER_MOBS);
             boolean freezeWorkers = serverLevel.getGameRules().get(TrueSleepRules.WORKER_MOBS_FROZEN);
             boolean freezeAll = serverLevel.getGameRules().get(TrueSleepRules.MOBS_FROZEN);

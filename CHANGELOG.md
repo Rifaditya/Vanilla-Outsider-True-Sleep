@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.2+build.5] - 2026-02-21
+
+### Added
+
+- **Dynamic Mob Unfreeze Toggles**: Added a new in-game GameRule for *every* individual entity type (e.g., `ts_unfreeze_minecraft_villager`, `ts_unfreeze_minecraft_iron_golem`, including modded ones) to allow players to completely customize which mobs are allowed to tick during the True Sleep time warp. Perfect for preventing redstone contraptions and farms from breaking.
+- **Dedicated Category**: Created a new "True Sleep Mobs" GameRule category to organize all the individual mob toggles in the in-game UI.
+
+### Recommended
+
+- **Collapsible Game Rules**: Highly recommended to install this mod, as True Sleep now registers ~150+ new GameRules (one for each mob).
+
 ## [1.3.2+build.4] - 2026-02-21
 
 ### Fixed

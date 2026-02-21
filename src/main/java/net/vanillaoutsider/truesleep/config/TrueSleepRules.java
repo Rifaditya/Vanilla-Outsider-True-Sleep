@@ -10,9 +10,13 @@ import org.slf4j.LoggerFactory;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.dasik.social.api.gamerule.DynamicGameRuleManager;
+
 public class TrueSleepRules {
         public static final GameRuleCategory TRUE_SLEEP_CATEGORY = GameRuleCategory
                         .register(Identifier.fromNamespaceAndPath("truesleep", "config"));
+        public static final GameRuleCategory TRUE_SLEEP_MOB_CATEGORY;
 
         // Default values
         private static int defaultEngineTps = 50;
@@ -22,8 +26,12 @@ public class TrueSleepRules {
         private static boolean defaultDrownImmunity = true;
         private static boolean defaultWorkerMobsFrozen = false;
 
-        // Static initializer to run the Loyalty Bridge BEFORE rules are registered
+        // Static initializer
         static {
+                // Must be registered here to be ready before runLoyaltyBridge and GameRules
+                TRUE_SLEEP_MOB_CATEGORY = DynamicGameRuleManager
+                                .registerCategory(Identifier.fromNamespaceAndPath("truesleep", "mob_settings"));
+
                 runLoyaltyBridge();
         }
 
@@ -100,5 +108,13 @@ public class TrueSleepRules {
         }
 
         public static void init() {
+                // Dynamically register an unfreeze override rule for EVERY entity type
+                BuiltInRegistries.ENTITY_TYPE.stream().forEach(entityType -> {
+                        Identifier id = BuiltInRegistries.ENTITY_TYPE.getKey(entityType);
+                        if (id != null) {
+                                String ruleName = "ts_unfreeze_" + id.getNamespace() + "_" + id.getPath();
+                                DynamicGameRuleManager.registerBoolean(ruleName, TRUE_SLEEP_MOB_CATEGORY, false);
+                        }
+                });
         }
 }

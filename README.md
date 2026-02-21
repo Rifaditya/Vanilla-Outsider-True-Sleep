@@ -12,15 +12,20 @@
 
 ---
 
+### 2. Standalone Download
+
+If you prefer installing individual mods instead of the full modpack:
+
+1.  Download `vanilla-outsider-true-sleep-26.1-snapshots-1.3.2+build.5.jar`.
+2.  Install [Fabric API](https://modrinth.com/mod/fabric-api) for Snapshot 26.1.
+3.  Place both into your `.minecraft/mods` folder.
+
+> ⚠️ **IMPORTANT**: True Sleep now dynamically generates over 150+ GameRules (one for every mob in the game) to allow individual mob unfreezing. It is **HIGHLY RECOMMENDED** to install the **[Collapsible Game Rules](https://github.com/Rifaditya/MC-CollapsibleGameRuleScreen)** mod to prevent the GameRules menu from becoming an unscrollable mess.
+
 ## 📖 About
 
 **True Sleep** is a Minecraft mod that changes how sleeping works. Instead of instantly skipping the night (fade to black), it **accelerates** the passage of time (Quantum Warp).
 
-* **Quantum Stride**: Boosts game logic to **1000 Virtual TPS** while keeping the server stable at **50 TPS**.
-* **Dreamweaver Engine**: Configurable sleep thresholds and wake times.
-* **Immersion**: Watch the moon/sun move across the sky smoothly.
-* **Simulation**: Furnaces, crops, and entities continue to tick rapidly.
-* **Vanilla Parity**: Includes `CatMixin` to ensure cats still give morning gifts.
 * **Safety**: Handles multi-dimension logic and prevents drowning during warp.
 * **Compatibility**: Supports **Golden Dandelion** (age-locked mobs won't die).
 
