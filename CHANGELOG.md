@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.2+build.4] - 2026-02-21
+
+### Fixed
+
+- **Compatibility**: Reverted Mixin compatibility level from `JAVA_25` to `JAVA_22` to resolve warning.
+- **Cleanup**: Removed stale `refmap` entries from `truesleep.mixins.json` and `truesleep.client.mixins.json`.
+
 ## [1.3.2+build.3] - 2026-02-21
 
 ### Fixed
