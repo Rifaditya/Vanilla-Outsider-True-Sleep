@@ -30,7 +30,7 @@ This project uses Gradle.
 
 ### Prerequisites
 
-* JDK 21 (for Minecraft 1.20.5+ and 26.x Snapshots)
+* JDK 25 (for Minecraft 26.x Snapshots)
 
 ### Build Command
 
