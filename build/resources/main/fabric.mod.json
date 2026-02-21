@@ -1,7 +1,7 @@
 {
     "schemaVersion": 1,
     "id": "vanilla-outsider-true-sleep",
-    "version": "1.3.2+build.3",
+    "version": "1.3.2+build.4",
     "name": "Vanilla Outsider: True Sleep",
     "description": "Preserves world simulation by accelerating ticks during sleep instead of skipping time.",
     "icon": "assets/vanilla-outsider-true-sleep/icon.png",
