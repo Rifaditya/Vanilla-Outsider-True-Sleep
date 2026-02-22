@@ -14,9 +14,9 @@ The logic follows a simple implicit state machine:
     * **Action**: None.
 
 2. **Warping (Active)**
-    * **Trigger**: `ServerLevelMixin` reports that `areEnoughSleeping` is TRUE.
-    * **Tick Rate**: `warpSpeed` (Default 100.0 TPS).
-    * **Action**: The server game loop runs at 5x speed (or configured speed). World simulation happens rapidly.
+    * **Trigger**: `ServerLevelMixin.truesleep$manageTimeWarp` reports that sleep conditions are met.
+    * **Tick Rate**: `engineTps` (50.0) with Quantum Stride catch-up to `virtualTps` (1000.0).
+    * **Action**: The server simulation runs at hyper-speed.
 
 3. **Waking Up (Termination)**
     * **Trigger**: The world time reaches "Morning" (checked via `ServerLevel.isBrightOutside()`).

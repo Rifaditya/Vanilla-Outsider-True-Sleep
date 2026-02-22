@@ -14,7 +14,7 @@ The most critical part of the mod is stopping the vanilla game from "skipping" t
     method = "tick",
     at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/SleepStatus;areEnoughSleeping(I)Z")
 )
-private boolean disableVanillaSleepSkip(SleepStatus instance, int percentage) {
+private boolean truesleep$silentSleepSuppression(SleepStatus instance, int percentage) {
     // We force this to return FALSE.
     // This tricks the vanilla 'tick' loop into thinking "not enough people are sleeping".
     // Result: The game continues to tick normally, it does NOT skip time.
@@ -28,7 +28,7 @@ Since we lied to the vanilla game (telling it nobody is sleeping), we must check
 
 ```java
 @Inject(method = "tick", at = @At("TAIL"))
-private void manageTimeWarp(BooleanSupplier haveTime, CallbackInfo ci) {
+private void truesleep$manageTimeWarp(BooleanSupplier haveTime, CallbackInfo ci) {
     // 1. Get the configured percentage rule directly
     int rule = this.getGameRules().get(GameRules.PLAYERS_SLEEPING_PERCENTAGE);
     
@@ -63,7 +63,7 @@ We hook into the check and ask the `TimeWarpManager` if a Time Warp happened rec
     method = "stop", 
     at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getSleepTimer()I")
 )
-private int bypassSleepTimerForGifts(Player player) {
+private int truesleep$bypassSleepTimerForGifts(Player player) {
     // If we just finished a supersonic Time Warp, LIE to the cat.
     if (TimeWarpManager.get().hasRecentWarp(level.getGameTime())) {
         return 100; // "Yes, cat, I definitely slept for 5 seconds."
@@ -88,7 +88,7 @@ In Minecraft 26.1, `GameRules.getInt` was replaced by a generic `get`.
 
 ```java
 @Inject(method = "renderSleepOverlay", at = @At("HEAD"), cancellable = true)
-private void removeSleepDarkening(CallbackInfo ci) {
+private void truesleep$removeSleepDarkening(CallbackInfo ci) {
     // Unconditionally cancel the overlay.
     // We want players to see the accelerated time passing.
     ci.cancel();
@@ -102,8 +102,21 @@ private void removeSleepDarkening(CallbackInfo ci) {
 
 ```java
 @Inject(method = "aiStep", at = @At("HEAD"), cancellable = true)
-private void injectGrowth(CallbackInfo ci) {
+private void truesleep$injectGrowth(CallbackInfo ci) {
     if (this.isAgeLocked()) return; // Respect age lock
     // ... custom aging logic (Quantum Stride)
 }
+
+## `MobMixin`
+
+**Target Class**: `net.minecraft.world.entity.Mob`
+**Purpose**: Handles the cryogenic stasis/freezing of entities during warping.
+
+```java
+@Inject(method = "tick", at = @At("HEAD"), cancellable = true)
+private void truesleep$freezeDuringWarp(CallbackInfo ci) {
+    // Checks if the entity is allowed to unfreeze via GameRules
+    // If not, cancels the tick to freeze the mob in space.
+}
+```
 ```

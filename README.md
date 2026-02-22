@@ -16,7 +16,7 @@
 
 If you prefer installing individual mods instead of the full modpack:
 
-1.  Download `vanilla-outsider-true-sleep-26.1-snapshots-1.3.2+build.5.jar`.
+1.  Download `vanilla-outsider-true-sleep-26.1-snapshots-1.3.2+build.6.jar`.
 2.  Install [Fabric API](https://modrinth.com/mod/fabric-api) for Snapshot 26.1.
 3.  Place both into your `.minecraft/mods` folder.
 
@@ -31,7 +31,7 @@ If you prefer installing individual mods instead of the full modpack:
 * **Immersion**: Watch the moon/sun move across the sky smoothly.
 * **Simulation**: Furnaces, crops, and entities continue to tick rapidly.
 * **Vanilla Parity**: Includes `CatMixin` to ensure cats still give morning gifts.
-* **Dynamic Mob Unfreeze**: Individual GameRule toggles for **every** mob type (including modded) to prevent redstone/farm breakage.
+* **True Sleep Mobs**: Dynamic GameRule toggles for **every** mob type (including modded) specialized in a new category for complete unfreeze control.
 * **Safety**: Handles multi-dimension logic and prevents drowning during warp.
 * **Compatibility**: Supports **Golden Dandelion** (age-locked mobs won't die).
 

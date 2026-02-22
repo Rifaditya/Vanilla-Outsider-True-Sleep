@@ -2,7 +2,7 @@
 
 **Mod Name:** True Sleep
 **Mod ID:** `truesleep` (Fabric)
-**Version:** 1.1.4 (Targeting Minecraft 26.1 Snapshots)
+**Version:** 1.3.2+build.6 (Targeting Minecraft 26.1 Snapshots)
 
 ## 🛡️ Safety & Compliance Statement
 
@@ -28,7 +28,7 @@ Moderators looking at Mixins might flag the following patterns. Here is the just
 
 ### 1. `ServerLevelMixin` returning `false` for sleep check
 
-* **Location**: `ServerLevelMixin.java` -> `disableVanillaSleepSkip`
+* **Location**: `ServerLevelMixin.java` -> `truesleep$silentSleepSuppression`
 * **Code**: returns `false` when vanilla asks `areEnoughSleeping`.
 * **Context**: This is INTENTIONAL gameplay logic.
 * **Reason**: I must prevent the vanilla game from "skipping" the night instantly (fade to black) so that my mod can instead "accelerate" the night (tick warp). If I allowed vanilla to return `true`, the night would skip before my logic runs.
@@ -40,18 +40,19 @@ Moderators looking at Mixins might flag the following patterns. Here is the just
 
 ### 3. CatMixin manipulating Sleep Timer
 
-* **Location**: `CatMixin.java` -> `bypassSleepTimerForGifts`
+* **Location**: `CatMixin.java` -> `truesleep$bypassSleepTimerForGifts`
 * **Code**: Returns `100` instead of actual sleep timer.
 * **Reason**: **Gameplay Parity.** Time Warp makes the night pass too quickly for the vanilla "5 second minimum sleep" check to trigger. This mixin ensures players still get cat gifts (phantom membrane, rabbit foot, etc.) even if the night passed instantly.
 
 ### 4. AgeableMobMixin preventing growth
 
-* **Location**: `AgeableMobMixin.java`
+* **Location**: `AgeableMobMixin.java` -> `truesleep$injectGrowth`
 * **Reason**: **Compatibility.** Some mods (Golden Dandelion) lock mob ages. Time Warp would otherwise rapidly age these mobs to death or adulthood. This mixin respects the lock.
 
 ## 🛠️ Build & dependencies
 
 * **Loader**: Fabric Loader
 
-* **Mappings**: Official Minecraft Mappings (Mojang) - *Note: Source may use direct names like `ServerLevel` instead of `class_XYZ`.*
-* **External Libs**: None (Uses Fabric API).
+* **Mappings**: Official Minecraft Mappings (Mojang).
+* **Naming Standard**: All private Mixin members are prefixed with `truesleep$` to prevent collisions, as mandated by the Zenith Architecture Protocol.
+* **Verification**: Moderators can verify "True Sleep Mobs" logic in `MobMixin.truesleep$freezeDuringWarp`, which references `DynamicGameRuleManager` from the `DasikLibrary` dependency.

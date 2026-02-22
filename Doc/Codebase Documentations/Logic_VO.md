@@ -49,7 +49,15 @@ The manager operates as a singleton State Machine driven by the server tick loop
 * **Consequence**: The Nether tick loop sees "0 sleepers" and triggers **WARP_ABORT**, cancelling the warp for the Overworld player.
 * **Solution**: `ServerLevelMixin` now explicitly **ignores** any level with `players().isEmpty()`. The Nether no longer votes on Time Warp.
 
-### 2. The Cat Gift Fix
+### 2. The Mob Unfreeze (Stasis) Logic
+
+* **Core Engine**: To prevent pathfinding lag and server jitter during high-speed warping, mobs are conventionally frozen in stasis via `MobMixin.truesleep$freezeDuringWarp`.
+* **Dynamic Unfreezing**: Build.6 introduced a dynamic unfreeze system.
+    * Every `EntityType` in the game (including modded ones) is assigned a `ts_unfreeze_<namespace>_<path>` GameRule.
+    * If this rule is `true`, the mob is exempt from stasis and continues to tick at the accelerated rate.
+* **Worker Mobs**: The internal `truesleep:worker_mobs` tag acts as a default filter for entities that should always move (Villagers, etc.), but this can be overridden per-entity type via GameRules.
+
+### 3. The Cat Gift Fix
 
 * **Problem**: Vanilla Cats (`Cat.java`) have a hardcoded check:
 

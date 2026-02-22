@@ -58,8 +58,9 @@ Normally, cats only give gifts if you sleep for 5+ seconds. True Sleep is so fas
 ### 🛡️ Quantum Safety
 
 * **Empty Dimensions**: The mod intelligently ignores empty dimensions to prevent logic bugs.
-* **Drown Immunity**: Entities in water are granted biological stasis (water breathing) during the warp to prevent drowning due to physics acceleration.
-* **Golden Dandelion**: Compatible with age-locked mobs (from other mods); they won't age to death instantly.
+* **Drown Immunity**: Entities in water are granted biological stasis (water breathing) during the warp to prevent drowning.
+* **Mob Unfreeze (Dynamic Category)**: A dedicated "True Sleep Mobs" GameRule category is generated, containing toggles for *every* individual entity type in the game. This allows you to specifically let villagers, iron golems, or modded creatures tick during sleep while keeping the rest frozen in stasis.
+* **Golden Dandelion**: Compatible with age-locked mobs (from other mods).
 
 ---
 
@@ -68,13 +69,14 @@ Normally, cats only give gifts if you sleep for 5+ seconds. True Sleep is so fas
 The mod works out of the box with zero setup.
 
 * **Global Template**: `config/truesleep.json` (Sets defaults for new worlds)
-* **In-Game**: Use `/gamerule truesleep_` to configure per-world settings.
+* **In-Game**: Use `/gamerule truesleep_` for core settings and the **True Sleep Mobs** category for entity control.
   * `truesleep_engine_tps`: Server stability (Default: 50)
   * `truesleep_virtual_tps`: Game speed (Default: 1000)
   * `truesleep_sleep_threshold`: when to sleep
   * `truesleep_wake_time`: when to wake
 
-![Config Screen](https://cdn.modrinth.com/data/AYb0NDWE/images/6b87fd550f4277bef67bdd707787ed947e8f0f33.png)
+> [!IMPORTANT]
+> **Recommended Mod**: Since this mod generates 150+ GameRules, it is highly recommended to use **[Collapsible Game Rules](https://modrinth.com/mod/collapsible-gamerules)** for a cleaner UI.
 
 ---
 

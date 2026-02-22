@@ -1,6 +1,6 @@
 # True Sleep: Project Summary
 
-**Version:** 1.1.4-26.1 (Targeting Minecraft 26.1 snapshots)  
+**Version:** 1.3.2+build.6 (Targeting Minecraft 26.1 snapshots)  
 **Dependencies:** Java 25, Fabric Loader >=0.16.9
 
 ## 1. Project Philosophy (Vanilla Outsider)
@@ -8,7 +8,8 @@
 Adheres to the "One Click, One Action" rule.
 
 * **No instant time skips:** Sleeping accelerates the world (Quantum Warp) instead of jumping to dawn.
-* **Simulation integrity:** Crops grow, furnaces smelt, and entities move during the warp.
+* **Simulation integrity:** Crops grow, furnaces smelt, and redstone ticks during the warp.
+* **Mob Unfreeze Logic**: Integrated dynamic GameRule system under the "True Sleep Mobs" category to allow individual entity unfreezing.
 * **Parity:** Restores functionality broken by high speeds (e.g., Cat gifts).
 
 ## 2. Dependencies & Environment

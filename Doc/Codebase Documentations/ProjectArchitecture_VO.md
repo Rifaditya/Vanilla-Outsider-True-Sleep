@@ -20,7 +20,8 @@ The project is organized into the following packages:
 
 - **`TrueSleepConfig.java`**: A simple POJO (Plain Old Java Object) used to serialize/deserialize configuration options using GSON.
 - **Settings**:
-  - `warpSpeed` (float): The tick rate multiplier when valid sleep conditions are met (Default: 100.0).
+  - `engineTps` (float): The actual server tick rate during warp (Default: 50.0).
+  - `virtualTps` (float): The target simulated tick rate (Default: 1000.0).
 
 ### `net.vanillaoutsider.truesleep.logic`
 
@@ -33,10 +34,11 @@ The project is organized into the following packages:
 ### `net.vanillaoutsider.truesleep.mixin`
 
 - **`ServerLevelMixin.java`**: The bridge between vanilla code and mod logic.
-  - **Redirects**: Intercepts the vanilla `areEnoughSleeping` check to prevent the native time-skip.
-  - **Injects**: Hooks into the `tick` method to feed data to the `TimeWarpManager`.
+  - **Redirects**: Intercepts `areEnoughSleeping` via `truesleep$silentSleepSuppression` to prevent native time-skip.
+  - **Injects**: Hooks into `tick` via `truesleep$manageTimeWarp` to feed data to the Manager.
   - **`CatMixin.java`**: Logic patch for gameplay parity.
-    - **Redirects**: Bypasses the 5-second sleep timer requirement for Cat Gifts if a Time Warp was active (since Time Warps are faster than 5 seconds).
+    - **Redirects**: Bypasses the requirement via `truesleep$bypassSleepTimerForGifts`.
+  - **`MobMixin.java`**: Implements the cryogenic stasis and the dynamic unfreeze system (`truesleep$freezeDuringWarp`).
 
 ### `net.vanillaoutsider.truesleep.mixin.client`
 
