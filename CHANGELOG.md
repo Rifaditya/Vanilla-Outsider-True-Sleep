@@ -2,7 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.2+build.10] - 2026-02-22
+
+### Changed
+
+- **Tooltips**: Added real-time tip to both Engine TPS and Virtual TPS game rule descriptions — "Set both values to the same number for a truly real-time night (no time dilation, 1:1 real speed)."
+
+## [1.3.2+build.9] - 2026-02-22
+
+
+### Changed
+
+- **Engine TPS** (`truesleep_engine_tps`): Max cap raised from 1,000 to unlimited (`Integer.MAX_VALUE`). Tooltip updated with safe-ceiling warning — recommended max on a normal system is **100**; beyond **200** risks instability.
+- **Virtual TPS** (`truesleep_virtual_tps`): Max cap raised from 10,000 to unlimited (`Integer.MAX_VALUE`). Tooltip notes the practical ceiling is ~**20,000** (night in ~1 real second); higher values offer no additional benefit.
+- **Wake Time** (`truesleep_wake_time`): Max corrected from 24,000 to **23,999**. A full day is 24,000 ticks — setting 24,000 equals 0 (Dawn) and is a meaningless target. Tooltip now includes a full time-of-day reference guide.
+- **Sleep Threshold** (`truesleep_sleep_threshold`): Max corrected from 24,000 to **23,999** for the same reason.
+
+### Removed
+
+- **Stability Clamp**: The hidden guard that silently forced Engine TPS back to 50 on every world load (if the config value was ≥ 99) has been removed. Users now own their configuration choices completely.
+
 ## [1.3.2+build.8] - 2026-02-22
+
 
 ### Fixed
 

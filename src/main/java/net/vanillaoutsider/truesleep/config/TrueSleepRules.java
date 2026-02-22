@@ -37,16 +37,16 @@ public class TrueSleepRules {
 
         public static final GameRule<Integer> ENGINE_TPS = GameRulesInvoker.invokeRegisterInteger(
                         "truesleep_engine_tps",
-                        TRUE_SLEEP_CATEGORY, defaultEngineTps, 1, 1000);
+                        TRUE_SLEEP_CATEGORY, defaultEngineTps, 1, Integer.MAX_VALUE);
         public static final GameRule<Integer> VIRTUAL_TPS_TARGET = GameRulesInvoker
                         .invokeRegisterInteger("truesleep_virtual_tps", TRUE_SLEEP_CATEGORY, defaultVirtualTps, 1,
-                                        10000);
+                                        Integer.MAX_VALUE);
         // Dreamweaver Rules
         public static final GameRule<Integer> SLEEP_THRESHOLD = GameRulesInvoker
                         .invokeRegisterInteger("truesleep_sleep_threshold", TRUE_SLEEP_CATEGORY, defaultSleepThreshold,
-                                        0, 24000);
+                                        0, 23999);
         public static final GameRule<Integer> WAKE_TIME = GameRulesInvoker.invokeRegisterInteger("truesleep_wake_time",
-                        TRUE_SLEEP_CATEGORY, defaultWakeTime, 0, 24000);
+                        TRUE_SLEEP_CATEGORY, defaultWakeTime, 0, 23999);
         public static final GameRule<Boolean> DROWN_IMMUNITY = GameRulesInvoker
                         .invokeRegisterBoolean("truesleep_drown_immunity", TRUE_SLEEP_CATEGORY, defaultDrownImmunity);
         public static final GameRule<Boolean> MOBS_FROZEN = GameRulesInvoker.invokeRegisterBoolean(
@@ -64,13 +64,7 @@ public class TrueSleepRules {
                 TrueSleepConfig.load(); // Reads file if exists, sets defaults if not.
                 TrueSleepConfig config = TrueSleepConfig.get();
 
-                // 2. Migration Logic (Stability Clamp)
-                if (config.engineTps >= 99.0f) {
-                        config.engineTps = 50.0f;
-                        needsSave = true;
-                        LoggerFactory.getLogger("TrueSleep")
-                                        .warn("Dreamweaver Protocol: Clamped Engine TPS to 50 for stability.");
-                }
+                // 2. Migration Logic — stability clamp removed. User owns their configuration.
 
                 // 3. Set Defaults from Config
                 defaultEngineTps = (int) config.engineTps;
