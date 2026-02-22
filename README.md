@@ -20,7 +20,10 @@ If you prefer installing individual mods instead of the full modpack:
 2.  Install [Fabric API](https://modrinth.com/mod/fabric-api) for Snapshot 26.1.
 3.  Place both into your `.minecraft/mods` folder.
 
-> ⚠️ **IMPORTANT**: True Sleep now dynamically generates over 150+ GameRules (one for every mob in the game) to allow individual mob unfreezing. It is **HIGHLY RECOMMENDED** to install the **[Collapsible Game Rules](https://github.com/Rifaditya/MC-CollapsibleGameRuleScreen)** mod to prevent the GameRules menu from becoming an unscrollable mess.
+## 🧩 Suggested Mods
+
+> [!TIP]
+> **[Collapsible Game Rules](https://modrinth.com/mod/collapsible-gamerules)**: Since True Sleep generates 150+ GameRules (one for every mob), it is **highly recommended** to install this mod to keep your GameRules screen organized and searchable.
 
 ## 📖 About
 

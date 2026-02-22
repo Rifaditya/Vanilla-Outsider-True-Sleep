@@ -61,7 +61,7 @@ Normally, cats only give gifts if you sleep for 5+ seconds. True Sleep is so fas
 * **Drown Immunity**: Entities in water are granted biological stasis (water breathing) during the warp to prevent drowning.
 * **Mob Unfreeze (Dynamic Category)**: A dedicated "True Sleep Mobs" GameRule category is generated, containing toggles for *every* individual entity type in the game. This allows you to specifically let villagers, iron golems, or modded creatures tick during sleep while keeping the rest frozen in stasis.
   ![Mob Unfreeze Category](https://raw.githubusercontent.com/Rifaditya/Vanilla-Outsider-True-Sleep/master/Images/2026-02-22_11.17.09.png)
-* **Golden Dandelion**: Compatible with age-locked mobs (from other mods).
+* **Golden Dandelion**: Compatible with age-locked mobs.
 
 ---
 
@@ -80,6 +80,13 @@ The mod works out of the box with zero setup.
 
 > [!IMPORTANT]
 > **Recommended Mod**: Since this mod generates 150+ GameRules, it is highly recommended to use **[Collapsible Game Rules](https://modrinth.com/mod/collapsible-gamerules)** for a cleaner UI.
+
+---
+
+## 🧩 Suggested Mods
+
+For the best experience, we recommend installing:
+* **[Collapsible Game Rules](https://modrinth.com/mod/collapsible-gamerules)**: Prevents the GameRules menu from becoming cluttered by grouping the 150+ new mob toggles into a clean, searchable category.
 
 ---
 

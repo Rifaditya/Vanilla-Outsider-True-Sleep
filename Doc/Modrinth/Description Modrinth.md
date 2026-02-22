@@ -83,6 +83,13 @@ The mod works out of the box with zero setup.
 
 ---
 
+## 🧩 Suggested Mods
+
+For the best experience, we recommend installing:
+* **[Collapsible Game Rules](https://modrinth.com/mod/collapsible-gamerules)**: Prevents the GameRules menu from becoming cluttered by grouping the 150+ new mob toggles into a clean, searchable category.
+
+---
+
 ## 📦 Install
 
 1. Install **[Fabric API](https://modrinth.com/mod/fabric-api)**.
