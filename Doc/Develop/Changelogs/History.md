@@ -1,5 +1,11 @@
 # History
 
+## [1.3.2+build.7] - 2026-02-22
+
+### Fixed
+
+- **Critical Bug (MobMixin)**: Fixed dynamic mob GameRule toggles (`ts_unfreeze_*`) having no effect. Root cause: `getDynamicRules()` cache was not reliably populated. Fix: query `BuiltInRegistries.GAME_RULE.getValue(ruleId)` directly.
+
 ## [1.3.2+build.6] - 2026-02-22
 
 ### Fixed

@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.gamerules.GameRule;
-import net.dasik.social.api.gamerule.DynamicGameRuleManager;
 import net.vanillaoutsider.truesleep.TrueSleepTags;
 
 @Mixin(Mob.class)
@@ -29,14 +28,17 @@ public abstract class MobMixin {
                 && mob.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
 
             // 1. Check Dynamic Unfreeze Rule for this specific Mob Type
-            Identifier id = BuiltInRegistries.ENTITY_TYPE.getKey(mob.getType());
-            if (id != null) {
-                String ruleName = "ts_unfreeze_" + id.getNamespace() + "_" + id.getPath();
-                GameRule<?> ruleObj = DynamicGameRuleManager.getDynamicRules().get(ruleName);
+            // Query the registry directly to avoid cache timing issues.
+            Identifier entityId = BuiltInRegistries.ENTITY_TYPE.getKey(mob.getType());
+            if (entityId != null) {
+                // Rule is stored under the raw name e.g. "ts_unfreeze_minecraft_allay"
+                // which Identifier.parse() maps to "minecraft:ts_unfreeze_minecraft_allay"
+                String ruleName = "ts_unfreeze_" + entityId.getNamespace() + "_" + entityId.getPath();
+                Identifier ruleId = Identifier.parse(ruleName);
+                @SuppressWarnings("unchecked")
+                GameRule<Boolean> ruleObj = (GameRule<Boolean>) BuiltInRegistries.GAME_RULE.getValue(ruleId);
                 if (ruleObj != null) {
-                    @SuppressWarnings("unchecked")
-                    boolean isCustomUnfrozen = DynamicGameRuleManager.getBoolean(serverLevel,
-                            (GameRule<Boolean>) ruleObj);
+                    boolean isCustomUnfrozen = serverLevel.getGameRules().get(ruleObj);
                     if (isCustomUnfrozen) {
                         return; // Mob is allowed to tick normally
                     }

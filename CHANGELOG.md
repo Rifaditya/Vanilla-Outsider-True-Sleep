@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.2+build.7] - 2026-02-22
+
+### Fixed
+
+- **Critical Bug (MobMixin)**: Fixed dynamic mob GameRule toggles having no effect. The `MobMixin` was querying the `DynamicGameRuleManager.getDynamicRules()` cache which could be empty due to initialization timing. The lookup now queries `BuiltInRegistries.GAME_RULE.getValue(ruleId)` directly, which is always reliable. This means `/gamerule ts_unfreeze_minecraft_zombie true` now correctly allows Zombies to tick during sleep.
+
 ## [1.3.2+build.6] - 2026-02-22
 
 ### Fixed
