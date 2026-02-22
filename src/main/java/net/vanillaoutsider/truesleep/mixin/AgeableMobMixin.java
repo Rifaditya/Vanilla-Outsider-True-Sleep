@@ -20,8 +20,9 @@ public abstract class AgeableMobMixin {
     public abstract boolean isAgeLocked();
 
     @Inject(method = "aiStep", at = @At("HEAD"), cancellable = true)
-    private void injectGrowth(CallbackInfo ci) {
-        if (this.isAgeLocked()) return;
+    private void truesleep$injectGrowth(CallbackInfo ci) {
+        if (this.isAgeLocked())
+            return;
 
         long stride = TimeWarpManager.get().getStride();
         if (stride > 1) {

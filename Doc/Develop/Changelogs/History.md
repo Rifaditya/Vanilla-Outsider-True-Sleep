@@ -1,5 +1,13 @@
 # History
 
+## [1.3.2+build.6] - 2026-02-22
+
+### Fixed
+
+- **Zenith Compliance**: Added `truesleep$` prefix to all 10 private Mixin injection methods across `MobMixin`, `EntityMixin`, `AgeableMobMixin`, `ServerLevelMixin`, `SocialCoreMixin`, `BedRuleMixin`, `CatMixin`, `GuiMixin`, and `SkyRendererMixin`.
+- **Localization**: Added missing `gamerule.category.truesleep.mob_settings` key to `en_us.json`.
+- **Documentation**: Removed stray junk text in CurseForge platform page.
+
 ## v1.3.2+build.5 - 2026-02-21
 
 - **Feature**: Added dynamic GameRule toggles for *every* individual entity type in the game under a new "True Sleep Mobs" category, allowing players to explicitly unfrozen specific mobs (like Villagers, Iron Golems, or modded creatures) during the time warp to preserve redstone mechanisms.

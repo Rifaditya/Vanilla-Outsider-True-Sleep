@@ -58,7 +58,7 @@ Normally, cats only give gifts if you sleep for 5+ seconds. True Sleep is so fas
 ### 🛡️ Quantum Safety
 
 * **Empty Dimensions**: The mod intelligently ignores empty dimensions to prevent logic bugs.
-* **Drown Immunity**: Entities in water are granted biological stasis (water breathing) during the warp to prevent drowning due to physics acceleration. asdasd
+* **Drown Immunity**: Entities in water are granted biological stasis (water breathing) during the warp to prevent drowning due to physics acceleration.
 * **Golden Dandelion**: Compatible with age-locked mobs (from other mods); they won't age to death instantly.
 
 ---

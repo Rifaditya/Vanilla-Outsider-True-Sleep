@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class GuiMixin {
 
     @Inject(method = "renderSleepOverlay", at = @At("HEAD"), cancellable = true)
-    private void removeSleepDarkening(CallbackInfo ci) {
+    private void truesleep$removeSleepDarkening(CallbackInfo ci) {
         ci.cancel();
     }
 }

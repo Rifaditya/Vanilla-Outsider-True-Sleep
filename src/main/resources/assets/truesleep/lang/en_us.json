@@ -1,4 +1,5 @@
 {
+    "gamerule.category.truesleep.mob_settings": "True Sleep Mobs",
     "gamerule.category.truesleep.config": "True Sleep",
     "gamerule.minecraft.truesleep_engine_tps": "Engine TPS (Quantum Warp)",
     "gamerule.minecraft.truesleep_engine_tps.description": "Controls the server's tick rate during the Time Warp sequence. Lower values (e.g., 50) ensure high stability and smooth sky movement. Higher values (e.g., 100+) increase simulation speed but may cause server lag. Recommended: 50.",

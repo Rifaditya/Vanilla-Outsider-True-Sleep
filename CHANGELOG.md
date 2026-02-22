@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.2+build.6] - 2026-02-22
+
+### Fixed
+
+- **Zenith Compliance**: Added missing `truesleep$` namespace prefix to all 10 private Mixin injection methods (`MobMixin`, `EntityMixin`, `AgeableMobMixin`, `ServerLevelMixin`, `SocialCoreMixin`, `BedRuleMixin`, `CatMixin`, `GuiMixin`, `SkyRendererMixin`) to satisfy Zenith modid-prefix rule.
+- **Localization**: Added missing translation key `gamerule.category.truesleep.mob_settings` (`"True Sleep Mobs"`) to `en_us.json` — the \"True Sleep Mobs\" game rule category was previously unlocalised.
+- **Documentation**: Fixed stray junk text in `Description Curseforge.md` (CurseForge platform page).
+
 ## [1.3.2+build.5] - 2026-02-21
 
 ### Added

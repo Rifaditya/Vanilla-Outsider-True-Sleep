@@ -21,7 +21,7 @@ public abstract class EntityMixin {
     public abstract int getMaxAirSupply();
 
     @Inject(method = "baseTick", at = @At("HEAD"))
-    private void injectAging(CallbackInfo ci) {
+    private void truesleep$injectAging(CallbackInfo ci) {
         if (TimeWarpManager.get().isWarping()) {
             // Pulmonary Stasis: Freeze air supply to prevent drowning logic from
             // triggering.

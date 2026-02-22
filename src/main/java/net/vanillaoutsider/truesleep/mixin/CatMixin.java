@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class CatMixin {
 
     @Redirect(method = "stop", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getSleepTimer()I"))
-    private int bypassSleepTimerForGifts(Player player) {
+    private int truesleep$bypassSleepTimerForGifts(Player player) {
         if (player.level() instanceof ServerLevel level) {
             if (TimeWarpManager.get().hasRecentWarp(level.getGameTime())) {
                 // Return 100 to satisfy the ">= 100" check for cat gifts

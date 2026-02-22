@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class SocialCoreMixin {
 
     @Inject(method = "pulse", at = @At("HEAD"), cancellable = true)
-    private static void throttleSocialPulse(ServerLevel level, CallbackInfo ci) {
+    private static void truesleep$throttleSocialPulse(ServerLevel level, CallbackInfo ci) {
         if (TimeWarpManager.get().isWarping()) {
             // Throttle to 1/20 ticks (effective 50 TPS for Social logic at 1000 TPS)
             if (level.getGameTime() % 20 != 0) {

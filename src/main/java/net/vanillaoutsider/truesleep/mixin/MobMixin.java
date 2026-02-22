@@ -18,7 +18,7 @@ import net.vanillaoutsider.truesleep.TrueSleepTags;
 public abstract class MobMixin {
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
-    private void freezeDuringWarp(CallbackInfo ci) {
+    private void truesleep$freezeDuringWarp(CallbackInfo ci) {
         // Stasis Field: Mobs are completely frozen in time during the warp
         // This prevents pathfinding lag, metabolic death (drowning/starving), and
         // chaotic movement.
