@@ -27,7 +27,7 @@ The world doesn't pause. Furnaces continue to smelt, crops continue to grow, and
 
 > [!NOTE]
 > **Quantum Stride Technology**: We use a variable tick stride to ensure high performance.
-> Default Engine Speed: **50 TPS** (Double standard speed) ensures buttery smooth sky movement without server lag.
+> Default Engine Speed: **50 TPS** (2.5x standard speed) — controls how fast everything actually moves: mobs, redstone, furnaces, the sky, all of it.
 > Virtual Speed: **1000 TPS** (50x speed) is achieved by simulating multiple ticks per server tick.
 
 ### 🎞️ Visuals
@@ -85,7 +85,7 @@ The mod works out of the box with zero setup.
 
 * **Global Template**: `config/truesleep.json` (Sets defaults for new worlds)
 * **In-Game**: Use `/gamerule truesleep_` for core settings and the **True Sleep Mobs** category for entity control.
-  * `truesleep_engine_tps`: Server stability (Default: 50)
+  * `truesleep_engine_tps`: Simulation speed — how fast everything moves (Default: 50)
   * `truesleep_virtual_tps`: Game speed (Default: 1000)
   * `truesleep_sleep_threshold`: when to sleep
   * `truesleep_wake_time`: when to wake

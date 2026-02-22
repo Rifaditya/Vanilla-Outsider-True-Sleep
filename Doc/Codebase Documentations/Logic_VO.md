@@ -19,7 +19,7 @@ The manager operates as a singleton State Machine driven by the server tick loop
     * **Trigger**: All players in the dimension are sleeping AND have settled into deep-sleep (`sleepStatus.areEnoughSleeping()` + `areEnoughDeepSleeping()`).
     * **Action**:
         * Set `isWarping = true`.
-        * Call `server.tickRateManager().setTickRate(config.engineTps)`. (Build 10: Now uses the `truesleep_engine_tps` GameRule directly).
+        * Call `server.tickRateManager().setTickRate(config.engineTps)`. (Build 10: Uses the `truesleep_engine_tps` GameRule — controls how fast everything moves: mobs, redstone, furnaces, sky).
         * **Quantum Stride**: The logic simulates multiple game ticks per server tick to reach the **Virtual TPS Target** (Build 10: Now uses the `truesleep_virtual_tps` GameRule).
 
 3. **WARPING (Active)**

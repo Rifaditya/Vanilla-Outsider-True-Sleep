@@ -27,7 +27,7 @@ The world doesn't pause. Furnaces continue to smelt, crops continue to grow, and
 
 > [!NOTE]
 > **Quantum Stride Technology**: We use a variable tick stride to ensure high performance.
-> Default Engine Speed: **50 TPS** (Double standard speed) ensures buttery smooth sky movement without server lag.
+> Default Engine Speed: **50 TPS** (2.5x standard speed) — controls how fast everything actually moves: mobs, redstone, furnaces, the sky, all of it.
 > Virtual Speed: **1000 TPS** (50x speed) is achieved by simulating multiple ticks per server tick.
 
 ### 🎞️ Visuals
