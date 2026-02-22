@@ -16,11 +16,11 @@ The manager operates as a singleton State Machine driven by the server tick loop
     * **Action**: Do nothing. Let vanilla run at 50ms/tick (20 TPS).
 
 2. **WARP_START (Transition)**
-    * **Trigger**: All players in the dimension are sleeping (`sleepStatus.areEnoughSleeping()`).
+    * **Trigger**: All players in the dimension are sleeping AND have settled into deep-sleep (`sleepStatus.areEnoughSleeping()` + `areEnoughDeepSleeping()`).
     * **Action**:
         * Set `isWarping = true`.
-        * Call `server.tickRateManager().setTickRate(50.0f)`.
-        * **Quantum Stride**: The logic simulates multiple game ticks per server tick to achieve **1000 Virtual TPS**.
+        * Call `server.tickRateManager().setTickRate(config.engineTps)`. (Build 10: Now uses the `truesleep_engine_tps` GameRule directly).
+        * **Quantum Stride**: The logic simulates multiple game ticks per server tick to reach the **Virtual TPS Target** (Build 10: Now uses the `truesleep_virtual_tps` GameRule).
 
 3. **WARPING (Active)**
     * **Condition**: `isWarping = true` **AND** `areEnoughSleeping = true`.
@@ -37,6 +37,7 @@ The manager operates as a singleton State Machine driven by the server tick loop
     * **Action**:
         * Set `isWarping = false`.
         * Reset tick rate to `20.0f`.
+        * **Clock Snap**: (Build 8) The world time is snapped exactly to the `truesleep_wake_time` GameRule via `serverLevelData.setGameTime(snappedTime)`.
         * Record `lastWarpTime` (for Cat Gift logic).
         * Wake up all players.
 
@@ -70,3 +71,8 @@ The manager operates as a singleton State Machine driven by the server tick loop
 * **Result**: The player never reaches `sleepTimer = 100`. Cats never give gifts.
 * **Solution**: `CatMixin` intercepts the check.
   * If `TimeWarpManager.hasRecentWarp()` is true (meaning we just finished a super-fast night), it forces the check to pass by returning `100`.
+### 4. The Agency Update (Uncapped)
+
+* **Unlimited Power**: Build 10 removes the "Stability Clamp" (legacy code that forced Engine TPS to 50). All caps on TPS rules have been raised to `Integer.MAX_VALUE`.
+* **Real-Time Synergy**: If `truesleep_engine_tps` == `truesleep_virtual_tps`, the simulation stride becomes **1**. This forces the night to pass at exactly that tick rate in real-time, effectively allowing for high-speed but "True" real-time simulation.
+* **Precision Gate**: We now mirror vanilla's `areEnoughDeepSleeping` logic using a shadow `@Shadow List<ServerPlayer> players` field in the mixin to ensure `playersSleepingPercentage` is respected to the tick.

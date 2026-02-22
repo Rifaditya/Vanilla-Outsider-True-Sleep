@@ -24,22 +24,26 @@ private boolean truesleep$silentSleepSuppression(SleepStatus instance, int perce
 
 ### 2. Monitoring Sleep Status
 
-Since we lied to the vanilla game (telling it nobody is sleeping), we must check the *real* status ourselves to trigger our custom logic.
+Since we lied to the vanilla game (telling it nobody is sleeping), we must check the *real* status ourselves to trigger our custom logic. Build 10 now strictly mirrors vanilla's two-condition gate.
 
 ```java
+@Shadow private List<ServerPlayer> players; // Shadowed in Build 8
+
 @Inject(method = "tick", at = @At("TAIL"))
 private void truesleep$manageTimeWarp(BooleanSupplier haveTime, CallbackInfo ci) {
-    // 1. Get the configured percentage rule directly
-    int rule = this.getGameRules().get(GameRules.PLAYERS_SLEEPING_PERCENTAGE);
+    // 1. Get the configured percentage rule
+    int percentage = this.getGameRules().get(GameRules.PLAYERS_SLEEPING_PERCENTAGE);
     
-    // 2. Check the real sleep status using the Shadowed field
-    boolean actuallyEnough = this.sleepStatus.areEnoughSleeping(rule);
+    // 2. Mirror vanilla's exact two-condition gate: enough sleeping AND deep asleep.
+    // This ensures playersSleepingPercentage is fully respected.
+    boolean enough = this.sleepStatus.areEnoughSleeping(percentage)
+                  && this.sleepStatus.areEnoughDeepSleeping(percentage, this.players);
     
     // 3. Pass this truth to our Manager
     TimeWarpManager.get().tick(
         (ServerLevel)(Object)this, 
-        actuallyEnough, 
-        this::wakeUpAllPlayers // Callback to wake players when done
+        enough, 
+        this::wakeUpAllPlayers 
     );
 }
 ```

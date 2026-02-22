@@ -9,7 +9,7 @@
     <img src="https://img.shields.io/badge/License-GPLv3-green?style=for-the-badge" alt="License">
 </p>
 
-# 🌙 True Sleep: The "Unfrozen" Update (Build 7)
+# 🌙 True Sleep: The "Agency" Update (Build 10)
 
 **No Backports:** I will **NOT** backport this mod to older versions (1.21, 1.20, etc.). Please do not ask.
 
@@ -40,9 +40,20 @@ Feature Showcase: https://www.youtube.com/watch?v=FcNaMSN2WG8
 
 Fine-tune your sleep schedule with precision:
 
-* **Sleep Threshold**: Configure exactly when you can get into bed (dusk, midnight, etc.).
-* **Wake Time**: Decide when the warp ends (dawn, noon, etc.).
+* **Sleep Threshold**: Configure exactly when you can get into bed (dusk, midnight, etc.). Corrected to 0–23999 range.
+* **Wake Time**: Decide when the warp ends (dawn, noon, etc.). Now includes a full tick-to-time reference guide.
 * **Hybrid Config**: Use `/gamerule` for per-world settings, or `config/truesleep.json` for global defaults.
+
+### 🚀 Full Agency (Uncapped)
+
+In **Build 10**, we have removed the training wheels. Engine TPS and Virtual TPS are now fully **uncapped**.
+
+* **No More Clamps**: The legacy "stability clamp" that forced 50 TPS on high settings has been deleted.
+* **Precision Control**: Set Engine TPS to 1000? Set Virtual TPS to 100,000? You have the agency.
+* **Real-Time Night**: Tip: Set **Engine TPS = Virtual TPS** (e.g., both to 50 or 100). This sets the simulation stride to 1, meaning the night passes in **true real-time** at that exact tick rate with zero time dilation.
+
+> [!WARNING]
+> High TPS values (Engine TPS > 100) are experimental. Pushing the engine too far can cause server lag or disconnects depending on your hardware. We provide the agency; you handle the consequences.
 
 ### ⚖️ Multiplayer
 

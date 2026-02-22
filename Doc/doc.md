@@ -1,6 +1,6 @@
 # True Sleep: Project Summary
 
-**Version:** 1.3.2+build.7 (Targeting Minecraft 26.1 snapshots)  
+**Version:** 1.3.2+build.10 (Targeting Minecraft 26.1 snapshots)  
 **Dependencies:** Java 25, Fabric Loader >=0.16.9
 
 ## 1. Project Philosophy (Vanilla Outsider)
@@ -9,7 +9,8 @@ Adheres to the "One Click, One Action" rule.
 
 * **No instant time skips:** Sleeping accelerates the world (Quantum Warp) instead of jumping to dawn.
 * **Simulation integrity:** Crops grow, furnaces smelt, and redstone ticks during the warp.
-* **Mob Unfreeze Logic**: Integrated dynamic GameRule system under the "True Sleep Mobs" category. Build 7 ("Unfrozen") introduces performance-optimized stasis, freezing non-essential mobs while allowing selective unfreezing. This is critical for **redstone contraptions and farms** that rely on specific mob movements (e.g., iron farms, villager breeders) to continue working during the warp.
+* **Full Agency (Build 10)**: Engine TPS and Virtual TPS are now fully **uncapped**. The hidden stability clamp has been removed. Users can selectively unfreeze *any* mob (Build 7) and push the tick rate as high as their hardware allows.
+* **Precision**: Wake-up occurs exactly at `truesleep_wake_time` (Build 8) and respects `playersSleepingPercentage` deep-sleep gate.
 * **Parity:** Restores functionality broken by high speeds (e.g., Cat gifts).
 
 ## 2. Dependencies & Environment
