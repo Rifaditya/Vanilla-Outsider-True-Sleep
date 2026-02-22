@@ -2,7 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.2+build.8] - 2026-02-22
+
+### Fixed
+
+- **Bug (TimeWarpManager)**: Fixed dead-code bug where players would wake up at the wrong time. The clock-snap correction was correctly calculated but never applied. The warp now calls `setGameTime(snappedTime)` to land players on exactly the configured `truesleep_wake_time` tick before calling `wakeUpAllPlayers`.
+- **Bug (ServerLevelMixin)**: True Sleep now fully respects the vanilla `playersSleepingPercentage` game rule. Previously, the warp could start the instant a player entered a bed, bypassing vanilla's "sleeping long enough" deep-sleep gate. The warp now requires both `areEnoughSleeping(percentage)` **and** `areEnoughDeepSleeping(percentage, players)` — exactly mirroring vanilla's condition — so 25% means 25% of online players must be fully asleep before the warp engages.
+
 ## [1.3.2+build.7] - 2026-02-22
+
 
 ### Fixed
 

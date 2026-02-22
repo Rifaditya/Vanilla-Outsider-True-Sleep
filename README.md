@@ -1,43 +1,72 @@
 <div align="center">
 
-# 🌙 True Sleep
-
-### "Don't skip the night. Live through it."
-
-![License](https://img.shields.io/badge/License-GPLv3-green?style=for-the-badge)
-![Fabric](https://img.shields.io/badge/Loader-Fabric-blue?style=for-the-badge&logo=fabric)
-![Java](https://img.shields.io/badge/Language-Java-orange?style=for-the-badge&logo=java)
+![True Sleep Banner](https://files.catbox.moe/9hc07g.png)
 
 </div>
+<p align="center">
+    <a href="https://modrinth.com/mod/fabric-api"><img src="https://img.shields.io/badge/Requires-Fabric_API-blue?style=for-the-badge&logo=fabric" alt="Requires Fabric API"></a>
+    <img src="https://img.shields.io/badge/Language-Java-orange?style=for-the-badge&logo=java" alt="Java">
+    <img src="https://img.shields.io/badge/License-GPLv3-green?style=for-the-badge" alt="License">
+</p>
+
+# 🌙 True Sleep: The "Unfrozen" Update (Build 7)
+
+**No Backports:** I will **NOT** backport this mod to older versions (1.21, 1.20, etc.). Please do not ask.
+
+In vanilla Minecraft, sleeping is a "cheat code" that deletes time. You right-click a bed, the screen fades to black, and the game instantly skips forward 12,000 ticks.
+
+**Vanilla Outsider: True Sleep** changes this foundation. When you sleep, the world **accelerates**. Instead of skipping the night, the game tick rate boosts to **Quantum Speeds** (variable TPS). You watch the moon zoom across the sky, stars streak by, and the sun rise rapidly.
 
 ---
 
-### 2. Standalone Download
+## ✨ Features
 
-If you prefer installing individual mods instead of the full modpack:
+### 🕰️ Quantum Warp (Simulation)
 
-1.  Download `vanilla-outsider-true-sleep-26.1-snapshots-1.3.2+build.6.jar`.
-2.  Install [Fabric API](https://modrinth.com/mod/fabric-api) for Snapshot 26.1.
-3.  Place both into your `.minecraft/mods` folder.
+The world doesn't pause. Furnaces continue to smelt, crops continue to grow, and copper continues to oxidize while you sleep. Everything simulates at hyper-speed.
 
-## 🧩 Suggested Mods
+> [!NOTE]
+> **Quantum Stride Technology**: We use a variable tick stride to ensure high performance.
+> Default Engine Speed: **50 TPS** (Double standard speed) ensures buttery smooth sky movement without server lag.
+> Virtual Speed: **1000 TPS** (50x speed) is achieved by simulating multiple ticks per server tick.
 
-> [!TIP]
-> **[Collapsible Game Rules](https://modrinth.com/mod/collapsible-gamerules)**: Since True Sleep generates 150+ GameRules (one for every mob), it is **highly recommended** to install this mod to keep your GameRules screen organized and searchable.
+### 🎞️ Visuals
 
-## 📖 About
+Watch the passage of time from your bed. No jarring "fade to black." The transition from night to day is seamless and grounded in the world.
 
-**True Sleep** is a Minecraft mod that changes how sleeping works. Instead of instantly skipping the night (fade to black), it **accelerates** the passage of time (Quantum Warp).
+Feature Showcase: https://www.youtube.com/watch?v=FcNaMSN2WG8
 
-* **Quantum Stride**: Boosts game logic to **1000 Virtual TPS** while keeping the server stable at **50 TPS**.
-* **Dreamweaver Engine**: Configurable sleep thresholds and wake times.
-* **Immersion**: Watch the moon/sun move across the sky smoothly.
-* **Simulation**: Furnaces, crops, and entities continue to tick rapidly.
-* **Vanilla Parity**: Includes `CatMixin` to ensure cats still give morning gifts.
-* **True Sleep Mobs**: Dynamic GameRule toggles for **every** mob type (including modded) specialized in a new category for complete unfreeze control.
-  ![True Sleep Mobs Category](https://raw.githubusercontent.com/Rifaditya/Vanilla-Outsider-True-Sleep/master/Images/2026-02-22_11.17.09.png)
-* **Safety**: Handles multi-dimension logic and prevents drowning during warp.
-* **Compatibility**: Supports **Golden Dandelion** (age-locked mobs won't die).
+### 💤 Dreamweaver Engine
+
+Fine-tune your sleep schedule with precision:
+
+* **Sleep Threshold**: Configure exactly when you can get into bed (dusk, midnight, etc.).
+* **Wake Time**: Decide when the warp ends (dawn, noon, etc.).
+* **Hybrid Config**: Use `/gamerule` for per-world settings, or `config/truesleep.json` for global defaults.
+
+### ⚖️ Multiplayer
+
+One player sleeping accelerates time for *everyone* on the server.
+
+* **No more arguments:** "1/2 players sleeping" doesn't force a skip.
+* **No disruption:** Other players just see the world speed up for a few seconds.
+
+### 🐈 Cat Gifts
+
+We have patched the vanilla Cat logic!
+Normally, cats only give gifts if you sleep for 5+ seconds. True Sleep is so fast the night passes in 1 second.
+**We fixed this:** Your cats now recognize the "Time Warp" and will still grant you Morning Gifts (Phantom Membranes, Rabbit Feet, etc.).
+
+### 🛡️ Quantum Safety
+
+* **Empty Dimensions**: The mod intelligently ignores empty dimensions to prevent logic bugs.
+* **Drown Immunity**: Entities in water are granted biological stasis (water breathing) during the warp to prevent drowning.
+* **Mob Unfreeze (Dynamic Category)**: A dedicated "True Sleep Mobs" GameRule category is generated, containing toggles for *every* individual entity type in the game. Build 7 introduces performance-optimized stasis—mobs are frozen by default to save TPS. However, if you have a **redstone contraption or farm** that relies on a specific mob to work (e.g., an iron farm using zombies/villagers), you can selectively "unfreeze" them to keep your systems running at 1000 Virtual TPS.
+  Feature Showcase: <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/FcNaMSN2WG8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  ![Mob Unfreeze Category](https://raw.githubusercontent.com/Rifaditya/Vanilla-Outsider-True-Sleep/master/Images/2026-02-22_11.17.09.png)
+* **Golden Dandelion**: Compatible with age-locked mobs (from other mods).
+
+---
 
 ## 🛠️ Building from Source
 

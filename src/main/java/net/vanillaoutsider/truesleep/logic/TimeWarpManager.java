@@ -50,10 +50,10 @@ public class TimeWarpManager {
     private void startWarp(ServerLevel level) {
         isWarping = true;
         this.originalRandomTickSpeed = level.getGameRules().get(GameRules.RANDOM_TICK_SPEED);
-        
+
         // Regulate Social Hive-Mind during intensive simulation
         GlobalSocialSystem.setThrottle(20);
-        
+
         updateWarpSpeed(level);
     }
 
@@ -62,27 +62,28 @@ public class TimeWarpManager {
         float virtualTps = level.getGameRules().get(TrueSleepRules.VIRTUAL_TPS_TARGET);
 
         int wakeTime = level.getGameRules().get(TrueSleepRules.WAKE_TIME);
-        
+
         long timeOfDay = level.getDefaultClockTime() % 24000L;
         // Check if we are currently "in the night" relative to the target wake time.
         // If we slept at 13000 and target is 14000, we just warp 1000 ticks.
         // If we slept at 13000 and target is 0 (Morning), we warp ~11000 ticks.
-        
-        // This warp detection logic (Time > 23000 || Time < 1000) was for Morning wake-up check tapering.
+
+        // This warp detection logic (Time > 23000 || Time < 1000) was for Morning
+        // wake-up check tapering.
         // We should adjust it to be relative to "wakeTime".
         // Tapering logic: If we are close to wakeTime, slow down.
-        
+
         long dist = TimeUtil.getCycleDistance(timeOfDay, wakeTime, 24000L);
-        
-        if (dist < 1000) { 
-             // Slow down near arrival
+
+        if (dist < 1000) {
+            // Slow down near arrival
             engineTps = 20.0f;
             virtualTps = 20.0f;
         }
 
-        this.stride = Math.max(1, (long)(virtualTps / engineTps));
-        
-        int scaledRandomTick = (int)(originalRandomTickSpeed * stride);
+        this.stride = Math.max(1, (long) (virtualTps / engineTps));
+
+        int scaledRandomTick = (int) (originalRandomTickSpeed * stride);
         level.getGameRules().set(GameRules.RANDOM_TICK_SPEED, scaledRandomTick, level.getServer());
 
         setTickRate(level, engineTps);
@@ -92,46 +93,52 @@ public class TimeWarpManager {
         isWarping = false;
         lastWarpTime = level.getGameTime();
         this.stride = 1;
-        
+
         // Restore Social Hive-Mind to native 20 TPS
         GlobalSocialSystem.setThrottle(1);
-        
+
         level.getGameRules().set(GameRules.RANDOM_TICK_SPEED, originalRandomTickSpeed, level.getServer());
-        
+
         setTickRate(level, 20.0f);
     }
 
     private void checkMorning(ServerLevel level, Runnable wakeUpCallback) {
         int wakeTime = level.getGameRules().get(TrueSleepRules.WAKE_TIME);
-        
+
         // "Is Bright Outside" check is vanilla hardcoded for sunrise.
         // We need to check if we hit our target time.
         // Vanilla sleeping wakes at time = 0.
-        
+
         long currentTimeOfDay = level.getDefaultClockTime() % 24000L;
         long dist = TimeUtil.getCycleDistance(currentTimeOfDay, wakeTime, 24000L);
-        
-        // If distance is extremely small (we caught up) or very large (we just passed it)
+
+        // If distance is extremely small (we caught up) or very large (we just passed
+        // it)
         // Wait, if we just passed it, dist would be 23990 (ish).
-        // Let's rely on the fact that updateWarpSpeed slows us down to 1:1 near the end.
+        // Let's rely on the fact that updateWarpSpeed slows us down to 1:1 near the
+        // end.
         // So checking if dist < 10 is safe.
-        
+
         if (dist < 20) {
-             TrueSleep.LOGGER.info("TrueSleep: Destination reached: Target Time {}. Stopping Hyperspace.", wakeTime);
-             stopWarp(level);
-             
-             // Ensure we land EXACTLY on the target time for cleanliness
-             long currentFull = level.getDefaultClockTime();
-             long correction = wakeTime - (currentFull % 24000L);
-             // If positive, add. If negative (we passed it), subtract? 
-             // Level time is monotonic usually.
-             
-             wakeUpCallback.run();
-             level.resetWeatherCycle();
+            TrueSleep.LOGGER.info("TrueSleep: Destination reached: Target Time {}. Stopping Hyperspace.", wakeTime);
+            stopWarp(level);
+
+            // Snap the clock EXACTLY to wakeTime (monotonically increasing — never go
+            // backwards).
+            long currentFull = level.getDefaultClockTime();
+            long currentDay = currentFull - (currentFull % 24000L);
+            long snappedTime = currentDay + wakeTime;
+            if (snappedTime < currentFull) {
+                snappedTime += 24000L; // Advance to next day if we overshot
+            }
+            ((net.minecraft.world.level.storage.ServerLevelData) level.getLevelData()).setGameTime(snappedTime);
+
+            wakeUpCallback.run();
+            level.resetWeatherCycle();
         }
     }
 
     private void setTickRate(ServerLevel level, float rate) {
-        ((net.minecraft.world.level.Level)level).tickRateManager().setTickRate(rate);
+        ((net.minecraft.world.level.Level) level).tickRateManager().setTickRate(rate);
     }
 }

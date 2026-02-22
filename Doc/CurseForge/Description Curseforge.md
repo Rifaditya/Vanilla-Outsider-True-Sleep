@@ -9,7 +9,7 @@
     <img src="https://img.shields.io/badge/License-GPLv3-green?style=for-the-badge" alt="License">
 </p>
 
-# 🌙 True Sleep (Now for 26.1 Snapshots!)
+# 🌙 True Sleep: The "Unfrozen" Update (Build 7)
 
 **No Backports:** I will **NOT** backport this mod to older versions (1.21, 1.20, etc.). Please do not ask.
 
@@ -23,7 +23,7 @@ In vanilla Minecraft, sleeping is a "cheat code" that deletes time. You right-cl
 
 ### 🕰️ Quantum Warp (Simulation)
 
-The world doesn't pause. Furnaces continue to smelt, crops continue to grow, and copper continues to oxidize while you sleep. Everything simulates at hyper-speed.
+The world doesn't pause. Furnaces continue to smelt, crops continue to grow, and copper continue to oxidize while you sleep. Everything simulates at hyper-speed.
 
 > [!NOTE]
 > **Quantum Stride Technology**: We use a variable tick stride to ensure high performance.
@@ -33,6 +33,8 @@ The world doesn't pause. Furnaces continue to smelt, crops continue to grow, and
 ### 🎞️ Visuals
 
 Watch the passage of time from your bed. No jarring "fade to black." The transition from night to day is seamless and grounded in the world.
+
+Feature Showcase: https://www.youtube.com/watch?v=FcNaMSN2WG8
 
 ### 💤 Dreamweaver Engine
 
@@ -59,9 +61,10 @@ Normally, cats only give gifts if you sleep for 5+ seconds. True Sleep is so fas
 
 * **Empty Dimensions**: The mod intelligently ignores empty dimensions to prevent logic bugs.
 * **Drown Immunity**: Entities in water are granted biological stasis (water breathing) during the warp to prevent drowning.
-* **Mob Unfreeze (Dynamic Category)**: A dedicated "True Sleep Mobs" GameRule category is generated, containing toggles for *every* individual entity type in the game. This allows you to specifically let villagers, iron golems, or modded creatures tick during sleep while keeping the rest frozen in stasis.
+* **Mob Unfreeze (Dynamic Category)**: A dedicated "True Sleep Mobs" GameRule category is generated, containing toggles for *every* individual entity type in the game. Build 7 introduces performance-optimized stasis—mobs are frozen by default to save TPS. However, if you have a **redstone contraption or farm** that relies a specific mob to work (e.g., an iron farm using zombies/villagers), you can selectively "unfreeze" them to keep your systems running at 1000 Virtual TPS.
+  Feature Showcase: <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/FcNaMSN2WG8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
   ![Mob Unfreeze Category](https://raw.githubusercontent.com/Rifaditya/Vanilla-Outsider-True-Sleep/master/Images/2026-02-22_11.17.09.png)
-* **Golden Dandelion**: Compatible with age-locked mobs.
+* **Golden Dandelion**: Compatible with age-locked mobs (from other mods).
 
 ---
 
@@ -92,9 +95,8 @@ For the best experience, we recommend installing:
 
 ## 📦 Install
 
-1. Download **[Fabric Loader](https://fabricmc.net/)** for Minecraft **26.1+** (Snapshot).
-2. Install **[Fabric API](https://modrinth.com/mod/fabric-api)**.
-3. Download `Vanilla-Outsider-True-Sleep.jar` and place it in your `mods` folder.
+1. Install **[Fabric API](https://modrinth.com/mod/fabric-api)**.
+2. Download `Vanilla-Outsider-True-Sleep.jar` and place it in your `mods` folder.
 
 ---
 

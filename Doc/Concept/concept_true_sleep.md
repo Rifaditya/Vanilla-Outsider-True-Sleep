@@ -17,17 +17,16 @@
 - **Vegetation**: Random ticks are scaled up, causing crops/saplings to grow rapidly.
 - **Machines**: Block Entities (Furnaces, Hoppers) tick at the **Accelerated Engine Rate**.
 
-### 2. Cryogenic Stasis (Entities)
+### 2. Cryogenic Stasis & Selective Unfreeze (Build 7)
 >
 > [!IMPORTANT]
-> **Mobs are FROZEN by default. Configurable via Gamerule.**
+> **Mobs are FROZEN by default. Selective unfreeze via Gamerule.**
 
-- **Feature**: `truesleep_freeze_mobs` (Default: `true`)
-- **Behavior (Enabled)**:
-  - **Mobs**: Completely frozen during warp (No tick, no AI, no movement, no breath/physics). Prevents lag and death.
-  - **Players**: Not frozen.
-- **Behavior (Disabled)**:
-  - **Mobs**: Tick rapidly with the engine. Move fast, age fast, burn fast. Warning: May cause drowning or starvation if warp is long.
+- **Feature**: Dynamic GameRule per entity type (`ts_unfreeze_<namespace>_<path>`).
+- **Behavior (Frozen)**:
+  - **Mobs**: Completely frozen during warp (No tick, no AI, no movement). Saves significant TPS at 1000 Virtual TPS.
+- **Behavior (Unfrozen)**:
+  - **Mobs**: Tick rapidly with the engine. **Essential for redstone contraptions/farms** that rely on specific mob logic (e.g., villager breeders, iron farms) to continue operating during the warp.
 
 ## Feature Parity Checklist
 
@@ -36,5 +35,6 @@
 | 1 | Sleep triggers Time Warp | `TimeWarpManager` | `truesleep_sleep_threshold` |
 | 2 | Sun/Moon move visually | `ServerLevelMixin` | - |
 | 3 | Redstone/Furnaces run fast | Native `TickRateManager` | `truesleep_engine_tps` |
-| 4 | Mobs Freeze (No move/breath) | `MobMixin` (tick cancel) | `truesleep_freeze_mobs` |
-| 5 | Non-Sleeping Players Active | `Player` excluded from `MobMixin` | - |
+| 4 | Mobs Freeze (Performance) | `MobMixin` (tick cancel) | `ts_unfreeze_*` (per-mob) |
+| 5 | Redstone Contraptions | selective unfreeze | `ts_unfreeze_villager` etc. |
+| 6 | Non-Sleeping Players Active | `Player` excluded | - |

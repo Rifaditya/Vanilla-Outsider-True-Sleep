@@ -1,6 +1,7 @@
 package net.vanillaoutsider.truesleep.mixin;
 
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.SleepStatus;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.storage.ServerLevelData;
@@ -14,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.List;
 import java.util.function.BooleanSupplier;
 
 @Mixin(ServerLevel.class)
@@ -26,6 +28,10 @@ public abstract class ServerLevelMixin {
     @Shadow
     @Final
     private SleepStatus sleepStatus;
+
+    @Shadow
+    @Final
+    private List<ServerPlayer> players;
 
     @Shadow
     private void wakeUpAllPlayers() {
@@ -47,7 +53,12 @@ public abstract class ServerLevelMixin {
         }
 
         int percentage = this.getGameRules().get(GameRules.PLAYERS_SLEEPING_PERCENTAGE);
-        boolean enough = this.sleepStatus.areEnoughSleeping(percentage);
+        // Mirror vanilla's exact two-condition gate: enough sleeping AND sleeping long
+        // enough.
+        // This ensures playersSleepingPercentage is fully respected (e.g. 25% = 25% of
+        // online players).
+        boolean enough = this.sleepStatus.areEnoughSleeping(percentage)
+                && this.sleepStatus.areEnoughDeepSleeping(percentage, this.players);
 
         TimeWarpManager.get().tick(level, enough, this::wakeUpAllPlayers);
 

@@ -54,7 +54,7 @@ The manager operates as a singleton State Machine driven by the server tick loop
 * **Core Engine**: To prevent pathfinding lag and server jitter during high-speed warping, mobs are conventionally frozen in stasis via `MobMixin.truesleep$freezeDuringWarp`.
 * **Dynamic Unfreezing**: Build.6 introduced a dynamic unfreeze system.
     * Every `EntityType` in the game (including modded ones) is assigned a `ts_unfreeze_<namespace>_<path>` GameRule.
-    * If this rule is `true`, the mob is exempt from stasis and continues to tick at the accelerated rate.
+    * If this rule is `true`, the mob is exempt from stasis and continues to tick at the accelerated rate. This is essential for **redstone contraptions and automated farms** (e.g., iron farms, villager-based sorters) that require specific entity logic to remain active during the Warp.
 * **Worker Mobs**: The internal `truesleep:worker_mobs` tag acts as a default filter for entities that should always move (Villagers, etc.), but this can be overridden per-entity type via GameRules.
 
 ### 3. The Cat Gift Fix

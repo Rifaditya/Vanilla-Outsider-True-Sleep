@@ -16,6 +16,10 @@ content: |
   - **Production:** Furnaces, Blast Furnaces, and Smokers continue processing fuel/items at the accelerated rate.
   - **Growth:** Crops, Saplings, and Baby Animals age rapidly during the sleep cycle.
   - **World:** Entities move in fast-forward (funny but logical).
+  
+  ### Build 7: The Unfrozen Update
+  - **Performance:** Non-essential mobs are frozen in stasis to save TPS during the 1000 Virtual TPS warp.
+  - **Control:** Selective unfreezing via GameRules allows specific mobs required for redstone contraptions and automated farms to continue working at high speed.
 
   ## Assets Needed
   - [Visual: Motion Blur shader for the sky (Optional)]
