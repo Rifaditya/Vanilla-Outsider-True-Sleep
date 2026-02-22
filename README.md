@@ -32,6 +32,7 @@ If you prefer installing individual mods instead of the full modpack:
 * **Simulation**: Furnaces, crops, and entities continue to tick rapidly.
 * **Vanilla Parity**: Includes `CatMixin` to ensure cats still give morning gifts.
 * **True Sleep Mobs**: Dynamic GameRule toggles for **every** mob type (including modded) specialized in a new category for complete unfreeze control.
+  ![True Sleep Mobs Category](https://raw.githubusercontent.com/Rifaditya/Vanilla-Outsider-True-Sleep/master/Images/2026-02-22_11.17.09.png)
 * **Safety**: Handles multi-dimension logic and prevents drowning during warp.
 * **Compatibility**: Supports **Golden Dandelion** (age-locked mobs won't die).
 
