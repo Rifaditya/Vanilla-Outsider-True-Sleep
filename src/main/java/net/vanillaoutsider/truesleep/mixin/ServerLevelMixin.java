@@ -45,6 +45,17 @@ public abstract class ServerLevelMixin {
         return false;
     }
 
+    // Belt-and-suspenders: also suppress the second arm of the vanilla AND check.
+    // Vanilla: areEnoughSleeping(pct) && areEnoughDeepSleeping(pct, players)
+    // Both must return false so vanilla never calls
+    // moveToTimeMarker(WAKE_UP_FROM_SLEEP)
+    // or wakeUpAllPlayers(), which would snap the clock to vanilla dawn.
+    @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/SleepStatus;areEnoughDeepSleeping(ILjava/util/List;)Z"))
+    private boolean truesleep$silentDeepSleepSuppression(SleepStatus instance, int percentage,
+            List<ServerPlayer> players) {
+        return false;
+    }
+
     @Inject(method = "tick", at = @At("TAIL"))
     private void truesleep$manageTimeWarp(BooleanSupplier haveTime, CallbackInfo ci) {
         ServerLevel level = (ServerLevel) (Object) this;

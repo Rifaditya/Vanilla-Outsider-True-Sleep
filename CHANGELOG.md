@@ -2,7 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.2+build.11] - 2026-02-23
+
+### Fixed
+
+- **Bug (ServerLevelMixin)**: Added a second `@Redirect` on `SleepStatus.areEnoughDeepSleeping()` in `ServerLevelMixin`. Vanilla's wake-up block gates on `areEnoughSleeping(pct) && areEnoughDeepSleeping(pct, players)`. The first redirect (on `areEnoughSleeping`) was already suppressing the block, but the new redirect on `areEnoughDeepSleeping` provides belt-and-suspenders insurance. This guarantees vanilla can **never** call `moveToTimeMarker(WAKE_UP_FROM_SLEEP)` (which snaps the clock to vanilla dawn) or `wakeUpAllPlayers()` — ensuring the mod's `truesleep_wake_time` GameRule is always the sole authority on when players wake.
+
 ## [1.3.2+build.10] - 2026-02-22
+
 
 ### Changed
 
