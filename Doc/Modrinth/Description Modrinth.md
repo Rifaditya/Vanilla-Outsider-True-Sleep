@@ -9,7 +9,7 @@
     <img src="https://img.shields.io/badge/License-GPLv3-green?style=for-the-badge" alt="License">
 </p>
 
-# 🌙 True Sleep: The "Agency" Update (Build 10)
+# 🌙 True Sleep: The "Agency" Update (v1.3.13)
 
 **No Backports:** I will **NOT** backport this mod to older versions (1.21, 1.20, etc.). Please do not ask.
 
@@ -29,6 +29,10 @@ The world doesn't pause. Furnaces continue to smelt, crops continue to grow, and
 > **Quantum Stride Technology**: We use a variable tick stride to ensure high performance.
 > Default Engine Speed: **50 TPS** (2.5x standard speed) — controls how fast everything actually moves: mobs, redstone, furnaces, the sky, all of it.
 > Virtual Speed: **1000 TPS** (50x speed) is achieved by simulating multiple ticks per server tick.
+> 
+> [!IMPORTANT]
+> **Production & Hopper Acceleration (v1.3.13)**: Smelting/brewing and hoppers coupled directly to machines are now accelerated to match the time warp speed. Redstone-locked hoppers are ignored to protect automatic sorters.
+> *Feedback Needed*: We need more feedback on this feature! If you find any issues with custom redstone builds or modded machines, please send an issue report for us to check. Thank you!
 
 ### 🎞️ Visuals
 
@@ -46,7 +50,7 @@ Fine-tune your sleep schedule with precision:
 
 ### 🚀 Full Agency (Uncapped)
 
-In **Build 10**, we have removed the training wheels. Engine TPS and Virtual TPS are now fully **uncapped**.
+We have removed the training wheels. Engine TPS and Virtual TPS are now fully **uncapped**.
 
 * **No More Clamps**: The legacy "stability clamp" that forced 50 TPS on high settings has been deleted.
 * **Precision Control**: Set Engine TPS to 1000? Set Virtual TPS to 100,000? You have the agency.
@@ -84,16 +88,24 @@ Normally, cats only give gifts if you sleep for 5+ seconds. True Sleep is so fas
 The mod works out of the box with zero setup.
 
 * **Global Template**: `config/truesleep.json` (Sets defaults for new worlds)
-* **In-Game**: Use `/gamerule truesleep_` for core settings and the **True Sleep Mobs** category for entity control.
-  * `truesleep_engine_tps`: Simulation speed — how fast everything moves (Default: 50)
-  * `truesleep_virtual_tps`: Game speed (Default: 1000)
-  * `truesleep_sleep_threshold`: when to sleep
-  * `truesleep_wake_time`: when to wake
+* **In-Game**: Use `/gamerule truesleep:` for core settings and the **True Sleep Mobs** category for entity control.
+  * `truesleep:engine_tps` — **Performance Limit**: How hard the server works during sleep (Default: 50)
+  * `truesleep:virtual_tps` — **Time Speed**: How fast the night flies by (Default: 1000)
+  * `truesleep:sleep_threshold` — **Sleep Threshold**: When players can start sleeping (Default: 12542)
+  * `truesleep:wake_time` — **Wake Time**: What time players wake up (Default: 0 / Sunrise)
+  * `truesleep:accelerate_machines` — **Accelerate Machines**: Speeds up furnaces/brewers during sleep (Default: ON)
+  * `truesleep:accelerate_hoppers` — **Accelerate Hoppers**: Speeds up hoppers coupled to machines (Default: ON)
+  * `truesleep:freeze_mobs` — **Freeze Mobs**: Pauses all mobs during sleep (Default: ON)
+  * `truesleep:freeze_workers` — **Freeze Villagers**: Also pauses villagers and iron golems (Default: OFF)
+  * `truesleep:drown_immunity` — **Drown Immunity**: Prevents drowning during sleep (Default: ON)
+* **ModMenu / Cloth Config**: All settings above are also available through the optional ModMenu config GUI (requires [Cloth Config](https://modrinth.com/mod/cloth-config) and [ModMenu](https://modrinth.com/mod/modmenu)).
 
 ![True Sleep Settings](https://raw.githubusercontent.com/Rifaditya/Vanilla-Outsider-True-Sleep/master/Images/2026-02-22_11.22.33.png)
 
 > [!IMPORTANT]
 > **Recommended Mod**: Since this mod generates 150+ GameRules, it is highly recommended to use **[Collapsible Game Rules](https://modrinth.com/mod/collapsible-gamerules)** for a cleaner UI.
+>
+> ![Mob Unfreeze Category](https://raw.githubusercontent.com/Rifaditya/Vanilla-Outsider-True-Sleep/master/Images/2026-02-22_11.17.09.png)
 
 ---
 
@@ -118,6 +130,8 @@ For the best experience, we recommend installing:
 | Singleplayer | ✅ |
 | Multiplayer (LAN/Server) | ✅ |
 | **VO: Better Dogs** | ✅ (Wolves cool down faster!) |
+| **Create Mod** | ✅ (Kinetic networks stay at physical speed) |
+| **Agrarian Reform** | ✅ (Offline growth catch-up compatible) |
 | Empty Dimensions | ✅ |
 
 ---
@@ -128,9 +142,10 @@ If you enjoy **True Sleep** and the **Vanilla Outsider** philosophy, consider fu
 
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20Me-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/dasikigaijin/tip)
 [![SocioBuzz](https://img.shields.io/badge/SocioBuzz-Local_Support-7BB32E?style=for-the-badge)](https://sociabuzz.com/dasikigaijin/tribe)
+[![Saweria](https://img.shields.io/badge/Saweria-Local_Support-FFA500?style=for-the-badge)](https://saweria.co/DasikIgaijinn)
 
 > [!NOTE]
-> **Indonesian Users:** SocioBuzz supports local payment methods (Gopay, OVO, Dana, etc.) if you want to support me without using PayPal/Ko-fi!
+> **Indonesian Users:** SocioBuzz and Saweria support local payment methods (Gopay, OVO, Dana, etc.) if you want to support me without using PayPal/Ko-fi!
 
 ---
 

@@ -1,7 +1,26 @@
+/*
+ * This file is part of True Sleep.
+ *
+ * True Sleep is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * True Sleep is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with True Sleep.  If not, see <https://www.gnu.org/licenses/>.
+ */
 package net.vanillaoutsider.truesleep.logic;
 
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.core.Holder;
+import net.minecraft.world.clock.WorldClock;
 import net.minecraft.world.level.gamerules.GameRules;
+import java.util.Optional;
 import net.vanillaoutsider.truesleep.TrueSleep;
 import net.vanillaoutsider.truesleep.config.TrueSleepRules;
 import net.dasik.social.util.TimeUtil;
@@ -11,8 +30,14 @@ public class TimeWarpManager {
     private static final TimeWarpManager INSTANCE = new TimeWarpManager();
     private boolean isWarping = false;
     private long lastWarpTime = 0;
-    private int originalRandomTickSpeed = 3;
     private long stride = 1;
+    private int originalRandomTickSpeed = 3;
+
+    // Cache fields to optimize hot entity tick loops
+    private boolean freezeMobsCached = true;
+    private boolean freezeWorkersCached = false;
+    private boolean accelerateMachinesCached = true;
+    private boolean accelerateHoppersCached = true;
 
     public boolean hasRecentWarp(long currentWorldTime) {
         return isWarping || (currentWorldTime - lastWarpTime) < 5;
@@ -30,13 +55,32 @@ public class TimeWarpManager {
         return isWarping ? stride : 1;
     }
 
+    public boolean shouldFreezeMobs() {
+        return isWarping && freezeMobsCached;
+    }
+
+    public boolean shouldFreezeWorkers() {
+        return isWarping && freezeWorkersCached;
+    }
+
+    public boolean shouldAccelerateMachines() {
+        return isWarping && accelerateMachinesCached;
+    }
+
+    public boolean shouldAccelerateHoppers() {
+        return isWarping && accelerateHoppersCached;
+    }
+
     public void tick(ServerLevel level, boolean allPlayersSleeping, Runnable wakeUpCallback) {
         if (allPlayersSleeping) {
             if (!isWarping) {
-                TrueSleep.LOGGER.info("TrueSleep: Quantum Warp ENGAGED. Initiating Stride Engine.");
+                TrueSleep.LOGGER.info("TrueSleep: Quantum Warp ENGAGED. Initiating TickRateManager Acceleration.");
                 startWarp(level);
             } else {
                 updateWarpSpeed(level);
+                if (this.stride > 1) {
+                    advanceTimeForStride(level, this.stride - 1);
+                }
                 checkMorning(level, wakeUpCallback);
             }
         } else {
@@ -60,33 +104,36 @@ public class TimeWarpManager {
     private void updateWarpSpeed(ServerLevel level) {
         float engineTps = level.getGameRules().get(TrueSleepRules.ENGINE_TPS);
         float virtualTps = level.getGameRules().get(TrueSleepRules.VIRTUAL_TPS_TARGET);
-
         int wakeTime = level.getGameRules().get(TrueSleepRules.WAKE_TIME);
 
+        // Cache GameRule values once per tick to eliminate hot-loop lookup overhead
+        this.freezeMobsCached = level.getGameRules().get(TrueSleepRules.MOBS_FROZEN);
+        this.freezeWorkersCached = level.getGameRules().get(TrueSleepRules.WORKER_MOBS_FROZEN);
+        this.accelerateMachinesCached = level.getGameRules().get(TrueSleepRules.ACCELERATE_MACHINES);
+        this.accelerateHoppersCached = level.getGameRules().get(TrueSleepRules.ACCELERATE_HOPPERS);
+
         long timeOfDay = level.getDefaultClockTime() % 24000L;
-        // Check if we are currently "in the night" relative to the target wake time.
-        // If we slept at 13000 and target is 14000, we just warp 1000 ticks.
-        // If we slept at 13000 and target is 0 (Morning), we warp ~11000 ticks.
-
-        // This warp detection logic (Time > 23000 || Time < 1000) was for Morning
-        // wake-up check tapering.
-        // We should adjust it to be relative to "wakeTime".
-        // Tapering logic: If we are close to wakeTime, slow down.
-
         long dist = TimeUtil.getCycleDistance(timeOfDay, wakeTime, 24000L);
 
-        if (dist < 1000) {
-            // Slow down near arrival
-            engineTps = 20.0f;
-            virtualTps = 20.0f;
+        // Smooth tapering near arrival: decelerate to 20 TPS when within 200 ticks
+        float targetRate = virtualTps;
+        if (dist < 200) {
+            targetRate = 20.0f + (virtualTps - 20.0f) * ((float) dist / 200.0f);
         }
+        targetRate = Math.max(20.0f, targetRate);
 
-        this.stride = Math.max(1, (long) (virtualTps / engineTps));
+        // Calculate stride based on capped ENGINE_TPS
+        float physicalTarget = Math.min(engineTps, targetRate);
+        this.stride = Math.max(1, Math.round(targetRate / physicalTarget));
 
-        int scaledRandomTick = (int) (originalRandomTickSpeed * stride);
-        level.getGameRules().set(GameRules.RANDOM_TICK_SPEED, scaledRandomTick, level.getServer());
+        setTickRate(level, physicalTarget);
 
-        setTickRate(level, engineTps);
+        // Scale randomTickSpeed
+        int newSpeed = Math.min(500, (int) (this.originalRandomTickSpeed * this.stride));
+        int currentSpeed = level.getGameRules().get(GameRules.RANDOM_TICK_SPEED);
+        if (currentSpeed != newSpeed) {
+            level.getGameRules().set(GameRules.RANDOM_TICK_SPEED, newSpeed, level.getServer());
+        }
     }
 
     private void stopWarp(ServerLevel level) {
@@ -97,41 +144,52 @@ public class TimeWarpManager {
         // Restore Social Hive-Mind to native 20 TPS
         GlobalSocialSystem.setThrottle(1);
 
-        level.getGameRules().set(GameRules.RANDOM_TICK_SPEED, originalRandomTickSpeed, level.getServer());
-
         setTickRate(level, 20.0f);
+
+        // Restore randomTickSpeed
+        int currentSpeed = level.getGameRules().get(GameRules.RANDOM_TICK_SPEED);
+        if (currentSpeed != this.originalRandomTickSpeed) {
+            level.getGameRules().set(GameRules.RANDOM_TICK_SPEED, this.originalRandomTickSpeed, level.getServer());
+        }
+    }
+
+    private void advanceTimeForStride(ServerLevel level, long skipTicks) {
+        if (skipTicks <= 0) return;
+
+        long newTime = level.getGameTime() + skipTicks;
+        ((net.minecraft.world.level.storage.ServerLevelData) level.getLevelData()).setGameTime(newTime);
+
+        Optional<Holder<WorldClock>> defaultClock = level.dimensionType().defaultClock();
+        if (defaultClock.isPresent()) {
+            level.getServer().clockManager().addTicks(defaultClock.get(), (int) skipTicks);
+        }
     }
 
     private void checkMorning(ServerLevel level, Runnable wakeUpCallback) {
         int wakeTime = level.getGameRules().get(TrueSleepRules.WAKE_TIME);
-
-        // "Is Bright Outside" check is vanilla hardcoded for sunrise.
-        // We need to check if we hit our target time.
-        // Vanilla sleeping wakes at time = 0.
-
         long currentTimeOfDay = level.getDefaultClockTime() % 24000L;
         long dist = TimeUtil.getCycleDistance(currentTimeOfDay, wakeTime, 24000L);
-
-        // If distance is extremely small (we caught up) or very large (we just passed
-        // it)
-        // Wait, if we just passed it, dist would be 23990 (ish).
-        // Let's rely on the fact that updateWarpSpeed slows us down to 1:1 near the
-        // end.
-        // So checking if dist < 10 is safe.
 
         if (dist < 20) {
             TrueSleep.LOGGER.info("TrueSleep: Destination reached: Target Time {}. Stopping Hyperspace.", wakeTime);
             stopWarp(level);
 
-            // Snap the clock EXACTLY to wakeTime (monotonically increasing — never go
-            // backwards).
+            // Snap the clock EXACTLY to wakeTime (monotonically increasing — never go backwards).
             long currentFull = level.getDefaultClockTime();
             long currentDay = currentFull - (currentFull % 24000L);
             long snappedTime = currentDay + wakeTime;
             if (snappedTime < currentFull) {
                 snappedTime += 24000L; // Advance to next day if we overshot
             }
+            
+            // Update the level data game time
             ((net.minecraft.world.level.storage.ServerLevelData) level.getLevelData()).setGameTime(snappedTime);
+
+            // Update and broadcast the dimension's default WorldClock time to prevent client desync
+            Optional<Holder<WorldClock>> defaultClock = level.dimensionType().defaultClock();
+            if (defaultClock.isPresent()) {
+                level.getServer().clockManager().setTotalTicks(defaultClock.get(), snappedTime);
+            }
 
             wakeUpCallback.run();
             level.resetWeatherCycle();

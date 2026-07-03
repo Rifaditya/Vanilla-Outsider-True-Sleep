@@ -1,16 +1,32 @@
+/*
+ * This file is part of True Sleep.
+ *
+ * True Sleep is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * True Sleep is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with True Sleep.  If not, see <https://www.gnu.org/licenses/>.
+ */
 package net.vanillaoutsider.truesleep.mixin.client;
 
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.SkyRenderer;
-import net.minecraft.client.renderer.state.SkyRenderState;
-import net.vanillaoutsider.truesleep.logic.TimeWarpManager;
+import net.minecraft.client.renderer.state.level.SkyRenderState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+// Verified against: SkyRenderer.java (26.2+)
 @Mixin(SkyRenderer.class)
 public abstract class SkyRendererMixin {
     @Unique
@@ -19,7 +35,9 @@ public abstract class SkyRendererMixin {
     @Inject(method = "extractRenderState", at = @At("TAIL"))
     private void truesleep$smoothSkyDuringWarp(ClientLevel level, float partialTicks, Camera camera,
             SkyRenderState state, CallbackInfo ci) {
-        if (TimeWarpManager.get().isWarping()) {
+        // Celestial Smoothing: Lerp towards the target angle to bridge server tick jumps.
+        // If the tickrate is accelerated (above 20.0 TPS), we perform sky smoothing.
+        if (level.tickRateManager().tickrate() > 20.0f) {
             float target = state.sunAngle;
 
             if (truesleep$lastVisualAngle < 0) {
@@ -27,9 +45,6 @@ public abstract class SkyRendererMixin {
                 return;
             }
 
-            // Celestial Smoothing: Lerp towards the target angle to bridge server tick
-            // jumps.
-            // At 1000 TPS, the "target" jumps significantly between client frames.
             float diff = target - truesleep$lastVisualAngle;
 
             // Normalize angle difference to [-PI, PI]

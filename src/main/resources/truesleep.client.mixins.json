@@ -3,7 +3,7 @@
   "package": "net.vanillaoutsider.truesleep.mixin.client",
   "compatibilityLevel": "JAVA_22",
   "mixins": [
-    "GuiMixin",
+    "HudMixin",
     "SkyRendererMixin"
   ],
   "injectors": {

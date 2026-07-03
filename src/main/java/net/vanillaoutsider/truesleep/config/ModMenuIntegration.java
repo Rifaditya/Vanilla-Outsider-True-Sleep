@@ -14,14 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with True Sleep.  If not, see <https://www.gnu.org/licenses/>.
  */
-package net.vanillaoutsider.truesleep;
+package net.vanillaoutsider.truesleep.config;
 
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.EntityType;
+import com.terraformersmc.modmenu.api.ConfigScreenFactory;
+import com.terraformersmc.modmenu.api.ModMenuApi;
+import net.dasik.social.api.config.GuiHelper;
 
-public class TrueSleepTags {
-    public static final TagKey<EntityType<?>> WORKER_MOBS = TagKey.create(Registries.ENTITY_TYPE,
-            Identifier.fromNamespaceAndPath("truesleep", "worker_mobs"));
+public class ModMenuIntegration implements ModMenuApi {
+    @Override
+    public ConfigScreenFactory<?> getModConfigScreenFactory() {
+        return GuiHelper.getOptionalFactory(
+                "vanilla-outsider-true-sleep",
+                "net.vanillaoutsider.truesleep.config.ClothConfigScreenHelper",
+                "createFactory"
+        );
+    }
 }
