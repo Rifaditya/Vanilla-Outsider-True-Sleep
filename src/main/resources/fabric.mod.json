@@ -17,6 +17,9 @@
     "entrypoints": {
         "main": [
             "net.vanillaoutsider.truesleep.TrueSleep"
+        ],
+        "modmenu": [
+            "net.vanillaoutsider.truesleep.config.ModMenuIntegration"
         ]
     },
     "mixins": [
@@ -28,9 +31,13 @@
     ],
     "depends": {
         "fabricloader": ">=0.16.9",
-        "minecraft": "~26.1-",
+        "minecraft": "*",
         "java": ">=25",
         "fabric-api": "*",
         "dasik-library": "*"
+    },
+    "suggests": {
+        "cloth-config": "*",
+        "modmenu": "*"
     }
 }

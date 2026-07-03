@@ -29,6 +29,12 @@ dependencies {
 
     // DasikLibrary
     implementation "net.dasik.social:dasik-library:${project.dasik_library_version}"
+
+    compileOnly "me.shedaniel.cloth:cloth-config-fabric:26.1.154"
+    runtimeOnly "me.shedaniel.cloth:cloth-config-fabric:26.1.154"
+
+    compileOnly "com.terraformersmc:modmenu:18.0.0-beta.1"
+    runtimeOnly "com.terraformersmc:modmenu:18.0.0-beta.1"
 }
 
 processResources {
