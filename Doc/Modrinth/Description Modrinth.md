@@ -1,4 +1,4 @@
-<div align="center">
+﻿<div align="center">
 
 ![True Sleep Banner](https://files.catbox.moe/9hc07g.png)
 
@@ -84,7 +84,12 @@ Normally, cats only give gifts if you sleep for 5+ seconds. True Sleep is so fas
 ---
 
 ## ⚙️ Config
+
 
+> [!IMPORTANT]
+> **Config vs. In-Game GameRules:**
+> The global configuration file only defines **default values for new worlds** at creation time.
+> If you have **already created/opened a world**, changing the config file will have no effect. You must change the settings in-game using the **Edit Game Rules** UI screen or the /gamerule command.
 The mod works out of the box with zero setup.
 
 * **Global Template**: `config/truesleep.json` (Sets defaults for new worlds)
