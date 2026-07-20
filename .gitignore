@@ -55,3 +55,4 @@ build_log_utf8.txt
 
 # Marketing Exclusion
 Doc/Marketing/
+!**/BACKLOG.md
