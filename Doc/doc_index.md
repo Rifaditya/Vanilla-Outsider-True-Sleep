@@ -1,4 +1,4 @@
-﻿# True Sleep: Documentation Index
+# True Sleep: Documentation Index
 
 Welcome to the central documentation hub for **True Sleep**. This project follows the **Zenith Protocol v2.1** documentation standard.
 
@@ -10,6 +10,7 @@ Welcome to the central documentation hub for **True Sleep**. This project follow
 ### [Development](Develop/)
 *   **[Architecture](Develop/Architecture/)**
 *   **[Changelogs](Develop/Changelogs/History.md)**
+*   **[Technical Backlog](BACKLOG.md)**
 *   **[Audit Logs](Develop/Audit/)**
 
 ### [Player Guide](Players/)
