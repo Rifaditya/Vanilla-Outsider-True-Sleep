@@ -1,5 +1,14 @@
 # Historical Changelog (True Sleep)
 
+## [1.3.16-26.2] - 2026-07-20
+
+### Maintenance & Code Quality
+
+- **Code Quality Audit Remediation**: Performed full audit remediation according to the Council's Auditor standard.
+- **Dead Code Cleanup**: Deleted 6 obsolete, unregistered mixin source files (`AgeableMobMixin.java`, `CatMixin.java`, `ClockInstanceMixin.java`, `GameRulesInvoker.java`, `ServerClockManagerMixin.java`, `SocialCoreMixin.java`).
+- **License Header Standardization**: Replaced verbose 16-line GPL blocks with mandatory 1-line simplified headers (`// Copyright (C) 2026 Dasik (Rifaditya) | GNU GPLv3`) and added missing `// Verified against: ...` citation comments across all active Java files.
+- **JSON Spacing**: Formatted all resource JSON files (`fabric.mod.json`, `en_us.json`, `truesleep.mixins.json`, `truesleep.client.mixins.json`) to standard 2-space indentation.
+
 ## [1.3.15-26.2] - 2026-07-20
 
 ### Added

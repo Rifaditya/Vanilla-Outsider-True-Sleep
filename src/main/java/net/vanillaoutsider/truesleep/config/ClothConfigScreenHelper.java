@@ -1,20 +1,5 @@
-/*
- * This file is part of True Sleep.
- *
- * True Sleep is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * True Sleep is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with True Sleep.  If not, see <https://www.gnu.org/licenses/>.
- */
-// Verified against: ClothConfigScreenHelper.java (26.1.2+)
+// Copyright (C) 2026 Dasik (Rifaditya) | GNU GPLv3
+// Verified against: ClothConfigScreenHelper.java (26.2+)
 package net.vanillaoutsider.truesleep.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;

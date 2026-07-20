@@ -1,17 +1,17 @@
 {
-    "required": true,
-    "package": "net.vanillaoutsider.truesleep.mixin",
-    "compatibilityLevel": "JAVA_22",
-    "mixins": [
-        "ServerLevelMixin",
-        "MobMixin",
-        "EntityMixin",
-        "BedRuleMixin",
-        "MobEffectInstanceMixin",
-        "LivingEntityMixin",
-        "LevelMixin"
-    ],
-    "injectors": {
-        "defaultRequire": 1
-    }
+  "required": true,
+  "package": "net.vanillaoutsider.truesleep.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "BedRuleMixin",
+    "EntityMixin",
+    "LevelMixin",
+    "LivingEntityMixin",
+    "MobEffectInstanceMixin",
+    "MobMixin",
+    "ServerLevelMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }
