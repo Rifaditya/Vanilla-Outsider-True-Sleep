@@ -36,6 +36,13 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(Level.class)
 public abstract class LevelMixin {
 
+    @Unique
+    private static final java.util.concurrent.ConcurrentHashMap<net.minecraft.world.level.block.entity.BlockEntityType<?>, Boolean> truesleep$PRODUCTION_MACHINE_CACHE = new java.util.concurrent.ConcurrentHashMap<>();
+    @Unique
+    private static final java.util.concurrent.ConcurrentHashMap<String, Boolean> truesleep$TYPE_MACHINE_CACHE = new java.util.concurrent.ConcurrentHashMap<>();
+    @Unique
+    private static final java.util.concurrent.ConcurrentHashMap<String, Boolean> truesleep$TYPE_HOPPER_CACHE = new java.util.concurrent.ConcurrentHashMap<>();
+
     @Redirect(method = "tickBlockEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/entity/TickingBlockEntity;tick()V"))
     private void truesleep$accelerateBlockEntities(TickingBlockEntity ticker) {
         Level level = (Level) (Object) this;
@@ -44,7 +51,7 @@ public abstract class LevelMixin {
             if (stride > 1) {
                 String type = ticker.getType();
                 if (type != null) {
-                    boolean isHopper = type.contains("hopper");
+                    boolean isHopper = truesleep$TYPE_HOPPER_CACHE.computeIfAbsent(type, t -> t.contains("hopper"));
                     if (isHopper) {
                         if (TimeWarpManager.get().shouldAccelerateHoppers()) {
                             BlockPos pos = ticker.getPos();
@@ -64,16 +71,18 @@ public abstract class LevelMixin {
                             }
                         }
                     } else if (TimeWarpManager.get().shouldAccelerateMachines()) {
-                        boolean isMachine = type.contains("furnace") 
-                                || type.contains("smoker") 
-                                || type.contains("brewing") 
-                                || type.contains("campfire")
-                                || type.contains("generator") 
-                                || type.contains("smelter") 
-                                || type.contains("alloy") 
-                                || type.contains("compressor") 
-                                || type.contains("crusher") 
-                                || type.contains("grinder");
+                        boolean isMachine = truesleep$TYPE_MACHINE_CACHE.computeIfAbsent(type, t -> 
+                                t.contains("furnace") 
+                                || t.contains("smoker") 
+                                || t.contains("brewing") 
+                                || t.contains("campfire")
+                                || t.contains("generator") 
+                                || t.contains("smelter") 
+                                || t.contains("alloy") 
+                                || t.contains("compressor") 
+                                || t.contains("crusher") 
+                                || t.contains("grinder")
+                        );
                         if (isMachine) {
                             for (int i = 0; i < stride; i++) {
                                 if (ticker.isRemoved()) break;
@@ -91,18 +100,21 @@ public abstract class LevelMixin {
     @Unique
     private boolean truesleep$isProductionMachine(BlockEntity be) {
         if (be == null) return false;
-        Identifier id = BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(be.getType());
-        if (id == null) return false;
-        String path = id.getPath();
-        return path.contains("furnace") 
-                || path.contains("smoker") 
-                || path.contains("brewing") 
-                || path.contains("campfire") 
-                || path.contains("generator") 
-                || path.contains("smelter") 
-                || path.contains("alloy") 
-                || path.contains("compressor") 
-                || path.contains("crusher") 
-                || path.contains("grinder");
+        net.minecraft.world.level.block.entity.BlockEntityType<?> type = be.getType();
+        return truesleep$PRODUCTION_MACHINE_CACHE.computeIfAbsent(type, t -> {
+            Identifier id = BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(t);
+            if (id == null) return false;
+            String path = id.getPath();
+            return path.contains("furnace") 
+                    || path.contains("smoker") 
+                    || path.contains("brewing") 
+                    || path.contains("campfire") 
+                    || path.contains("generator") 
+                    || path.contains("smelter") 
+                    || path.contains("alloy") 
+                    || path.contains("compressor") 
+                    || path.contains("crusher") 
+                    || path.contains("grinder");
+        });
     }
 }
