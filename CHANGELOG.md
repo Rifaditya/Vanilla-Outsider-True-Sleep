@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.14-26.2] - 2026-07-20
+
+### Added
+
+- **Machine Acceleration Hot-Loop Cache**: Implemented high-performance `ConcurrentHashMap` caching for machine and hopper block entity type evaluations in `LevelMixin.java`. Replaced string regex allocations and registry lookups in the sleeping hot loop with $O(1)$ constant time lookups, bringing machine ticking CPU overhead during sleep down to near zero.
+
 ## [1.3.13-26.2] - 2026-07-03
 
 ### Added

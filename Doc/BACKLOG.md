@@ -7,9 +7,9 @@ This backlog tracks upcoming technical enhancements, performance optimizations, 
 ## 🎯 Active Backlog Checklist
 
 ### 1. ⚡ Machine Acceleration Hot-Loop Caching
-- [ ] **Task 1.1**: Implement a `BlockEntityType` acceleration boolean cache (`ConcurrentHashMap<BlockEntityType<?>, Boolean>`) in `LevelMixin.java` / `TimeWarpManager.java`.
-- [ ] **Task 1.2**: Replace string keyword regexes and block state property lookups in the sleeping hot loop with $O(1)$ cached lookups.
-- [ ] **Task 1.3**: Audit cache invalidation on world reload / registry dynamic re-indexing.
+- [x] **Task 1.1**: Implement a `BlockEntityType` acceleration boolean cache (`ConcurrentHashMap<BlockEntityType<?>, Boolean>`) in `LevelMixin.java` / `TimeWarpManager.java`.
+- [x] **Task 1.2**: Replace string keyword regexes and block state property lookups in the sleeping hot loop with $O(1)$ cached lookups.
+- [x] **Task 1.3**: Audit cache invalidation on world reload / registry dynamic re-indexing.
 
 ### 2. 🌧️ Weather & Atmosphere Fast-Forwarding (`rainTime` & `thunderTime`)
 - [ ] **Task 2.1**: Implement `rainTime` and `thunderTime` `stride - 1` fast-forwarding in `TimeWarpManager.java`.
