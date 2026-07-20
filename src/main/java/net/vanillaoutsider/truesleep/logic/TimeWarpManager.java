@@ -163,6 +163,30 @@ public class TimeWarpManager {
         if (defaultClock.isPresent()) {
             level.getServer().clockManager().addTicks(defaultClock.get(), (int) skipTicks);
         }
+
+        advanceWeatherForStride(level, skipTicks);
+    }
+
+    private void advanceWeatherForStride(ServerLevel level, long skipTicks) {
+        if (skipTicks <= 0) return;
+
+        net.minecraft.world.level.saveddata.WeatherData weatherData = level.getWeatherData();
+        if (weatherData != null) {
+            int clearWeatherTime = weatherData.getClearWeatherTime();
+            int rainTime = weatherData.getRainTime();
+            int thunderTime = weatherData.getThunderTime();
+
+            if (clearWeatherTime > 0) {
+                weatherData.setClearWeatherTime((int) Math.max(0, clearWeatherTime - skipTicks));
+            } else {
+                if (rainTime > 0) {
+                    weatherData.setRainTime((int) Math.max(0, rainTime - skipTicks));
+                }
+                if (thunderTime > 0) {
+                    weatherData.setThunderTime((int) Math.max(0, thunderTime - skipTicks));
+                }
+            }
+        }
     }
 
     private void checkMorning(ServerLevel level, Runnable wakeUpCallback) {

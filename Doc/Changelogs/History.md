@@ -1,5 +1,11 @@
 # Historical Changelog (True Sleep)
 
+## [1.3.15-26.2] - 2026-07-20
+
+### Added
+
+- **Weather & Atmosphere Fast-Forwarding**: Integrated fast-forwarding of `rainTime`, `thunderTime`, and `clearWeatherTime` via `ServerLevel`'s `WeatherData` in `TimeWarpManager.java`. Rain and thunder storms now count down proportionally during sleep warp (`stride - 1` ticks per warp tick), allowing storms to clear naturally by morning.
+
 ## [1.3.14-26.2] - 2026-07-20
 
 ### Added

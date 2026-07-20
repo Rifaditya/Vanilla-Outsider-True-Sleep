@@ -12,9 +12,9 @@ This backlog tracks upcoming technical enhancements, performance optimizations, 
 - [x] **Task 1.3**: Audit cache invalidation on world reload / registry dynamic re-indexing.
 
 ### 2. 🌧️ Weather & Atmosphere Fast-Forwarding (`rainTime` & `thunderTime`)
-- [ ] **Task 2.1**: Implement `rainTime` and `thunderTime` `stride - 1` fast-forwarding in `TimeWarpManager.java`.
-- [ ] **Task 2.2**: When weather timers hit `0`, trigger `serverLevel.setWeatherParameters(...)` to clear rain and thunder by morning.
-- [ ] **Task 2.3**: Verify weather transitions when sleeping through stormy nights.
+- [x] **Task 2.1**: Implement `rainTime` and `thunderTime` `stride - 1` fast-forwarding in `TimeWarpManager.java`.
+- [x] **Task 2.2**: When weather timers hit `0`, trigger `serverLevel.setWeatherParameters(...)` to clear rain and thunder by morning.
+- [x] **Task 2.3**: Verify weather transitions when sleeping through stormy nights.
 
 ### 3. 🎯 Smooth LERP Deceleration Tapering on Wake-Up
 - [ ] **Task 3.1**: Implement a 15-tick LERP deceleration step counter in `TimeWarpManager.java`.
