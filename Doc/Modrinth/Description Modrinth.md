@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
 
 ![True Sleep Banner](https://files.catbox.moe/9hc07g.png)
 
@@ -9,9 +9,9 @@
     <img src="https://img.shields.io/badge/License-GPLv3-green?style=for-the-badge" alt="License">
 </p>
 
-# 🌙 True Sleep: The "Agency" Update (v1.3.13)
+# ?? True Sleep: The "Agency" Update (v1.3.13)
 
-**No Backports:** I will **NOT** backport this mod to older versions (1.21, 1.20, etc.). Please do not ask.
+**Active Version Policy:** I build **1 JAR for 1 Version**. I only update and maintain the latest active Minecraft version (e.g. when 26.3 is released, 26.2 is retired). No backports or legacy version maintenance. Please do not ask.
 
 In vanilla Minecraft, sleeping is a "cheat code" that deletes time. You right-click a bed, the screen fades to black, and the game instantly skips forward 12,000 ticks.
 
@@ -19,36 +19,36 @@ In vanilla Minecraft, sleeping is a "cheat code" that deletes time. You right-cl
 
 ---
 
-## ✨ Features
+## ? Features
 
-### 🕰️ Quantum Warp (Simulation)
+### ??? Quantum Warp (Simulation)
 
 The world doesn't pause. Furnaces continue to smelt, crops continue to grow, and copper continues to oxidize while you sleep. Everything simulates at hyper-speed.
 
 > [!NOTE]
 > **Quantum Stride Technology**: We use a variable tick stride to ensure high performance.
-> Default Engine Speed: **50 TPS** (2.5x standard speed) — controls how fast everything actually moves: mobs, redstone, furnaces, the sky, all of it.
+> Default Engine Speed: **50 TPS** (2.5x standard speed) � controls how fast everything actually moves: mobs, redstone, furnaces, the sky, all of it.
 > Virtual Speed: **1000 TPS** (50x speed) is achieved by simulating multiple ticks per server tick.
 > 
 > [!IMPORTANT]
 > **Production & Hopper Acceleration (v1.3.13)**: Smelting/brewing and hoppers coupled directly to machines are now accelerated to match the time warp speed. Redstone-locked hoppers are ignored to protect automatic sorters.
 > *Feedback Needed*: We need more feedback on this feature! If you find any issues with custom redstone builds or modded machines, please send an issue report for us to check. Thank you!
 
-### 🎞️ Visuals
+### ??? Visuals
 
 Watch the passage of time from your bed. No jarring "fade to black." The transition from night to day is seamless and grounded in the world.
 
 Feature Showcase: https://www.youtube.com/watch?v=FcNaMSN2WG8
 
-### 💤 Dreamweaver Engine
+### ?? Dreamweaver Engine
 
 Fine-tune your sleep schedule with precision:
 
-* **Sleep Threshold**: Configure exactly when you can get into bed (dusk, midnight, etc.). Corrected to 0–23999 range.
+* **Sleep Threshold**: Configure exactly when you can get into bed (dusk, midnight, etc.). Corrected to 0�23999 range.
 * **Wake Time**: Decide when the warp ends (dawn, noon, etc.). Now includes a full tick-to-time reference guide.
 * **Hybrid Config**: Use `/gamerule` for per-world settings, or `config/truesleep.json` for global defaults.
 
-### 🚀 Full Agency (Uncapped)
+### ?? Full Agency (Uncapped)
 
 We have removed the training wheels. Engine TPS and Virtual TPS are now fully **uncapped**.
 
@@ -59,31 +59,31 @@ We have removed the training wheels. Engine TPS and Virtual TPS are now fully **
 > [!WARNING]
 > High TPS values (Engine TPS > 100) are experimental. Pushing the engine too far can cause server lag or disconnects depending on your hardware. We provide the agency; you handle the consequences.
 
-### ⚖️ Multiplayer
+### ?? Multiplayer
 
 One player sleeping accelerates time for *everyone* on the server.
 
 * **No more arguments:** "1/2 players sleeping" doesn't force a skip.
 * **No disruption:** Other players just see the world speed up for a few seconds.
 
-### 🐈 Cat Gifts
+### ?? Cat Gifts
 
 We have patched the vanilla Cat logic!
 Normally, cats only give gifts if you sleep for 5+ seconds. True Sleep is so fast the night passes in 1 second.
 **We fixed this:** Your cats now recognize the "Time Warp" and will still grant you Morning Gifts (Phantom Membranes, Rabbit Feet, etc.).
 
-### 🛡️ Quantum Safety
+### ??? Quantum Safety
 
 * **Empty Dimensions**: The mod intelligently ignores empty dimensions to prevent logic bugs.
 * **Drown Immunity**: Entities in water are granted biological stasis (water breathing) during the warp to prevent drowning.
-* **Mob Unfreeze (Dynamic Category)**: A dedicated "True Sleep Mobs" GameRule category is generated, containing toggles for *every* individual entity type in the game. Build 7 introduces performance-optimized stasis—mobs are frozen by default to save TPS. However, if you have a **redstone contraption or farm** that relies on a specific mob to work (e.g., an iron farm using zombies/villagers), you can selectively "unfreeze" them to keep your systems running at 1000 Virtual TPS.
+* **Mob Unfreeze (Dynamic Category)**: A dedicated "True Sleep Mobs" GameRule category is generated, containing toggles for *every* individual entity type in the game. Build 7 introduces performance-optimized stasis�mobs are frozen by default to save TPS. However, if you have a **redstone contraption or farm** that relies on a specific mob to work (e.g., an iron farm using zombies/villagers), you can selectively "unfreeze" them to keep your systems running at 1000 Virtual TPS.
   Feature Showcase: <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/FcNaMSN2WG8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
   ![Mob Unfreeze Category](https://raw.githubusercontent.com/Rifaditya/Vanilla-Outsider-True-Sleep/master/Images/2026-02-22_11.17.09.png)
 * **Golden Dandelion**: Compatible with age-locked mobs.
 
 ---
 
-## ⚙️ Config
+## ?? Config
 
 
 > [!IMPORTANT]
@@ -94,15 +94,15 @@ The mod works out of the box with zero setup.
 
 * **Global Template**: `config/truesleep.json` (Sets defaults for new worlds)
 * **In-Game**: Use `/gamerule truesleep:` for core settings and the **True Sleep Mobs** category for entity control.
-  * `truesleep:engine_tps` — **Performance Limit**: How hard the server works during sleep (Default: 50)
-  * `truesleep:virtual_tps` — **Time Speed**: How fast the night flies by (Default: 1000)
-  * `truesleep:sleep_threshold` — **Sleep Threshold**: When players can start sleeping (Default: 12542)
-  * `truesleep:wake_time` — **Wake Time**: What time players wake up (Default: 0 / Sunrise)
-  * `truesleep:accelerate_machines` — **Accelerate Machines**: Speeds up furnaces/brewers during sleep (Default: ON)
-  * `truesleep:accelerate_hoppers` — **Accelerate Hoppers**: Speeds up hoppers coupled to machines (Default: ON)
-  * `truesleep:freeze_mobs` — **Freeze Mobs**: Pauses all mobs during sleep (Default: ON)
-  * `truesleep:freeze_workers` — **Freeze Villagers**: Also pauses villagers and iron golems (Default: OFF)
-  * `truesleep:drown_immunity` — **Drown Immunity**: Prevents drowning during sleep (Default: ON)
+  * `truesleep:engine_tps` � **Performance Limit**: How hard the server works during sleep (Default: 50)
+  * `truesleep:virtual_tps` � **Time Speed**: How fast the night flies by (Default: 1000)
+  * `truesleep:sleep_threshold` � **Sleep Threshold**: When players can start sleeping (Default: 12542)
+  * `truesleep:wake_time` � **Wake Time**: What time players wake up (Default: 0 / Sunrise)
+  * `truesleep:accelerate_machines` � **Accelerate Machines**: Speeds up furnaces/brewers during sleep (Default: ON)
+  * `truesleep:accelerate_hoppers` � **Accelerate Hoppers**: Speeds up hoppers coupled to machines (Default: ON)
+  * `truesleep:freeze_mobs` � **Freeze Mobs**: Pauses all mobs during sleep (Default: ON)
+  * `truesleep:freeze_workers` � **Freeze Villagers**: Also pauses villagers and iron golems (Default: OFF)
+  * `truesleep:drown_immunity` � **Drown Immunity**: Prevents drowning during sleep (Default: ON)
 * **ModMenu / Cloth Config**: All settings above are also available through the optional ModMenu config GUI (requires [Cloth Config](https://modrinth.com/mod/cloth-config) and [ModMenu](https://modrinth.com/mod/modmenu)).
 
 ![True Sleep Settings](https://raw.githubusercontent.com/Rifaditya/Vanilla-Outsider-True-Sleep/master/Images/2026-02-22_11.22.33.png)
@@ -114,34 +114,34 @@ The mod works out of the box with zero setup.
 
 ---
 
-## 🧩 Suggested Mods
+## ?? Suggested Mods
 
 For the best experience, we recommend installing:
 * **[Collapsible Game Rules](https://modrinth.com/mod/collapsible-gamerules)**: Prevents the GameRules menu from becoming cluttered by grouping the 150+ new mob toggles into a clean, searchable category.
 
 ---
 
-## 📦 Install
+## ?? Install
 
 1. Install **[Fabric API](https://modrinth.com/mod/fabric-api)**.
 2. Download `Vanilla-Outsider-True-Sleep.jar` and place it in your `mods` folder.
 
 ---
 
-## 🧩 Compatibility
+## ?? Compatibility
 
 | Feature | Fabric (26.1+) |
 | :--- | :---: |
-| Singleplayer | ✅ |
-| Multiplayer (LAN/Server) | ✅ |
-| **VO: Better Dogs** | ✅ (Wolves cool down faster!) |
-| **Create Mod** | ✅ (Kinetic networks stay at physical speed) |
-| **Agrarian Reform** | ✅ (Offline growth catch-up compatible) |
-| Empty Dimensions | ✅ |
+| Singleplayer | ? |
+| Multiplayer (LAN/Server) | ? |
+| **VO: Better Dogs** | ? (Wolves cool down faster!) |
+| **Create Mod** | ? (Kinetic networks stay at physical speed) |
+| **Agrarian Reform** | ? (Offline growth catch-up compatible) |
+| Empty Dimensions | ? |
 
 ---
 
-## ☕ Support
+## ? Support
 
 If you enjoy **True Sleep** and the **Vanilla Outsider** philosophy, consider fueling the next update with a coffee!
 
@@ -154,7 +154,7 @@ If you enjoy **True Sleep** and the **Vanilla Outsider** philosophy, consider fu
 
 ---
 
-## 📜 Credits
+## ?? Credits
 
 | Role | Author |
 | :--- | :--- |
@@ -176,7 +176,7 @@ If you enjoy **True Sleep** and the **Vanilla Outsider** philosophy, consider fu
 
 <div align="center">
 
-**Made with ❤️ for the Minecraft community**
+**Made with ?? for the Minecraft community**
 
 *Part of the Vanilla Outsider Collection*
 
