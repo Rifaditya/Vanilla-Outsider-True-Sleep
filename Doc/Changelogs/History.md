@@ -1,5 +1,11 @@
 # Historical Changelog (True Sleep)
 
+## [1.3.17-26.2] - 2026-07-21
+
+### Added
+
+- **Smooth LERP Deceleration Tapering**: Implemented smooth LERP deceleration tapering in `TimeWarpManager.java`. Naturally tapers simulation speed and tick rate down to native 20 TPS as morning approaches (`dist [200 -> 20]`), and provides a 15-tick smooth LERP wind-down if sleep is interrupted mid-warp. Eliminates visual sky rotation micro-stutters and sudden tick-rate drops.
+
 ## [1.3.16-26.2] - 2026-07-20
 
 ### Maintenance & Code Quality

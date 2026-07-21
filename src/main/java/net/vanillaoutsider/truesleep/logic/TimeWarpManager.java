@@ -26,8 +26,12 @@ public class TimeWarpManager {
     private boolean accelerateMachinesCached = true;
     private boolean accelerateHoppersCached = true;
 
+    private long lastWarpStride = 1;
+    private float lastWarpRate = 20.0f;
+    private int decelerateTicks = 0;
+
     public boolean hasRecentWarp(long currentWorldTime) {
-        return isWarping || (currentWorldTime - lastWarpTime) < 5;
+        return isWarping || decelerateTicks > 0 || (currentWorldTime - lastWarpTime) < 5;
     }
 
     public static TimeWarpManager get() {
@@ -35,11 +39,11 @@ public class TimeWarpManager {
     }
 
     public boolean isWarping() {
-        return isWarping;
+        return isWarping || decelerateTicks > 0;
     }
 
     public long getStride() {
-        return isWarping ? stride : 1;
+        return (isWarping || decelerateTicks > 0) ? stride : 1;
     }
 
     public boolean shouldFreezeMobs() {
@@ -60,6 +64,7 @@ public class TimeWarpManager {
 
     public void tick(ServerLevel level, boolean allPlayersSleeping, Runnable wakeUpCallback) {
         if (allPlayersSleeping) {
+            decelerateTicks = 0; // Cancel any active wind-down if sleep resumes
             if (!isWarping) {
                 TrueSleep.LOGGER.info("TrueSleep: Quantum Warp ENGAGED. Initiating TickRateManager Acceleration.");
                 startWarp(level);
@@ -72,14 +77,17 @@ public class TimeWarpManager {
             }
         } else {
             if (isWarping) {
-                TrueSleep.LOGGER.info("TrueSleep: Warp Aborted - Sleep interrupted.");
-                stopWarp(level);
+                TrueSleep.LOGGER.info("TrueSleep: Warp Aborted - Sleep interrupted. Initiating smooth 15-tick deceleration wind-down.");
+                initiateWindDown(level);
+            } else if (decelerateTicks > 0) {
+                tickWindDown(level);
             }
         }
     }
 
     private void startWarp(ServerLevel level) {
         isWarping = true;
+        decelerateTicks = 0;
         this.originalRandomTickSpeed = level.getGameRules().get(GameRules.RANDOM_TICK_SPEED);
 
         // Regulate Social Hive-Mind during intensive simulation
@@ -102,16 +110,19 @@ public class TimeWarpManager {
         long timeOfDay = level.getDefaultClockTime() % 24000L;
         long dist = TimeUtil.getCycleDistance(timeOfDay, wakeTime, 24000L);
 
-        // Smooth tapering near arrival: decelerate to 20 TPS when within 200 ticks
+        // Smooth tapering near arrival: decelerate targetRate from virtualTps down to 20.0 TPS over dist [200 -> 20]
         float targetRate = virtualTps;
         if (dist < 200) {
-            targetRate = 20.0f + (virtualTps - 20.0f) * ((float) dist / 200.0f);
+            float progress = Math.max(0.0f, Math.min(1.0f, (float) (dist - 20) / 180.0f));
+            targetRate = 20.0f + (virtualTps - 20.0f) * progress;
         }
         targetRate = Math.max(20.0f, targetRate);
 
         // Calculate stride based on capped ENGINE_TPS
         float physicalTarget = Math.min(engineTps, targetRate);
         this.stride = Math.max(1, Math.round(targetRate / physicalTarget));
+        this.lastWarpStride = this.stride;
+        this.lastWarpRate = physicalTarget;
 
         setTickRate(level, physicalTarget);
 
@@ -123,8 +134,36 @@ public class TimeWarpManager {
         }
     }
 
+    private void initiateWindDown(ServerLevel level) {
+        isWarping = false;
+        decelerateTicks = 15;
+        tickWindDown(level);
+    }
+
+    private void tickWindDown(ServerLevel level) {
+        if (decelerateTicks <= 0) {
+            stopWarp(level);
+            return;
+        }
+
+        float progress = (float) decelerateTicks / 15.0f;
+        float currentRate = 20.0f + (this.lastWarpRate - 20.0f) * progress;
+        this.stride = Math.max(1, Math.round(1 + (this.lastWarpStride - 1) * progress));
+
+        setTickRate(level, currentRate);
+
+        int targetRandomSpeed = (int) (this.originalRandomTickSpeed + (this.originalRandomTickSpeed * (this.stride - 1)));
+        level.getGameRules().set(GameRules.RANDOM_TICK_SPEED, Math.min(500, targetRandomSpeed), level.getServer());
+
+        decelerateTicks--;
+        if (decelerateTicks <= 0) {
+            stopWarp(level);
+        }
+    }
+
     private void stopWarp(ServerLevel level) {
         isWarping = false;
+        decelerateTicks = 0;
         lastWarpTime = level.getGameTime();
         this.stride = 1;
 

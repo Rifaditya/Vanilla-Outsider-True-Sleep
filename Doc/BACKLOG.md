@@ -17,9 +17,9 @@ This backlog tracks upcoming technical enhancements, performance optimizations, 
 - [x] **Task 2.3**: Verify weather transitions when sleeping through stormy nights.
 
 ### 3. 🎯 Smooth LERP Deceleration Tapering on Wake-Up
-- [ ] **Task 3.1**: Implement a 15-tick LERP deceleration step counter in `TimeWarpManager.java`.
-- [ ] **Task 3.2**: Smoothly decay `randomTickSpeed` and `stride` during the wake-up transition window (`stride = Math.max(1, LERP(currentStride, 1, progress))`).
-- [ ] **Task 3.3**: Verify smooth visual sky rendering transitions at dawn without micro-stutters.
+- [x] **Task 3.1**: Implement a 15-tick LERP deceleration step counter in `TimeWarpManager.java`.
+- [x] **Task 3.2**: Smoothly decay `randomTickSpeed` and `stride` during the wake-up transition window (`stride = Math.max(1, LERP(currentStride, 1, progress))`).
+- [x] **Task 3.3**: Verify smooth visual sky rendering transitions at dawn without micro-stutters.
 
 ### 4. 🛡️ Sculk Sensor & Vibration Stasis Guard
 - [ ] **Task 4.1**: Create `SculkSensorMixin.java` / `VibrationSystemMixin.java` to suppress vibration listeners while `TimeWarpManager.get().isWarping()` is `true`.
