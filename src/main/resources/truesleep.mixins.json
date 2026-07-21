@@ -9,7 +9,8 @@
     "LivingEntityMixin",
     "MobEffectInstanceMixin",
     "MobMixin",
-    "ServerLevelMixin"
+    "ServerLevelMixin",
+    "VibrationSystemListenerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

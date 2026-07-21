@@ -1,5 +1,11 @@
 # Historical Changelog (True Sleep)
 
+## [1.3.18-26.2] - 2026-07-21
+
+### Added
+
+- **Sculk Sensor & Vibration Stasis Guard**: Created `VibrationSystemListenerMixin.java` targeting `VibrationSystem$Listener.handleGameEvent`. Automatically suppresses all game event vibrations while time warp is active, preventing accelerated machines, hoppers, doors, or crops from triggering Sculk Sensors, Sculk Shriekers, or spawning Wardens during sleep.
+
 ## [1.3.17-26.2] - 2026-07-21
 
 ### Added
