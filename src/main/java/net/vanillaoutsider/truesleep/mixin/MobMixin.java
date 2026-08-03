@@ -99,7 +99,12 @@ public abstract class MobMixin {
             }
         }
 
-        // 2. Age potion effects if frozen (active mobs are handled by LivingEntityMixin)
+        // 2. Age Chicken Egg Laying timer if chicken
+        if (mob instanceof net.minecraft.world.entity.animal.chicken.Chicken chicken) {
+            chicken.eggTime = Math.max(1, chicken.eggTime - ticks);
+        }
+
+        // 3. Age potion effects if frozen (active mobs are handled by LivingEntityMixin)
         if (isFrozen) {
             for (net.minecraft.world.effect.MobEffectInstance effect : mob.getActiveEffects()) {
                 ((MobEffectInstanceExtensions) effect).truesleep$ageEffect(ticks);

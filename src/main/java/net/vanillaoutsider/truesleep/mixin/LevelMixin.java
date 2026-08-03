@@ -56,18 +56,9 @@ public abstract class LevelMixin {
                             }
                         }
                     } else if (TimeWarpManager.get().shouldAccelerateMachines()) {
-                        boolean isMachine = truesleep$TYPE_MACHINE_CACHE.computeIfAbsent(type, t -> 
-                                t.contains("furnace") 
-                                || t.contains("smoker") 
-                                || t.contains("brewing") 
-                                || t.contains("campfire")
-                                || t.contains("generator") 
-                                || t.contains("smelter") 
-                                || t.contains("alloy") 
-                                || t.contains("compressor") 
-                                || t.contains("crusher") 
-                                || t.contains("grinder")
-                        );
+                        BlockPos pos = ticker.getPos();
+                        BlockEntity be = level.getBlockEntity(pos);
+                        boolean isMachine = be != null && truesleep$isProductionMachine(be);
                         if (isMachine) {
                             for (int i = 0; i < stride; i++) {
                                 if (ticker.isRemoved()) break;
@@ -87,6 +78,9 @@ public abstract class LevelMixin {
         if (be == null) return false;
         net.minecraft.world.level.block.entity.BlockEntityType<?> type = be.getType();
         return truesleep$PRODUCTION_MACHINE_CACHE.computeIfAbsent(type, t -> {
+            if (t.builtInRegistryHolder().is(net.vanillaoutsider.truesleep.TrueSleepTags.ACCELERATED_MACHINES)) {
+                return true;
+            }
             Identifier id = BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(t);
             if (id == null) return false;
             String path = id.getPath();

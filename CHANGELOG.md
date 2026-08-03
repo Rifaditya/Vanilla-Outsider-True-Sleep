@@ -1,6 +1,25 @@
 # Changelog
 
+## [1.3.21+26.2] - 2026-08-03
+
+### Added
+- **Data-Driven Machine Tag**: Registered `#truesleep:accelerated_machines` (`TagKey<BlockEntityType<?>>`) in `TrueSleepTags.java` and updated `LevelMixin.java` so third-party mod machines can be accelerated during sleep warp via data-driven tag definitions.
+- **Passive Mob Stasis Aging**: Updated `MobMixin.java` to decrement chicken `eggTime` during time warp stasis, preserving egg-laying farm productivity during sleep.
+
+## [1.3.20+26.2] - 2026-07-22
+
+### ⚠️ Version Guard Notice
+- Includes zero-dependency ModVersionGuard pre-release protection. Halts startup with an explicit warning banner if run on incompatible Minecraft drops or missing core dependencies to prevent world save corruption.
+
+### Fixed
+- **ModVersionGuard Protection Banner**: Updated ModVersionGuard.java to use Knot ClassLoader resolution (Thread.currentThread().getContextClassLoader()) and display explicit pre-release protection warnings upon an API mismatch.
+
 All notable changes to this project will be documented in this file.
+
+## [1.3.19+26.2] - 2026-07-22
+
+### Added
+- **Forward Compatibility & Version Guard**: Configured `fabric.mod.json` with `"minecraft": ">=26.2-"` for open-ended forward compatibility. Added zero-dependency `ModVersionGuard` check on startup to display human-readable guidance if an incompatible Minecraft API version is encountered.
 
 ## [1.3.18-26.2] - 2026-07-21
 
