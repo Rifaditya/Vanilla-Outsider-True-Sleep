@@ -1,0 +1,60 @@
+name: "Manage Inactive & Feedback Issues"
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at 00:00 UTC
+  issues:
+    types: [closed] # Triggers automatic cleanup when any issue is closed
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  # 1. Check inactive issues with 'waiting-for-feedback'
+  stale:
+    if: github.event_name != 'issues'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v9
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          # ONLY check issues with these labels:
+          only-issue-labels: 'waiting-for-feedback, needs-info'
+          any-issue-labels: true
+          # Safety: Never touch these labels:
+          exempt-issue-labels: 'confirmed-bug, pinned, roadmap, in-progress'
+          
+          # Inactivity settings (7 days + 3 days warning)
+          days-before-issue-stale: 7
+          days-before-issue-close: 3
+          
+          stale-issue-message: 'This issue has been waiting for feedback and is marked as stale. It will be closed in 3 days if no further response is received. Feel free to reply at any time!'
+          close-issue-message: 'This issue has been closed due to no response. If you still need help or have more information, feel free to leave a comment or reopen at any time!'
+          close-issue-reason: 'completed'
+          
+          # PRs are untouched
+          days-before-pr-stale: -1
+          days-before-pr-close: -1
+
+  # 2. Automatically remove 'waiting-for-feedback' when the issue is closed
+  cleanup-labels:
+    if: github.event_name == 'issues' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const labelsToRemove = ['waiting-for-feedback', 'needs-info', 'stale'];
+            for (const label of issue.labels) {
+              if (labelsToRemove.includes(label.name)) {
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  name: label.name
+                }).catch(() => {});
+              }
+            }
