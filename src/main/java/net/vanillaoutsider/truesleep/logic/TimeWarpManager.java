@@ -38,6 +38,8 @@ public class TimeWarpManager {
     private boolean freezeWorkersCached = false;
     private boolean accelerateMachinesCached = true;
     private boolean accelerateHoppersCached = true;
+    private boolean biologicalAgingCached = true;
+    private boolean sleepHungerCached = true;
 
     public boolean hasRecentWarp(long currentWorldTime) {
         return isWarping || (currentWorldTime - lastWarpTime) < 5;
@@ -71,6 +73,14 @@ public class TimeWarpManager {
         return isWarping && accelerateHoppersCached;
     }
 
+    public boolean shouldAgeBiological() {
+        return isWarping && biologicalAgingCached;
+    }
+
+    public boolean shouldDrainSleepHunger() {
+        return isWarping && sleepHungerCached;
+    }
+
     public void tick(ServerLevel level, boolean allPlayersSleeping, Runnable wakeUpCallback) {
         if (allPlayersSleeping) {
             if (!isWarping) {
@@ -78,6 +88,11 @@ public class TimeWarpManager {
                 startWarp(level);
             } else {
                 updateWarpSpeed(level);
+                if (shouldDrainSleepHunger()) {
+                    for (net.minecraft.server.level.ServerPlayer player : level.players()) {
+                        SleepHungerHelper.applySleepHunger(player, 1);
+                    }
+                }
                 if (this.stride > 1) {
                     advanceTimeForStride(level, this.stride - 1);
                 }
@@ -111,6 +126,8 @@ public class TimeWarpManager {
         this.freezeWorkersCached = level.getGameRules().get(TrueSleepRules.WORKER_MOBS_FROZEN);
         this.accelerateMachinesCached = level.getGameRules().get(TrueSleepRules.ACCELERATE_MACHINES);
         this.accelerateHoppersCached = level.getGameRules().get(TrueSleepRules.ACCELERATE_HOPPERS);
+        this.biologicalAgingCached = level.getGameRules().get(TrueSleepRules.BIOLOGICAL_AGING);
+        this.sleepHungerCached = level.getGameRules().get(TrueSleepRules.SLEEP_HUNGER);
 
         long timeOfDay = level.getDefaultClockTime() % 24000L;
         long dist = TimeUtil.getCycleDistance(timeOfDay, wakeTime, 24000L);
@@ -162,6 +179,12 @@ public class TimeWarpManager {
         Optional<Holder<WorldClock>> defaultClock = level.dimensionType().defaultClock();
         if (defaultClock.isPresent()) {
             level.getServer().clockManager().addTicks(defaultClock.get(), (int) skipTicks);
+        }
+
+        if (shouldDrainSleepHunger()) {
+            for (net.minecraft.server.level.ServerPlayer player : level.players()) {
+                SleepHungerHelper.applySleepHunger(player, skipTicks);
+            }
         }
     }
 

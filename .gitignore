@@ -56,3 +56,7 @@ build_log_utf8.txt
 # Marketing Exclusion
 Doc/Marketing/
 !**/BACKLOG.md
+
+Archive/
+Archive Jar of all versions/
+*.jar

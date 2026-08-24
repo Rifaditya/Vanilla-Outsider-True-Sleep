@@ -1,19 +1,4 @@
-/*
- * This file is part of True Sleep.
- *
- * True Sleep is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * True Sleep is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with True Sleep.  If not, see <https://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2026 Dasik (Rifaditya) | GNU GPLv3
 package net.vanillaoutsider.truesleep.mixin;
 
 import net.minecraft.world.level.Level;
@@ -32,7 +17,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-// Verified against: Level.java (26.2+)
+// Verified against: Level.java (26.1.2+)
 @Mixin(Level.class)
 public abstract class LevelMixin {
 
@@ -75,7 +60,9 @@ public abstract class LevelMixin {
                                 t.contains("furnace") 
                                 || t.contains("smoker") 
                                 || t.contains("brewing") 
-                                || t.contains("campfire")
+                                || t.contains("campfire") 
+                                || t.contains("beehive")
+                                || t.contains("bee_nest")
                                 || t.contains("generator") 
                                 || t.contains("smelter") 
                                 || t.contains("alloy") 
@@ -83,6 +70,11 @@ public abstract class LevelMixin {
                                 || t.contains("crusher") 
                                 || t.contains("grinder")
                         );
+                        if (!isMachine) {
+                            BlockPos pos = ticker.getPos();
+                            BlockEntity be = level.getBlockEntity(pos);
+                            isMachine = be != null && truesleep$isProductionMachine(be);
+                        }
                         if (isMachine) {
                             for (int i = 0; i < stride; i++) {
                                 if (ticker.isRemoved()) break;
@@ -102,6 +94,9 @@ public abstract class LevelMixin {
         if (be == null) return false;
         net.minecraft.world.level.block.entity.BlockEntityType<?> type = be.getType();
         return truesleep$PRODUCTION_MACHINE_CACHE.computeIfAbsent(type, t -> {
+            if (t.builtInRegistryHolder().is(net.vanillaoutsider.truesleep.TrueSleepTags.ACCELERATED_MACHINES)) {
+                return true;
+            }
             Identifier id = BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(t);
             if (id == null) return false;
             String path = id.getPath();
@@ -109,6 +104,8 @@ public abstract class LevelMixin {
                     || path.contains("smoker") 
                     || path.contains("brewing") 
                     || path.contains("campfire") 
+                    || path.contains("beehive")
+                    || path.contains("bee_nest")
                     || path.contains("generator") 
                     || path.contains("smelter") 
                     || path.contains("alloy") 

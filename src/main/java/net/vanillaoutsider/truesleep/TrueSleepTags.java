@@ -1,27 +1,15 @@
-/*
- * This file is part of True Sleep.
- *
- * True Sleep is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * True Sleep is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with True Sleep.  If not, see <https://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2026 Dasik (Rifaditya) | GNU GPLv3
 package net.vanillaoutsider.truesleep;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class TrueSleepTags {
     public static final TagKey<EntityType<?>> WORKER_MOBS = TagKey.create(Registries.ENTITY_TYPE,
             Identifier.fromNamespaceAndPath("truesleep", "worker_mobs"));
+    public static final TagKey<BlockEntityType<?>> ACCELERATED_MACHINES = TagKey.create(Registries.BLOCK_ENTITY_TYPE,
+            Identifier.fromNamespaceAndPath("truesleep", "accelerated_machines"));
 }
