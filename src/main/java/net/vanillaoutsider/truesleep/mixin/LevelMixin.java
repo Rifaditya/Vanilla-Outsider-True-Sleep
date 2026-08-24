@@ -56,9 +56,25 @@ public abstract class LevelMixin {
                             }
                         }
                     } else if (TimeWarpManager.get().shouldAccelerateMachines()) {
-                        BlockPos pos = ticker.getPos();
-                        BlockEntity be = level.getBlockEntity(pos);
-                        boolean isMachine = be != null && truesleep$isProductionMachine(be);
+                        boolean isMachine = truesleep$TYPE_MACHINE_CACHE.computeIfAbsent(type, t -> 
+                                t.contains("furnace") 
+                                || t.contains("smoker") 
+                                || t.contains("brewing") 
+                                || t.contains("campfire") 
+                                || t.contains("beehive")
+                                || t.contains("bee_nest")
+                                || t.contains("generator") 
+                                || t.contains("smelter") 
+                                || t.contains("alloy") 
+                                || t.contains("compressor") 
+                                || t.contains("crusher") 
+                                || t.contains("grinder")
+                        );
+                        if (!isMachine) {
+                            BlockPos pos = ticker.getPos();
+                            BlockEntity be = level.getBlockEntity(pos);
+                            isMachine = be != null && truesleep$isProductionMachine(be);
+                        }
                         if (isMachine) {
                             for (int i = 0; i < stride; i++) {
                                 if (ticker.isRemoved()) break;
@@ -88,6 +104,8 @@ public abstract class LevelMixin {
                     || path.contains("smoker") 
                     || path.contains("brewing") 
                     || path.contains("campfire") 
+                    || path.contains("beehive")
+                    || path.contains("bee_nest")
                     || path.contains("generator") 
                     || path.contains("smelter") 
                     || path.contains("alloy") 

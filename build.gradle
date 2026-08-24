@@ -60,3 +60,63 @@ jar {
 		rename { "${it}_${project.base.archivesName.get()}" }
 	}
 }
+
+afterEvaluate {
+    def targetJarTask = tasks.findByName('remapJar') ?: tasks.findByName('jar')
+    if (targetJarTask != null) {
+        def archiveTask = tasks.register('archiveReleaseJar') {
+            group = 'build'
+            description = 'Automatically copies built release JAR to central Archive Jar of all versions/MC 26.2 and Modrinth profile'
+            dependsOn targetJarTask
+            doLast {
+                def jarFile = targetJarTask.archiveFile.get().asFile
+                if (!jarFile.exists()) {
+                    jarFile = file("build/libs/${project.archives_base_name}-${project.mod_version}.jar")
+                }
+                if (jarFile.exists()) {
+                    // 1. Central Outer Archive (MC 26.2)
+                    def archiveDir = file("../../Archive Jar of all versions/MC 26.2")
+                    if (!archiveDir.exists()) {
+                        archiveDir.mkdirs()
+                    }
+                    copy {
+                        from jarFile
+                        into archiveDir
+                    }
+                    // Copy sources jar if exists
+                    def sourcesJar = file("build/libs/${project.archives_base_name}-${project.mod_version}-sources.jar")
+                    if (sourcesJar.exists()) {
+                        copy {
+                            from sourcesJar
+                            into archiveDir
+                        }
+                    }
+                    println "[AUTO-ARCHIVE] Successfully copied ${jarFile.name} to central Archive directory: ${archiveDir.canonicalPath}"
+                    
+                    // 2. Modrinth Profile Sync (if directories exist)
+                    def profilePaths = [
+                        "C:/Users/fmrif/AppData/Roaming/ModrinthApp/profiles/Fabric 26.2 (1)/mods",
+                        "C:/Users/fmrif/AppData/Roaming/ModrinthApp/profiles/Fabric 26.x test the latest/mods"
+                    ]
+                    profilePaths.each { p ->
+                        def modrinthProfileMods = file(p)
+                        if (modrinthProfileMods.exists()) {
+                            modrinthProfileMods.listFiles().each { f ->
+                                if (f.name.startsWith(project.archives_base_name) && f.name.endsWith(".jar") && f.name != jarFile.name) {
+                                    f.delete()
+                                    println "[MODRINTH-SYNC] Purged old version from launcher profile: ${f.name}"
+                                }
+                            }
+                            copy {
+                                from jarFile
+                                into modrinthProfileMods
+                            }
+                            println "[MODRINTH-SYNC] Deployed ${jarFile.name} to ${p}"
+                        }
+                    }
+                }
+            }
+        }
+        build.finalizedBy(archiveTask)
+    }
+}

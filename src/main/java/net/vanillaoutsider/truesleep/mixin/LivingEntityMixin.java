@@ -25,9 +25,12 @@ public abstract class LivingEntityMixin {
         if (!self.level().isClientSide() && TimeWarpManager.get().isWarping()) {
             long stride = TimeWarpManager.get().getStride();
             if (stride > 1) {
-                int skipTicks = (int) (stride - 1);
-                for (MobEffectInstance effect : this.getActiveEffects()) {
-                    ((MobEffectInstanceExtensions) effect).truesleep$ageEffect(skipTicks);
+                Collection<MobEffectInstance> effects = this.getActiveEffects();
+                if (!effects.isEmpty()) {
+                    int skipTicks = (int) (stride - 1);
+                    for (MobEffectInstance effect : effects) {
+                        ((MobEffectInstanceExtensions) effect).truesleep$ageEffect(skipTicks);
+                    }
                 }
             }
         }

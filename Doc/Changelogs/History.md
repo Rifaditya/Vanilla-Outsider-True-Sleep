@@ -1,6 +1,26 @@
 # Historical Changelog (True Sleep)
 
-## [1.3.18-26.2] - 2026-07-21
+## [1.3.22+26.2] - 2026-08-18
+
+### Added
+- **Dedicated Brigadier Command Suite (`/truesleep`)**: Introduced an in-game command suite (`/truesleep help`, `status`, `get`, `set`, `reset`, `reload`) with rich tab completion, permission controls (`LEVEL_GAMEMASTERS`), and 2-way synchronization between active world `GameRules` and `config/truesleep.json`.
+- **Introspective Live Status Summary**: Added `/truesleep status` to report active time-warp state, simulation stride, performance limit (Engine TPS), time speed (Virtual TPS), sleep threshold, wake time, mob stasis toggles, and machine acceleration.
+
+## [1.3.21+26.2] - 2026-08-03
+
+### Added
+- **Data-Driven Machine Tag**: Registered `#truesleep:accelerated_machines` (`TagKey<BlockEntityType<?>>`) in `TrueSleepTags.java` and updated `LevelMixin.java` so third-party mod machines can be accelerated during sleep warp via data-driven tag definitions.
+- **Passive Mob Stasis Aging**: Updated `MobMixin.java` to decrement chicken `eggTime` during time warp stasis, preserving egg-laying farm productivity during sleep.
+
+## [1.3.20+26.2] - 2026-07-22
+
+### Fixed
+- **ModVersionGuard Protection Banner**: Updated ModVersionGuard.java to use Knot ClassLoader resolution (Thread.currentThread().getContextClassLoader()) and display explicit pre-release protection warnings upon an API mismatch.
+
+## [1.3.19+26.2] - 2026-07-22
+
+### Added
+- **Forward Compatibility & Version Guard**: Configured `fabric.mod.json` with `"minecraft": ">=26.2-"` for open-ended forward compatibility. Added zero-dependency `ModVersionGuard` check on startup.
 
 ### Added
 

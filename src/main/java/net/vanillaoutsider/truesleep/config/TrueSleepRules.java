@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.dasik.social.api.gamerule.DynamicGameRuleManager;
 
-
 public class TrueSleepRules {
         public static final GameRuleCategory TRUE_SLEEP_CATEGORY = GameRuleCategory
                         .register(Identifier.fromNamespaceAndPath("truesleep", "config"));
@@ -28,10 +27,11 @@ public class TrueSleepRules {
         private static boolean defaultWorkerMobsFrozen = false;
         private static boolean defaultAccelerateMachines = true;
         private static boolean defaultAccelerateHoppers = true;
+        private static boolean defaultBiologicalAging = true;
+        private static boolean defaultSleepHunger = true;
 
         // Static initializer
         static {
-                // Must be registered here to be ready before runLoyaltyBridge and GameRules
                 TRUE_SLEEP_MOB_CATEGORY = DynamicGameRuleManager
                                 .registerCategory(Identifier.fromNamespaceAndPath("truesleep", "mob_settings"));
 
@@ -81,23 +81,30 @@ public class TrueSleepRules {
         public static final GameRule<Boolean> ACCELERATE_MACHINES = DynamicGameRuleManager
                         .booleanRule("truesleep:accelerate_machines", TRUE_SLEEP_CATEGORY, defaultAccelerateMachines)
                         .name("Accelerate Machines")
-                        .description("Speeds up furnaces, brewing stands, and modded machines during sleep. Default: ON.")
+                        .description("Speeds up furnaces, brewing stands, beehives, and modded machines during sleep. Default: ON.")
                         .register();
         public static final GameRule<Boolean> ACCELERATE_HOPPERS = DynamicGameRuleManager
                         .booleanRule("truesleep:accelerate_hoppers", TRUE_SLEEP_CATEGORY, defaultAccelerateHoppers)
                         .name("Accelerate Hoppers")
                         .description("Speeds up hoppers connected directly to smelting or brewing machines to feed them at matching speeds. Default: ON.")
                         .register();
+        public static final GameRule<Boolean> BIOLOGICAL_AGING = DynamicGameRuleManager
+                        .booleanRule("truesleep:biological_aging", TRUE_SLEEP_CATEGORY, defaultBiologicalAging)
+                        .name("Biological Farm Aging")
+                        .description("Simulates sheep wool grazing, chicken egg timers, and baby animal growth during sleep stasis. Default: ON.")
+                        .register();
+        public static final GameRule<Boolean> SLEEP_HUNGER = DynamicGameRuleManager
+                        .booleanRule("truesleep:sleep_hunger", TRUE_SLEEP_CATEGORY, defaultSleepHunger)
+                        .name("Sleep Hunger Drain")
+                        .description("Drains player hunger naturally overnight during time warp so you wake up needing breakfast. Default: ON.")
+                        .register();
 
         private static void runLoyaltyBridge() {
                 // 1. Load or Initialize Global Template
-
-                TrueSleepConfig.load(); // Reads file if exists, sets defaults if not.
+                TrueSleepConfig.load();
                 TrueSleepConfig config = TrueSleepConfig.get();
 
-                // 2. Migration Logic — stability clamp removed. User owns their configuration.
-
-                // 3. Set Defaults from Config
+                // 2. Set Defaults from Config
                 defaultEngineTps = (int) config.engineTps;
                 defaultVirtualTps = (int) config.virtualTps;
                 defaultSleepThreshold = config.sleepThreshold;
@@ -107,29 +114,10 @@ public class TrueSleepRules {
                 defaultWorkerMobsFrozen = config.freezeWorkers;
                 defaultAccelerateMachines = config.accelerateMachines;
                 defaultAccelerateHoppers = config.accelerateHoppers;
-                // But for now, sticking to the plan's direct register or variable approach.
-                // Let's keep it consistent.
+                defaultBiologicalAging = config.biologicalAging;
+                defaultSleepHunger = config.sleepHunger;
 
-                // The GameRule registration uses these static values.
-                // Note: For the new rules (Threshold/Wake), we can't easily change the static
-                // registration defaults
-                // dynamically unless we read config BEFORE this class is loaded?
-                // Actually, this static block runs when class is loaded.
-                // So the static fields below (SLEEP_THRESHOLD) will use the literals we pass
-                // unless we do:
-                // public static final GameRule<Integer> SLEEP_THRESHOLD = ... register(...,
-                // config.sleepThreshold, ...);
-                // BUT strict Java order implies we must have variables ready.
-                // Solution: Read config FIRST in static block, populate static vars, THEN
-                // register.
-                // Wait, 'runLoyaltyBridge' is called in static block. It populates
-                // 'defaultEngineTps' etc.
-                // So we just need to add static vars for the new rules.
-
-                // 4. Persistence (Additive Update)
-                // TrueSleepConfig.load() handles loading. If new fields were missing in JSON,
-                // GSON leaves them default (or null).
-                // To be additive, we just save it back. GSON will write the new fields.
+                // 3. Persistence (Additive Update)
                 TrueSleepConfig.save();
 
                 LoggerFactory.getLogger("TrueSleep").info("Dreamweaver Protocol: Global Template Loaded.");
@@ -141,7 +129,6 @@ public class TrueSleepRules {
                         Identifier id = BuiltInRegistries.ENTITY_TYPE.getKey(entityType);
                         if (id != null) {
                                 String ruleName = "truesleep:unfreeze_" + id.getNamespace() + "_" + id.getPath();
-                                String entityName = net.minecraft.util.Util.makeDescriptionId("entity", id);
                                 DynamicGameRuleManager.booleanRule(ruleName, TRUE_SLEEP_MOB_CATEGORY, false)
                                     .name("Unfreeze " + id.getPath().replace('_', ' '))
                                     .description("Allows this entity type to bypass True Sleep freezing.")
