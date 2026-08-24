@@ -1,0 +1,87 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+
+# IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# VS Code
+.vscode/
+bin/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Fabric
+run/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+
+# IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# VS Code
+.vscode/
+bin/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Fabric
+run/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Artifacts
+releases/
+*.log
+# Build Logs
+build_log.txt
+build_log_utf8.txt
+# Logging and archives
+*.log
+*.log.gz
+*.log.txt
+*.log.zip
+*.log.7z
+*.log.rar
+*.log.tar
+*.log.tar.gz
+*.log.tar.bz2
+*.log.tar.xz
+*.log.tar.zst
+*.log.tar.lz4
+*.log.tar.lzo
+*.log.tar.zstd
+build_log*.txt
+
+# Marketing Exclusion
+Doc/Marketing/
+!**/BACKLOG.md
+*hype_*
+
+Archive/
+Archive Jar of all versions/
+*.jar

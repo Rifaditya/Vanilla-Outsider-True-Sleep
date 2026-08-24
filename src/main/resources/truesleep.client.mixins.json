@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "net.vanillaoutsider.truesleep.mixin.client",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+    "HudMixin",
+    "SkyRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,116 @@
+plugins {
+	id 'net.fabricmc.fabric-loom' version '1.15-SNAPSHOT'
+	id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+	archivesName = project.archives_base_name
+}
+
+repositories {
+	maven { url "https://maven.shedaniel.me/" }
+	maven { url "https://maven.terraformersmc.com/releases/" }
+    mavenLocal()
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	// mappings "net.fabricmc:yarn:${project.minecraft_version}:v2" 
+    // Intentionally omitted mappings to match Better Dogs approach for 26.1-snapshot
+
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    // Config
+    implementation("com.google.code.gson:gson:2.10.1")
+
+    // DasikLibrary
+    implementation "net.dasik.social:dasik-library:${project.dasik_library_version}"
+
+    compileOnly "me.shedaniel.cloth:cloth-config-fabric:26.1.154"
+    runtimeOnly "me.shedaniel.cloth:cloth-config-fabric:26.1.154"
+
+    compileOnly "com.terraformersmc:modmenu:18.0.0-beta.1"
+    runtimeOnly "com.terraformersmc:modmenu:18.0.0-beta.1"
+}
+
+processResources {
+	inputs.property "version", project.version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": inputs.properties.version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 25
+}
+
+java {
+	withSourcesJar()
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
+}
+
+jar {
+	from("LICENSE") {
+		rename { "${it}_${project.base.archivesName.get()}" }
+	}
+}
+
+afterEvaluate {
+    def targetJarTask = tasks.findByName('remapJar') ?: tasks.findByName('jar')
+    if (targetJarTask != null) {
+        def archiveTask = tasks.register('archiveReleaseJar') {
+            group = 'build'
+            description = 'Automatically copies built release JAR to central Archive Jar of all versions/MC 26.3 and Modrinth profile'
+            dependsOn targetJarTask
+            doLast {
+                def jarFile = targetJarTask.archiveFile.get().asFile
+                if (!jarFile.exists()) {
+                    jarFile = file("build/libs/${project.archives_base_name}-${project.mod_version}.jar")
+                }
+                if (jarFile.exists()) {
+                    // 1. Central Outer Archive (MC 26.3)
+                    def archiveDir = file("../../Archive Jar of all versions/MC 26.3")
+                    if (!archiveDir.exists()) {
+                        archiveDir.mkdirs()
+                    }
+                    copy {
+                        from jarFile
+                        into archiveDir
+                    }
+                    // Copy sources jar if exists
+                    def sourcesJar = file("build/libs/${project.archives_base_name}-${project.mod_version}-sources.jar")
+                    if (sourcesJar.exists()) {
+                        copy {
+                            from sourcesJar
+                            into archiveDir
+                        }
+                    }
+                    println "[AUTO-ARCHIVE] Successfully copied ${jarFile.name} to central Archive directory: ${archiveDir.canonicalPath}"
+                    
+                    // 2. Modrinth Profile Sync (if directory exists)
+                    def modrinthProfileMods = file("C:/Users/fmrif/AppData/Roaming/ModrinthApp/profiles/Fabric 26.3ish/mods")
+                    if (modrinthProfileMods.exists()) {
+                        modrinthProfileMods.listFiles().each { f ->
+                            if (f.name.startsWith(project.archives_base_name) && f.name.endsWith(".jar") && f.name != jarFile.name) {
+                                f.delete()
+                                println "[MODRINTH-SYNC] Purged old version from launcher profile: ${f.name}"
+                            }
+                        }
+                        copy {
+                            from jarFile
+                            into modrinthProfileMods
+                        }
+                        println "[MODRINTH-SYNC] Deployed ${jarFile.name} to Modrinth profile mods folder."
+                    }
+                }
+            }
+        }
+        build.finalizedBy(archiveTask)
+    }
+}

@@ -1,0 +1,126 @@
+# Mixin Documentation: True Sleep
+
+## `ServerLevelMixin`
+
+**Target Class**: `net.minecraft.server.level.ServerLevel`
+**Purpose**: Intercept vanilla sleep logic and inject custom "Warp" logic.
+
+### 1. Disabling Time Skip
+
+The most critical part of the mod is stopping the vanilla game from "skipping" the night instantly.
+
+```java
+@Redirect(
+    method = "tick",
+    at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/SleepStatus;areEnoughSleeping(I)Z")
+)
+private boolean truesleep$silentSleepSuppression(SleepStatus instance, int percentage) {
+    // We force this to return FALSE.
+    // This tricks the vanilla 'tick' loop into thinking "not enough people are sleeping".
+    // Result: The game continues to tick normally, it does NOT skip time.
+    return false;
+}
+```
+
+### 2. Monitoring Sleep Status
+
+Since we lied to the vanilla game (telling it nobody is sleeping), we must check the *real* status ourselves to trigger our custom logic. Build 10 now strictly mirrors vanilla's two-condition gate.
+
+```java
+@Shadow private List<ServerPlayer> players; // Shadowed in Build 8
+
+@Inject(method = "tick", at = @At("TAIL"))
+private void truesleep$manageTimeWarp(BooleanSupplier haveTime, CallbackInfo ci) {
+    // 1. Get the configured percentage rule
+    int percentage = this.getGameRules().get(GameRules.PLAYERS_SLEEPING_PERCENTAGE);
+    
+    // 2. Mirror vanilla's exact two-condition gate: enough sleeping AND deep asleep.
+    // This ensures playersSleepingPercentage is fully respected.
+    boolean enough = this.sleepStatus.areEnoughSleeping(percentage)
+                  && this.sleepStatus.areEnoughDeepSleeping(percentage, this.players);
+    
+    // 3. Pass this truth to our Manager
+    TimeWarpManager.get().tick(
+        (ServerLevel)(Object)this, 
+        enough, 
+        this::wakeUpAllPlayers 
+    );
+}
+```
+
+## `CatMixin`
+
+**Target Class**: `net.minecraft.world.entity.animal.feline.Cat.CatRelaxOnOwnerGoal`
+**Purpose**: Restore vanilla Cat Gift functionality during Time Warp.
+
+### The Problem
+
+Vanilla cats only give a morning gift if the player slept for at least **100 ticks (5 seconds)**.
+However, True Sleep's "Time Warp" accelerates the night so fast that the night might pass in only **1.2 seconds** (even though 10 hours of game time passed). The cat thinks you didn't sleep long enough.
+
+### The Fix
+
+We hook into the check and ask the `TimeWarpManager` if a Time Warp happened recently.
+
+```java
+@Redirect(
+    method = "stop", 
+    at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getSleepTimer()I")
+)
+private int truesleep$bypassSleepTimerForGifts(Player player) {
+    // If we just finished a supersonic Time Warp, LIE to the cat.
+    if (TimeWarpManager.get().hasRecentWarp(level.getGameTime())) {
+        return 100; // "Yes, cat, I definitely slept for 5 seconds."
+    }
+    return player.getSleepTimer(); // Regular behavior
+}
+```
+
+### 26.1 API Fixes
+
+In Minecraft 26.1, `GameRules.getInt` was replaced by a generic `get`.
+
+- **Old**: `getGameRules().getInt(KEY)`
+- **26.1**: `getGameRules().get(KEY)` (Auto-unboxing handles the Integer return).
+
+## Client-Side Mixins
+
+### `GuiMixin`
+
+**Target Class**: `net.minecraft.client.gui.Gui`
+**Purpose**: Remove the visual obstruction when sleeping.
+
+```java
+@Inject(method = "renderSleepOverlay", at = @At("HEAD"), cancellable = true)
+private void truesleep$removeSleepDarkening(CallbackInfo ci) {
+    // Unconditionally cancel the overlay.
+    // We want players to see the accelerated time passing.
+    ci.cancel();
+}
+```
+
+## `AgeableMobMixin`
+
+**Target Class**: `net.minecraft.world.entity.AgeableMob`
+**Purpose**: Support "Golden Dandelion" features (Age Locking).
+
+```java
+@Inject(method = "aiStep", at = @At("HEAD"), cancellable = true)
+private void truesleep$injectGrowth(CallbackInfo ci) {
+    if (this.isAgeLocked()) return; // Respect age lock
+    // ... custom aging logic (Quantum Stride)
+}
+
+## `MobMixin`
+
+**Target Class**: `net.minecraft.world.entity.Mob`
+**Purpose**: Handles the cryogenic stasis/freezing of entities during warping.
+
+```java
+@Inject(method = "tick", at = @At("HEAD"), cancellable = true)
+private void truesleep$freezeDuringWarp(CallbackInfo ci) {
+    // Checks if the entity is allowed to unfreeze via GameRules
+    // If not, cancels the tick to freeze the mob in space.
+}
+```
+```
