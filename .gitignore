@@ -60,3 +60,6 @@ Doc/Marketing/
 Archive/
 Archive Jar of all versions/
 *.jar
+# Platform Publisher API Token Security Vault
+*platform_tokens.json
+.agents/config/platform_tokens.json
