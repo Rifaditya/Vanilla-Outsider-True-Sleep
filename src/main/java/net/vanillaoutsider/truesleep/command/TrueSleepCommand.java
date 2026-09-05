@@ -11,6 +11,7 @@ import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.dasik.social.api.config.DasikSupportHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.gamerules.GameRules;
@@ -119,6 +120,7 @@ public class TrueSleepCommand {
                 "§a/truesleep reload§r - Reload JSON config from disk and apply to world\n" +
                 "§7Valid Settings: §fengine_tps, virtual_tps, sleep_threshold, wake_time, freeze_mobs, freeze_workers, drown_immunity, accelerate_machines, accelerate_hoppers, biological_aging, sleep_hunger§r"
         ), false);
+        source.sendSuccess(DasikSupportHelper::getCommandFooter, false);
         return 1;
     }
 
@@ -157,6 +159,7 @@ public class TrueSleepCommand {
                 "§e• Biological Farm Aging: " + (bioAging ? "§aON" : "§cOFF") + "§r\n" +
                 "§e• Sleep Hunger Drain: " + (sleepHunger ? "§aON" : "§cOFF") + "§r"
         ), false);
+        source.sendSuccess(DasikSupportHelper::getCommandFooter, false);
         return 1;
     }
 
