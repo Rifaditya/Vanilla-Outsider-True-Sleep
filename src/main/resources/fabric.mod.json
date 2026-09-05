@@ -34,11 +34,12 @@
         "minecraft": ">=26.3-",
         "java": ">=25",
         "fabric-api": "*",
-        "dasik-library": ">=1.8.0"
+        "dasik-library": ">=1.8.38"
     },
     "suggests": {
         "modmenu": "*",
-        "cloth-config": "*"
+        "yet-another-config-lib": "*",
+        "yet_another_config_lib_v3": "*"
     },
     "custom": {
         "modmenu": {

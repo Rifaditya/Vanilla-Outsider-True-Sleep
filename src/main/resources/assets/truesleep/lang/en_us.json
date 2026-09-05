@@ -31,5 +31,8 @@
   "config.truesleep.wakeTime": "Wake Time (Ticks)",
   "config.truesleep.drownImmunity": "Drown Immunity",
   "config.truesleep.freezeMobs": "Freeze Mobs",
-  "config.truesleep.freezeWorkers": "Freeze Villagers"
+  "config.truesleep.freezeWorkers": "Freeze Villagers",
+
+  "dasiklibrary.support.kofi.button": "☕ Support Solo Dev on Ko-fi",
+  "dasiklibrary.support.kofi.tooltip": "Click to visit ko-fi.com/dasikigaijin in your default browser and directly support solo development!"
 }

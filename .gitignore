@@ -88,3 +88,5 @@ Archive Jar of all versions/
 # Platform Publisher API Token Security Vault
 *platform_tokens.json
 .agents/config/platform_tokens.json
+
+Doc/Wiki/
