@@ -1,43 +1,51 @@
 {
-  "schemaVersion": 1,
-  "id": "vanilla-outsider-true-sleep",
-  "version": "${version}",
-  "name": "Vanilla Outsider: True Sleep",
-  "description": "Preserves world simulation by accelerating ticks during sleep instead of skipping time.",
-  "icon": "assets/vanilla-outsider-true-sleep/icon.png",
-  "authors": [
-    "DasikIgaijin"
-  ],
-  "contact": {
-    "homepage": "https://github.com/Rifaditya",
-    "sources": "https://github.com/Rifaditya/Vanilla-Outsider-True-Sleep"
-  },
-  "license": "GPL-3.0",
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-      "net.vanillaoutsider.truesleep.TrueSleep"
+    "schemaVersion": 1,
+    "id": "vanilla-outsider-true-sleep",
+    "version": "${version}",
+    "name": "Vanilla Outsider: True Sleep",
+    "description": "Preserves world simulation by accelerating ticks during sleep instead of skipping time.",
+    "icon": "assets/vanilla-outsider-true-sleep/icon.png",
+    "authors": [
+        "DasikIgaijin"
     ],
-    "modmenu": [
-      "net.vanillaoutsider.truesleep.config.ModMenuIntegration"
-    ]
-  },
-  "mixins": [
-    "truesleep.mixins.json",
-    {
-      "config": "truesleep.client.mixins.json",
-      "environment": "client"
+    "contact": {
+        "homepage": "https://github.com/Rifaditya",
+        "sources": "https://github.com/Rifaditya/Vanilla-Outsider-True-Sleep"
+    },
+    "license": "GPL-3.0",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "net.vanillaoutsider.truesleep.TrueSleep"
+        ],
+        "modmenu": [
+            "net.vanillaoutsider.truesleep.config.ModMenuIntegration"
+        ]
+    },
+    "mixins": [
+        "truesleep.mixins.json",
+        {
+            "config": "truesleep.client.mixins.json",
+            "environment": "client"
+        }
+    ],
+    "depends": {
+        "fabricloader": ">=0.16.10",
+        "minecraft": ">=26.2-",
+        "java": ">=25",
+        "fabric-api": "*",
+        "dasik-library": ">=1.8.0"
+    },
+    "suggests": {
+        "modmenu": "*",
+        "cloth-config": "*"
+    },
+    "custom": {
+        "modmenu": {
+            "links": {
+                "modmenu.donate": "https://ko-fi.com/dasikigaijin",
+                "modmenu.kofi": "https://ko-fi.com/dasikigaijin"
+            }
+        }
     }
-  ],
-  "depends": {
-    "fabricloader": ">=0.16.10",
-    "minecraft": ">=26.2-",
-    "java": ">=25",
-    "fabric-api": "*",
-    "dasik-library": ">=1.8.0"
-  },
-  "suggests": {
-    "modmenu": "*",
-    "cloth-config": "*"
-  }
 }
