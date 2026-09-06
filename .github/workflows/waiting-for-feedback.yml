@@ -32,20 +32,20 @@ jobs:
 
             const isAuthor = comment ? (comment.user.login === issue.user.login) : (context.payload.sender.login === issue.user.login);
             const labels = issue.labels.map(l => l.name.toLowerCase());
-            const hasWaitingOrStale = labels.some(l => 
+            const hasStale = labels.includes('stale');
+            const hasWaitingLabel = labels.some(l => 
               l === 'waiting for feedback' || 
               l === 'needs-info' || 
-              l === 'waiting-for-feedback' ||
-              l === 'stale'
+              l === 'waiting-for-feedback'
             );
 
-            // 1. Explicit Reopen Event (User clicks "Reopen issue")
+            // 1. Explicit Reopen Event (User or Maintainer clicks "Reopen issue")
             if (eventName === 'issues' && action === 'reopened') {
-              console.log(`Issue #${issue.number} was reopened by @${context.payload.sender.login}.`);
+              console.log(`Issue #${issue.number} was reopened by @${context.payload.sender.login}. Removing stale tag.`);
               
+              // Always remove stale label immediately on reopen
               for (const l of issue.labels) {
-                const lower = l.name.toLowerCase();
-                if (lower === 'waiting for feedback' || lower === 'needs-info' || lower === 'waiting-for-feedback' || lower === 'stale') {
+                if (l.name.toLowerCase() === 'stale') {
                   try {
                     await github.rest.issues.removeLabel({
                       owner: context.repo.owner,
@@ -53,29 +53,33 @@ jobs:
                       issue_number: issue.number,
                       name: l.name
                     });
+                    console.log(`Removed stale label from #${issue.number}`);
                   } catch (err) {
-                    console.warn(`Could not remove label ${l.name}:`, err);
+                    console.warn(`Could not remove stale label:`, err);
                   }
                 }
               }
 
-              try {
-                await github.rest.issues.addLabels({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: issue.number,
-                  labels: ['active']
-                });
-              } catch (err) {
-                console.warn('Could not add active label:', err);
+              // Ensure waiting for feedback is present so inactivity tracking re-arms
+              if (!hasWaitingLabel) {
+                try {
+                  await github.rest.issues.addLabels({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issue.number,
+                    labels: ['waiting for feedback']
+                  });
+                } catch (err) {
+                  console.warn('Could not add waiting for feedback label:', err);
+                }
               }
               return;
             }
 
             // 2. Author Comment Event
             if (eventName === 'issue_comment' && isAuthor) {
-              // If closed and has stale label, auto-reopen
-              if (issue.state === 'closed' && labels.includes('stale')) {
+              // If closed and was marked stale, auto-reopen since author provided feedback
+              if (issue.state === 'closed' && hasStale) {
                 console.log(`Author replied on stale closed issue #${issue.number}. Reopening automatically.`);
                 try {
                   await github.rest.issues.update({
@@ -88,18 +92,17 @@ jobs:
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     issue_number: issue.number,
-                    body: `Issue automatically reopened following reply from @${comment.user.login}. Marked as \`active\` for review.`
+                    body: `Issue automatically reopened following reply from @${comment.user.login}. Removed \`stale\` tag.`
                   });
                 } catch (err) {
                   console.warn('Could not reopen issue:', err);
                 }
               }
 
-              // Remove waiting & stale labels, add active
-              if (hasWaitingOrStale) {
+              // Always strip stale label if author replies
+              if (hasStale) {
                 for (const l of issue.labels) {
-                  const lower = l.name.toLowerCase();
-                  if (lower === 'waiting for feedback' || lower === 'needs-info' || lower === 'waiting-for-feedback' || lower === 'stale') {
+                  if (l.name.toLowerCase() === 'stale') {
                     try {
                       await github.rest.issues.removeLabel({
                         owner: context.repo.owner,
@@ -108,20 +111,9 @@ jobs:
                         name: l.name
                       });
                     } catch (err) {
-                      console.warn(`Could not remove label ${l.name}:`, err);
+                      console.warn(`Could not remove stale label:`, err);
                     }
                   }
-                }
-
-                try {
-                  await github.rest.issues.addLabels({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    issue_number: issue.number,
-                    labels: ['active']
-                  });
-                } catch (err) {
-                  console.warn('Could not add active label:', err);
                 }
               }
             }
@@ -134,10 +126,11 @@ jobs:
         uses: actions/stale@v9
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          only-labels: 'waiting for feedback'
+          any-of-issue-labels: 'waiting for feedback,needs-info,waiting-for-feedback'
           days-before-issue-stale: 10
           days-before-issue-close: 4
           stale-issue-message: 'This issue is waiting for additional feedback/logs and has had no activity for 10 days. It will be automatically closed in 4 days if no response is received.'
           close-issue-message: 'Closing this issue due to inactivity because requested feedback was not provided. If you still encounter this issue, feel free to reply with the details and the issue can be reopened.'
           stale-issue-label: 'stale'
+          remove-stale-when-updated: true
           exempt-issue-labels: 'pinned,security,in progress,todo'
