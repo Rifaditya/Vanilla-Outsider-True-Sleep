@@ -39,13 +39,10 @@ jobs:
               l === 'waiting-for-feedback'
             );
 
-            // 1. Explicit Reopen Event (User or Maintainer clicks "Reopen issue")
-            if (eventName === 'issues' && action === 'reopened') {
-              console.log(`Issue #${issue.number} was reopened by @${context.payload.sender.login}. Removing stale tag.`);
-              
-              // Always remove stale label immediately on reopen
+            // Helper to strip labels
+            const removeLabelsByName = async (namesToRemove) => {
               for (const l of issue.labels) {
-                if (l.name.toLowerCase() === 'stale') {
+                if (namesToRemove.includes(l.name.toLowerCase())) {
                   try {
                     await github.rest.issues.removeLabel({
                       owner: context.repo.owner,
@@ -53,32 +50,25 @@ jobs:
                       issue_number: issue.number,
                       name: l.name
                     });
-                    console.log(`Removed stale label from #${issue.number}`);
+                    console.log(`Removed label '${l.name}' from #${issue.number}`);
                   } catch (err) {
-                    console.warn(`Could not remove stale label:`, err);
+                    console.warn(`Could not remove label '${l.name}':`, err);
                   }
                 }
               }
+            };
 
-              // Ensure waiting for feedback is present so inactivity tracking re-arms
-              if (!hasWaitingLabel) {
-                try {
-                  await github.rest.issues.addLabels({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    issue_number: issue.number,
-                    labels: ['waiting for feedback']
-                  });
-                } catch (err) {
-                  console.warn('Could not add waiting for feedback label:', err);
-                }
-              }
+            // 1. Explicit Reopen Event (User or Maintainer clicks "Reopen issue")
+            if (eventName === 'issues' && action === 'reopened') {
+              console.log(`Issue #${issue.number} reopened. Resetting to clean slate.`);
+              // Strip stale and waiting labels so it behaves like a clean brand new issue
+              await removeLabelsByName(['stale', 'waiting for feedback', 'needs-info', 'waiting-for-feedback']);
               return;
             }
 
             // 2. Author Comment Event
             if (eventName === 'issue_comment' && isAuthor) {
-              // If closed and was marked stale, auto-reopen since author provided feedback
+              // If issue was closed and marked stale, auto-reopen to clean slate
               if (issue.state === 'closed' && hasStale) {
                 console.log(`Author replied on stale closed issue #${issue.number}. Reopening automatically.`);
                 try {
@@ -92,29 +82,17 @@ jobs:
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     issue_number: issue.number,
-                    body: `Issue automatically reopened following reply from @${comment.user.login}. Removed \`stale\` tag.`
+                    body: `Issue automatically reopened following reply from @${comment.user.login}.`
                   });
                 } catch (err) {
                   console.warn('Could not reopen issue:', err);
                 }
               }
 
-              // Always strip stale label if author replies
-              if (hasStale) {
-                for (const l of issue.labels) {
-                  if (l.name.toLowerCase() === 'stale') {
-                    try {
-                      await github.rest.issues.removeLabel({
-                        owner: context.repo.owner,
-                        repo: context.repo.repo,
-                        issue_number: issue.number,
-                        name: l.name
-                      });
-                    } catch (err) {
-                      console.warn(`Could not remove stale label:`, err);
-                    }
-                  }
-                }
+              // When author replies, always strip 'stale' and 'waiting for feedback'
+              if (hasStale || hasWaitingLabel) {
+                console.log(`Author replied on #${issue.number}. Resetting labels.`);
+                await removeLabelsByName(['stale', 'waiting for feedback', 'needs-info', 'waiting-for-feedback']);
               }
             }
 
