@@ -1,0 +1,143 @@
+name: Issue Feedback Automation
+
+on:
+  issues:
+    types: [reopened]
+  issue_comment:
+    types: [created]
+  schedule:
+    - cron: '0 0 * * *' # Daily midnight UTC check
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  handle_issue_activity:
+    if: (!github.event.issue.pull_request) && (github.event_name == 'issues' || github.event_name == 'issue_comment')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Handle issue reopen or author reply
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const eventName = context.eventName;
+            const action = context.payload.action;
+            const comment = context.payload.comment;
+            const isBot = comment ? comment.user.type === 'Bot' : context.payload.sender.type === 'Bot';
+            
+            if (isBot) return;
+
+            const isAuthor = comment ? (comment.user.login === issue.user.login) : (context.payload.sender.login === issue.user.login);
+            const labels = issue.labels.map(l => l.name.toLowerCase());
+            const hasWaitingOrStale = labels.some(l => 
+              l === 'waiting for feedback' || 
+              l === 'needs-info' || 
+              l === 'waiting-for-feedback' ||
+              l === 'stale'
+            );
+
+            // 1. Explicit Reopen Event (User clicks "Reopen issue")
+            if (eventName === 'issues' && action === 'reopened') {
+              console.log(`Issue #${issue.number} was reopened by @${context.payload.sender.login}.`);
+              
+              for (const l of issue.labels) {
+                const lower = l.name.toLowerCase();
+                if (lower === 'waiting for feedback' || lower === 'needs-info' || lower === 'waiting-for-feedback' || lower === 'stale') {
+                  try {
+                    await github.rest.issues.removeLabel({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      issue_number: issue.number,
+                      name: l.name
+                    });
+                  } catch (err) {
+                    console.warn(`Could not remove label ${l.name}:`, err);
+                  }
+                }
+              }
+
+              try {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  labels: ['active']
+                });
+              } catch (err) {
+                console.warn('Could not add active label:', err);
+              }
+              return;
+            }
+
+            // 2. Author Comment Event
+            if (eventName === 'issue_comment' && isAuthor) {
+              // If closed and has stale label, auto-reopen
+              if (issue.state === 'closed' && labels.includes('stale')) {
+                console.log(`Author replied on stale closed issue #${issue.number}. Reopening automatically.`);
+                try {
+                  await github.rest.issues.update({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issue.number,
+                    state: 'open'
+                  });
+                  await github.rest.issues.createComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issue.number,
+                    body: `Issue automatically reopened following reply from @${comment.user.login}. Marked as \`active\` for review.`
+                  });
+                } catch (err) {
+                  console.warn('Could not reopen issue:', err);
+                }
+              }
+
+              // Remove waiting & stale labels, add active
+              if (hasWaitingOrStale) {
+                for (const l of issue.labels) {
+                  const lower = l.name.toLowerCase();
+                  if (lower === 'waiting for feedback' || lower === 'needs-info' || lower === 'waiting-for-feedback' || lower === 'stale') {
+                    try {
+                      await github.rest.issues.removeLabel({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: issue.number,
+                        name: l.name
+                      });
+                    } catch (err) {
+                      console.warn(`Could not remove label ${l.name}:`, err);
+                    }
+                  }
+                }
+
+                try {
+                  await github.rest.issues.addLabels({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issue.number,
+                    labels: ['active']
+                  });
+                } catch (err) {
+                  console.warn('Could not add active label:', err);
+                }
+              }
+            }
+
+  stale_feedback_check:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Handle Stale Feedback
+        uses: actions/stale@v9
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          only-labels: 'waiting for feedback'
+          days-before-issue-stale: 10
+          days-before-issue-close: 4
+          stale-issue-message: 'This issue is waiting for additional feedback/logs and has had no activity for 10 days. It will be automatically closed in 4 days if no response is received.'
+          close-issue-message: 'Closing this issue due to inactivity because requested feedback was not provided. If you still encounter this issue, feel free to reply with the details and the issue can be reopened.'
+          stale-issue-label: 'stale'
+          exempt-issue-labels: 'pinned,security,in progress,todo'
