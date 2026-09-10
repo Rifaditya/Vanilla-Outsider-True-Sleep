@@ -4,6 +4,7 @@
 
 </div>
 <p align="center">
+    <a href="https://discord.gg/EV99bgAFqb" target="_blank" rel="noopener"><img src="https://img.shields.io/badge/Discord-Join_Community-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Join Discord"></a>
     <a href="https://modrinth.com/mod/fabric-api"><img src="https://img.shields.io/badge/Requires-Fabric_API-blue?style=for-the-badge&logo=fabric" alt="Requires Fabric API"></a>
     <img src="https://img.shields.io/badge/Language-Java-orange?style=for-the-badge&logo=java" alt="Java">
     <img src="https://img.shields.io/badge/License-GPLv3-green?style=for-the-badge" alt="License">
@@ -120,44 +121,84 @@ For the best experience, we recommend installing:
 | **VO: Better Dogs** | ✅ (Wolves cool down faster!) |
 | Empty Dimensions | ✅ |
 
----
+<hr>
 
-## ☕ Support
+<h2>☕ Support</h2>
 
-If you enjoy **True Sleep** and the **Vanilla Outsider** philosophy, consider fueling the next update with a coffee!
+<p>If you enjoy <strong>True Sleep</strong> and the <strong>Vanilla Outsider Collection</strong>, consider fueling future updates!</p>
 
-[![Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20Me-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/dasikigaijin/tip)
-[![SocioBuzz](https://img.shields.io/badge/SocioBuzz-Local_Support-7BB32E?style=for-the-badge)](https://sociabuzz.com/dasikigaijin/tribe)
+<p align="center">
+  <a href="https://ko-fi.com/dasikigaijin/tip"><img src="https://img.shields.io/badge/Ko--fi-Support%20Me-FF5E5B?style=for-the-badge&amp;logo=ko-fi&amp;logoColor=white" alt="Ko-fi"></a>
+  <a href="https://sociabuzz.com/dasikigaijin/tribe"><img src="https://img.shields.io/badge/SocioBuzz-Local_Support-7BB32E?style=for-the-badge" alt="SocioBuzz"></a>
+  <a href="https://saweria.co/DasikIgaijinn"><img src="https://img.shields.io/badge/Saweria-Local_Support-FFA500?style=for-the-badge" alt="Saweria"></a>
+</p>
 
-> [!NOTE]
-> **Indonesian Users:** SocioBuzz supports local payment methods (Gopay, OVO, Dana, etc.) if you want to support me without using PayPal/Ko-fi!
+<blockquote><p><strong>🇮🇩 Indonesian Users:</strong> SocioBuzz and Saweria support local payment methods (Gopay, OVO, Dana, etc.) if you want to support me without using PayPal/Ko-fi!</p></blockquote>
 
----
+<blockquote><p><strong>Dedicated Server Hosting Partner:</strong><br>Looking for a high-performance server to host your community or play with friends? Check out <strong>BisectHosting</strong> for 1-click modpack installations, automated backups, and 24/7 dedicated customer support. Use promo code <strong><code>Dasik</code></strong> for 25% off your first month!</p></blockquote>
 
-## 📜 Credits
+<h3>💬 Join the Community &amp; Get Support</h3>
+<p>Looking for help, want to test early beta builds, or vote on upcoming features? Join our official Discord community!</p>
+<p align="center">
+  <a href="https://discord.gg/EV99bgAFqb" target="_blank" rel="noopener">
+    <img src="https://img.shields.io/badge/Discord-Join_Community-5865F2?style=for-the-badge&amp;logo=discord&amp;logoColor=white" alt="Join Official Discord">
+  </a>
+</p>
 
-| Role | Author |
-| :--- | :--- |
-| **Creator** | DasikIgaijin |
-| **Collection** | Vanilla Outsider |
-| **License** | GNU GPLv3 |
+<hr>
 
----
+<h2>📜 Credits &amp; Modpack Permissions</h2>
 
-> [!IMPORTANT]
-> This mod is part of the **Vanilla Outsider** collection. You are free to use it in modpacks, videos, and servers.
->
-> > [!IMPORTANT]
-> > **Modpack Permissions:** You are free to include this mod in modpacks, **provided the modpack is hosted on the same platform** (e.g. Modrinth).
-> >
-> > **Cross-platform distribution is not permitted.** If you download this mod from Modrinth, your modpack must also be published on Modrinth.
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Information</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Creator / Author</strong></td>
+      <td><strong>Dasik</strong> (Rifaditya)</td>
+    </tr>
+    <tr>
+      <td><strong>Community</strong></td>
+      <td><a href="https://discord.gg/EV99bgAFqb" target="_blank" rel="noopener">Official Discord</a></td>
+    </tr>
+    <tr>
+      <td><strong>Collection</strong></td>
+      <td><a href="https://www.curseforge.com/members/dasikigaijin/projects">Vanilla Outsider</a></td>
+    </tr>
+    <tr>
+      <td><strong>License</strong></td>
+      <td><a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3.0 (GPLv3)</a></td>
+    </tr>
+    <tr>
+      <td><strong>Source Code</strong></td>
+      <td><a href="https://github.com/Rifaditya/Vanilla-Outsider-True-Sleep">GitHub - Rifaditya/Vanilla-Outsider-True-Sleep</a></td>
+    </tr>
+    <tr>
+      <td><strong>Issue Tracker</strong></td>
+      <td><a href="https://github.com/Rifaditya/Vanilla-Outsider-True-Sleep/issues">GitHub Issues</a></td>
+    </tr>
+    <tr>
+      <td><strong>Documentation / Wiki</strong></td>
+      <td><a href="https://github.com/Rifaditya/Vanilla-Outsider-True-Sleep/wiki">GitHub Wiki</a></td>
+    </tr>
+  </tbody>
+</table>
 
----
+<blockquote>
+  <p><strong>📦 Modpack Permissions &amp; Distribution:</strong><br>
+  You are fully welcome to include this mod in any modpack on any platform! However, the mod file must be downloaded directly through official distribution channels (<strong>CurseForge</strong> or <strong>Modrinth</strong>). Re-uploading, mirroring, or redistributing the original mod JAR to third-party mirror sites, scraper portals, or unauthorized launchers is strictly prohibited.</p>
+  <p><strong>⚖️ License &amp; Fork Guidelines (No Zero-Change Re-uploads):</strong><br>
+  This project is open-source under the <strong>GNU GPLv3</strong>. You are fully encouraged to inspect the code, learn from it, and fork the repository to create genuine modifications, substantial feature expansions, or community ports&mdash;provided your project remains open-source under GPLv3 with proper attribution.<br>
+  <strong>However, straight 1:1 re-uploads, clone forks with no meaningful functional changes, or re-publishing identical builds under different project names (e.g. to farm downloads or rewards) are strictly forbidden.</strong></p>
+</blockquote>
 
-<div align="center">
+<hr>
 
-**Made with ❤️ for the Minecraft community**
-
-*Part of the Vanilla Outsider Collection*
-
-</div>
+<p align="center">
+  <strong>Made with ❤️ for the Minecraft community</strong><br>
+  <em>Part of the Vanilla Outsider Collection</em>
+</p>
