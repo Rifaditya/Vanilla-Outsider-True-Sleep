@@ -32,7 +32,6 @@ releases/
 # Build Logs
 build_log.txt
 build_log_utf8.txt
-*log*
 # Logging and archives
 *.log
 *.log.gz
@@ -50,8 +49,7 @@ build_log_utf8.txt
 *.log.tar.zstd
 # Build Logs
 build_log.txt
-build_log_utf8.txt
-*log*
+*.log
 
 # Marketing Exclusion
 Doc/Marketing/
