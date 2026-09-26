@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.28+26.3] - 2026-09-16
+
+### Changed
+- Removed redundant `minecraft:soul_campfire` from `#truesleep:accelerated_machines` tag (shared BlockEntityType).
+
+---
+
 ## [1.3.25+26.3] - 2026-08-18
 
 ### Added
