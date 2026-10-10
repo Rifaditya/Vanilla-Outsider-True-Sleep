@@ -50,7 +50,7 @@ public abstract class ServerLevelMixin {
     @Inject(method = "tick", at = @At("TAIL"))
     private void truesleep$manageTimeWarp(BooleanSupplier haveTime, CallbackInfo ci) {
         ServerLevel level = (ServerLevel) (Object) this;
-        if (level.players().isEmpty()) {
+        if (level.players().isEmpty() || !level.canSleepThroughNights()) {
             return;
         }
 

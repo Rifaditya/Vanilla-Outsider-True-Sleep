@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.30+26.3] - 2026-10-10
+
+### Fixed
+- Added dimension sleep capability check (`canSleepThroughNights()`) to prevent non-sleeping dimensions (Nether, End) from querying or interfering with sleep status.
+- Restored dynamic version template token in `fabric.mod.json`.
+
+---
+
 ## [1.3.29+26.3] - 2026-10-10
 
 ### Fixed
