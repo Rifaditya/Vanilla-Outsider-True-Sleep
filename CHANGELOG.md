@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.30+26.1.2] - 2026-10-10
+
+### Fixed
+- Fixed multiplayer sleep deadlock where players in foreign dimensions aborted ongoing time warps (Issue #2).
+- Added dimension sleep capability check (`canSleepThroughNights()`) to prevent non-sleeping dimensions from polling sleep status.
+- Removed redundant `minecraft:soul_campfire` from `#truesleep:accelerated_machines` tag.
+- Standardized single-line GPLv3 headers across all source files.
+
+---
+
 ## [1.3.25+26.1.2] - 2026-08-18
 
 ### Added
