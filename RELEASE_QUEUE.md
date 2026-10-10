@@ -57,4 +57,4 @@ Open this file in your editor and change `[ ]` to `[x]` when you publish a versi
 - [x] **`1.3.25+26.2`** (2026-08-18) - - **Sleep Hunger Reduction Setting**: Added `SleepHungerHelper.java` for metabolic exhaustion simulation over fast-forwarded night, sprint starvation safety floor (food level 6), `truesleep:sleep_hunger` GameRule, and `/truesleep set/get/status sleep_hunger`.
 - [x] **`1.3.26+26.2`** (2026-09-05) - - **ModMenu Creator Links**: Added Ko-fi support links in mod metadata.
 - [x] **`1.3.27+26.2`** (2026-09-05) - - **YACL v3 Migration**: Replaced Cloth Config screen with YetAnotherConfigLib v3. - - **Ko-fi Support Integration**: Added top-pinned solo developer support button linking directly to Ko-fi in config screen.
-
+- [ ] **`1.3.30+26.2`** (2026-10-10) - - **Dimension-Isolated Time Warp Engine & Sleep Capability Gating (Issue #2)**: Fixed multiplayer sleep deadlocks where awake players in foreign dimensions aborted ongoing time warps. Added `canSleepThroughNights()` check to prevent non-sleeping dimensions from polling sleep status. Cleaned up `#truesleep:accelerated_machines` tag and restored dynamic manifest version token.

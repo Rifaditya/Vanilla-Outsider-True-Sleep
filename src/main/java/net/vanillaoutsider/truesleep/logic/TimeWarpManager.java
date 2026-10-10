@@ -5,7 +5,9 @@ package net.vanillaoutsider.truesleep.logic;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.clock.WorldClock;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gamerules.GameRules;
 import java.util.Optional;
 import net.vanillaoutsider.truesleep.TrueSleep;
@@ -15,6 +17,7 @@ import net.dasik.social.core.GlobalSocialSystem;
 
 public class TimeWarpManager {
     private static final TimeWarpManager INSTANCE = new TimeWarpManager();
+    private ResourceKey<Level> activeLevelKey = null;
     private boolean isWarping = false;
     private long lastWarpTime = 0;
     private long stride = 1;
@@ -72,11 +75,19 @@ public class TimeWarpManager {
         return isWarping && sleepHungerCached;
     }
 
+    public ResourceKey<Level> getActiveLevelKey() {
+        return activeLevelKey;
+    }
+
     public void tick(ServerLevel level, boolean allPlayersSleeping, Runnable wakeUpCallback) {
+        if (activeLevelKey != null && !level.dimension().equals(activeLevelKey)) {
+            return;
+        }
+
         if (allPlayersSleeping) {
             decelerateTicks = 0; // Cancel any active wind-down if sleep resumes
             if (!isWarping) {
-                TrueSleep.LOGGER.info("TrueSleep: Quantum Warp ENGAGED. Initiating TickRateManager Acceleration.");
+                TrueSleep.LOGGER.info("TrueSleep: Quantum Warp ENGAGED for dimension [{}]. Initiating TickRateManager Acceleration.", level.dimension().identifier());
                 startWarp(level);
             } else {
                 updateWarpSpeed(level);
@@ -91,16 +102,19 @@ public class TimeWarpManager {
                 checkMorning(level, wakeUpCallback);
             }
         } else {
-            if (isWarping) {
-                TrueSleep.LOGGER.info("TrueSleep: Warp Aborted - Sleep interrupted. Initiating smooth 15-tick deceleration wind-down.");
-                initiateWindDown(level);
-            } else if (decelerateTicks > 0) {
-                tickWindDown(level);
+            if (activeLevelKey != null && level.dimension().equals(activeLevelKey)) {
+                if (isWarping) {
+                    TrueSleep.LOGGER.info("TrueSleep: Warp Aborted for dimension [{}] - Sleep interrupted. Initiating smooth 15-tick deceleration wind-down.", level.dimension().identifier());
+                    initiateWindDown(level);
+                } else if (decelerateTicks > 0) {
+                    tickWindDown(level);
+                }
             }
         }
     }
 
     private void startWarp(ServerLevel level) {
+        this.activeLevelKey = level.dimension();
         isWarping = true;
         decelerateTicks = 0;
         this.originalRandomTickSpeed = level.getGameRules().get(GameRules.RANDOM_TICK_SPEED);
@@ -179,6 +193,7 @@ public class TimeWarpManager {
     }
 
     private void stopWarp(ServerLevel level) {
+        this.activeLevelKey = null;
         isWarping = false;
         decelerateTicks = 0;
         lastWarpTime = level.getGameTime();
@@ -244,7 +259,7 @@ public class TimeWarpManager {
         long dist = TimeUtil.getCycleDistance(currentTimeOfDay, wakeTime, 24000L);
 
         if (dist < 20) {
-            TrueSleep.LOGGER.info("TrueSleep: Destination reached: Target Time {}. Stopping Hyperspace.", wakeTime);
+            TrueSleep.LOGGER.info("TrueSleep: Destination reached: Target Time {} for dimension [{}]. Stopping Hyperspace.", wakeTime, level.dimension().identifier());
             stopWarp(level);
 
             // Snap the clock EXACTLY to wakeTime (monotonically increasing — never go backwards).

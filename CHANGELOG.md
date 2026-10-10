@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.3.30+26.2] - 2026-10-10
+
+### Fixed
+- Fixed multiplayer sleep deadlock where players in foreign dimensions aborted ongoing time warps (Issue #2).
+- Added dimension sleep capability check (`canSleepThroughNights()`) to prevent non-sleeping dimensions from polling sleep status.
+- Removed redundant `minecraft:soul_campfire` from `#truesleep:accelerated_machines` tag (Issue #3).
+- Restored dynamic version expansion token `${version}` in `fabric.mod.json`.
+- Standardized single-line GPLv3 headers across all classes.
+
+---
+
 ## [1.3.25+26.2] - 2026-08-18
 
 ### Added
