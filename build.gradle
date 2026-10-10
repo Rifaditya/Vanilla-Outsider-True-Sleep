@@ -135,7 +135,7 @@ afterEvaluate {
                     println "[AUTO-ARCHIVE] Successfully copied ${jarFile.name} to central Archive directory: ${archiveDir.canonicalPath}"
                     
                     // 2. Modrinth Profile Sync (if directory exists)
-                    def modrinthProfileMods = file("C:/Users/fmrif/AppData/Roaming/ModrinthApp/profiles/Fabric 26.3ish/mods")
+                    def modrinthProfileMods = file("C:/Users/fmrif/AppData/Roaming/ModrinthApp/profiles/26.3/mods")
                     if (modrinthProfileMods.exists()) {
                         modrinthProfileMods.listFiles().each { f ->
                             if (f.name.startsWith(project.archives_base_name) && f.name.endsWith(".jar") && f.name != jarFile.name) {

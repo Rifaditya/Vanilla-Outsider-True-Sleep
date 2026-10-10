@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.29+26.3] - 2026-10-10
+
+### Fixed
+- **Dimension-Isolated Time Warp Engine (Issue #2)**: Fixed multiplayer sleep deadlocks where awake players in other dimensions (The Nether, The End, or custom dimensions) continuously aborted active Overworld time warp simulations. Simulation ticking, acceleration, and wind-down abort checks are now strictly bound to the sleeping dimension's level key.
+
+---
+
 ## [1.3.28+26.3] - 2026-09-16
 
 ### Changed
