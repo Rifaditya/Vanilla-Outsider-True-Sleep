@@ -14,7 +14,6 @@ public class TrueSleep implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        net.vanillaoutsider.truesleep.util.ModVersionGuard.checkClass("True Sleep", "net.minecraft.world.entity.player.Player");
         LOGGER.info("Initializing True Sleep (Time Warp)...");
         TrueSleepRules.init();
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> TrueSleepCommand.register(dispatcher));

@@ -10,9 +10,10 @@
     ],
     "contact": {
         "homepage": "https://github.com/Rifaditya",
-        "sources": "https://github.com/Rifaditya/Vanilla-Outsider-True-Sleep"
+        "sources": "https://github.com/Rifaditya/Vanilla-Outsider-True-Sleep",
+        "issues": "https://github.com/Rifaditya/Vanilla-Outsider-True-Sleep/issues"
     },
-    "license": "GPL-3.0",
+    "license": "GPL-3.0-or-later",
     "environment": "*",
     "entrypoints": {
         "main": [
@@ -41,6 +42,10 @@
         "modmenu": "*"
     },
     "custom": {
+        "modrinth": {
+            "projectId": "AYb0NDWE",
+            "slug": "vanilla-outsider-true-sleep"
+        },
         "modmenu": {
             "links": {
                 "modmenu.donate": "https://ko-fi.com/dasikigaijin",

@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.31+26.1.2] - 2026-10-11
+
+### Changed
+- Purged unremapped runtime reflection hazard (`ModVersionGuard`) to ensure 100% Knot ClassLoader runtime safety across production servers and development environments.
+- Aligned project metadata in `fabric.mod.json` with official issue tracker links and Modrinth platform attributes under GPL-3.0-or-later.
+
+---
+
 ## [1.3.30+26.1.2] - 2026-10-10
 
 ### Fixed
