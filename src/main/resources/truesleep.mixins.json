@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "package": "net.vanillaoutsider.truesleep.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "EntityMixin",
+    "LevelMixin",
+    "LivingEntityMixin",
+    "MobEffectInstanceMixin",
+    "MobMixin",
+    "ServerLevelMixin",
+    "ServerPlayerMixin",
+    "VibrationSystemListenerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

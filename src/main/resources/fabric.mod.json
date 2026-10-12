@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "vanilla-outsider-true-sleep",
+  "version": "${version}",
+  "name": "Vanilla Outsider: True Sleep",
+  "description": "True Sleep seamlessly accelerates in-game time when sleeping without skips or desync.",
+  "authors": [
+    "Dasik (Rifaditya)"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/vanilla-outsider-true-sleep",
+    "sources": "https://github.com/Rifaditya/Vanilla-Outsider-True-Sleep",
+    "issues": "https://github.com/Rifaditya/Vanilla-Outsider-True-Sleep/issues"
+  },
+  "license": "GPL-3.0-or-later",
+  "icon": "assets/vanilla-outsider-true-sleep/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.vanillaoutsider.truesleep.TrueSleep"
+    ]
+  },
+  "mixins": [
+    "truesleep.mixins.json",
+    "truesleep.client.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "fabric-api": "*",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "dasik-library": ">=1.1.0+1.20.1"
+  },
+  "custom": {
+    "modrinth": {
+      "projectId": "AYb0NDWE",
+      "slug": "vanilla-outsider-true-sleep"
+    }
+  }
+}

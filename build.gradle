@@ -1,0 +1,149 @@
+plugins {
+    id 'fabric-loom' version '1.10.2'
+    id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://maven.fabricmc.net/" }
+    maven { url "https://maven.terraformersmc.com/releases/" }
+    flatDir {
+        dirs 'e:/Minecraft Project/Dasik Library v1.20.1/Archive Jar of all versions/MC 1.20.1'
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    modImplementation "net.dasik.social:dasik-library:1.1.0+1.20.1"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.10.0"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.10.0"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.10.0"
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = "UTF-8"
+    it.options.release = 17
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+jar {
+    archiveBaseName = project.archives_base_name
+    from("LICENSE") {
+        rename "LICENSE_${project.archives_base_name}", "LICENSE"
+    }
+}
+
+remapJar {
+    archiveBaseName = project.archives_base_name
+}
+
+afterEvaluate {
+    tasks.register('archiveReleaseJar', Copy) {
+        dependsOn build
+        from remapJar.archiveFile
+        into file("../../Archive Jar of all versions/MC 1.20.1")
+        doLast {
+            println "[AUTO-ARCHIVE] Successfully copied ${remapJar.archiveFile.get().asFile.name} to outer Archive directory: ${destinationDir.absolutePath}"
+            def profileModsDir = file("C:/Users/fmrif/AppData/Roaming/ModrinthApp/profiles/Fabric 1.20.1/mods")
+            if (profileModsDir.exists()) {
+                profileModsDir.listFiles().each { f ->
+                    if (f.name.startsWith("${project.archives_base_name}-") && f.name.endsWith(".jar") && !f.name.equals(remapJar.archiveFile.get().asFile.name)) {
+                        println "[AUTO-DEPLOY] Purging stale version: ${f.name}"
+                        f.delete()
+                    }
+                }
+                copy {
+                    from remapJar.archiveFile
+                    into profileModsDir
+                }
+                println "[AUTO-DEPLOY] Successfully deployed ${remapJar.archiveFile.get().asFile.name} to Modrinth profile: ${profileModsDir.absolutePath}"
+            }
+
+            // Central Release Hub Archives Sync
+            File hubCandidate = projectDir
+            File hubDir = null
+            while (hubCandidate != null) {
+                File checkDir = new File(hubCandidate, "minecraft-mod-release-hub")
+                if (checkDir.exists()) {
+                    hubDir = checkDir
+                    break
+                }
+                hubCandidate = hubCandidate.parentFile
+            }
+            if (hubDir == null) {
+                File fallback = new File("E:/Minecraft Project/minecraft-mod-release-hub")
+                if (fallback.exists()) hubDir = fallback
+            }
+            if (hubDir != null && hubDir.exists()) {
+                File hubConfigFile = new File(hubDir, "config/platform_projects.json")
+                if (hubConfigFile.exists()) {
+                    try {
+                        def hubJson = new groovy.json.JsonSlurper().parse(hubConfigFile)
+                        def curPath = projectDir.canonicalPath.replace('\\', '/').toLowerCase()
+                        def matchedMod = hubJson.find { name, data ->
+                            data.root_dir && curPath.contains(data.root_dir.replace('\\', '/').toLowerCase())
+                        }?.key
+                        if (matchedMod) {
+                            File targetArchiveDir = new File(hubDir, "archives/${matchedMod}")
+                            if (!targetArchiveDir.exists()) {
+                                targetArchiveDir.mkdirs()
+                            }
+                            def targetFileToCopy = (tasks.findByName('remapJar') ?: tasks.findByName('jar')).archiveFile.get().asFile
+                            copy {
+                                from targetFileToCopy
+                                into targetArchiveDir
+                            }
+                            println "[HUB-ARCHIVE] Successfully copied ${targetFileToCopy.name} to release hub archives: ${targetArchiveDir.canonicalPath}"
+                        }
+                    } catch (Exception e) {
+                        println "[HUB-ARCHIVE] Note: Could not copy to release hub: ${e.message}"
+                    }
+                }
+            }
+
+            // External Vault D:\ sync
+            try {
+                File vaultDir = new File("D:/Minecraft Mod Archive Jars/True Sleep")
+                if (vaultDir.exists() || vaultDir.mkdirs()) {
+                    def targetFileToCopy = (tasks.findByName('remapJar') ?: tasks.findByName('jar')).archiveFile.get().asFile
+                    copy {
+                        from targetFileToCopy
+                        into vaultDir
+                    }
+                    println "[VAULT-ARCHIVE] Successfully copied ${targetFileToCopy.name} to external vault D: ${vaultDir.canonicalPath}"
+                }
+            } catch (Exception e) {
+                println "[VAULT-ARCHIVE] Vault D: unreachable: ${e.message}"
+            }
+        }
+    }
+    build.finalizedBy archiveReleaseJar
+}
