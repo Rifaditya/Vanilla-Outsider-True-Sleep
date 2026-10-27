@@ -63,3 +63,4 @@ Open this file in your editor and change `[ ]` to `[x]` when you publish a versi
 - [ ] **`1.3.30+26.3`** (2026-10-10) - - **Dimension Sleep Capability Gating & Manifest Token**: Added dimension sleep capability check (`canSleepThroughNights()`) to prevent non-sleeping dimensions (Nether, End) from querying or interfering with sleep status. - - Restored dynamic version template token in `fabric.mod.json`.
 - [ ] **`1.3.31+26.3`** (2026-10-11) - - **Reflection Hazard Purge & Platform Metadata Alignment**: Purged unremapped runtime reflection hazard (`ModVersionGuard`) preventing production Knot ClassLoader crashes and aligned platform metadata with GPL-3.0-or-later license, issue tracker contact, and Modrinth project attributes.
 
+- [ ] **1.3.32+26.3** (2026-10-27) - - **Weather Fix (TimeWarpManager)**: Preserved natural weather progression on clear sleep cycles; sleep now clears sky only during active rain or thunderstorms ([BL-TS-012]).
