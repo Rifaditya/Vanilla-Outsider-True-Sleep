@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [1.3.32+26.1.2] - 2026-10-27
 
 ### Fixed
-- Fixed an issue where waking up from sleep unconditionally reset the weather cycle on clear nights, wiping the countdown to natural rain. Sleeping on a clear night now preserves natural weather progression, while sleeping during rain or thunderstorms properly clears the skies.
+- Fixed an issue where waking up from sleep unconditionally reset the weather cycle on clear nights, wiping the countdown to natural rain. Sleeping on a clear night now preserves natural weather progression, while sleeping during rain or thunderstorms properly clears the skies. *(Reported by Night Dragon(Jasmine) on Discord)*
 
 ---
 
@@ -51,7 +51,7 @@ All notable changes to this project will be documented in this file.
 ## [1.3.22+26.1.2] - 2026-08-18
 
 ### Added
-- **Dedicated Brigadier Command Suite (`/truesleep`)**: Introduced an in-game command suite (`/truesleep help`, `status`, `get`, `set`, `reset`, `reload`) with rich tab completion, permission controls (`LEVEL_GAMEMASTERS`), and 2-way synchronization between active world `GameRules` and `config/truesleep.json`.
+- **Dedicated Brigadier Command Suite** (`/truesleep`): Introduced an in-game command suite (`/truesleep help`, `status`, `get`, `set`, `reset`, `reload`) with rich tab completion, permission controls (`LEVEL_GAMEMASTERS`), and 2-way synchronization between active world `GameRules` and `config/truesleep.json`.
 - **Data-Driven Machine Tag**: Registered `#truesleep:accelerated_machines` (`TagKey<BlockEntityType<?>>`) in `TrueSleepTags.java` and updated `LevelMixin.java` so third-party mod machines can be accelerated during sleep warp via data-driven tag definitions.
 - **Passive Mob Stasis Aging**: Updated `MobMixin.java` to decrement chicken `eggTime` during time warp stasis, preserving egg-laying farm productivity during sleep.
 
@@ -59,7 +59,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- **Machine Acceleration Hot-Loop Cache**: Implemented high-performance `ConcurrentHashMap` caching for machine and hopper block entity type evaluations in `LevelMixin.java`. Replaced string regex allocations and registry lookups in the sleeping hot loop with $O(1)$ constant time lookups, bringing machine ticking CPU overhead during sleep down to near zero.
+- **Machine Acceleration Hot-Loop Cache**: Implemented high-performance `ConcurrentHashMap` caching for machine and hopper block entity type evaluations in `LevelMixin.java`. Replaced string regex allocations and registry lookups in the sleeping hot loop with O(1) constant time lookups, bringing machine ticking CPU overhead during sleep down to near zero.
 
 ## [1.3.13+R-26.1.2] - 2026-06-13
 
