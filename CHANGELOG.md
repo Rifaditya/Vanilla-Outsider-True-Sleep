@@ -3,7 +3,7 @@
 ## [1.3.32+26.3] - 2026-10-27
 
 ### Fixed
-- Fixed an issue where waking up from sleep unconditionally reset the weather cycle on clear nights, wiping the countdown to natural rain. Sleeping on a clear night now preserves natural weather progression, while sleeping during rain or thunderstorms properly clears the skies.
+- Fixed an issue where waking up from sleep unconditionally reset the weather cycle on clear nights, wiping the countdown to natural rain. Sleeping on a clear night now preserves natural weather progression, while sleeping during rain or thunderstorms properly clears the skies. *(Reported by Night Dragon(Jasmine) on Discord)*
 
 ---
 
@@ -62,4 +62,4 @@
 
 ### Added
 - **Minecraft 26.3 Modern Sovereign Target**: Ported codebase to target Minecraft 26.3 snapshots natively with open-ended forward bounds (`>=26.3-`) and ModVersionGuard protection.
-- **Dedicated Brigadier Command Suite (`/truesleep`)**: Full in-game command suite (`/truesleep help`, `status`, `get`, `set`, `reset`, `reload`) with rich tab completion, permission controls (`LEVEL_GAMEMASTERS`), and 2-way synchronization between active world `GameRules` and `config/truesleep.json`.
+- **Dedicated Brigadier Command Suite** (`/truesleep`): Full in-game command suite (`/truesleep help`, `status`, `get`, `set`, `reset`, `reload`) with rich tab completion, permission controls (`LEVEL_GAMEMASTERS`), and 2-way synchronization between active world `GameRules` and `config/truesleep.json`.
