@@ -9,7 +9,6 @@
     "MobEffectInstanceMixin",
     "MobMixin",
     "ServerLevelMixin",
-    "ServerPlayerMixin",
     "VibrationSystemListenerMixin"
   ],
   "injectors": {
