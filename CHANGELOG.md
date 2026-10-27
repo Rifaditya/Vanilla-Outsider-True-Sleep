@@ -4,6 +4,11 @@ All notable changes to **Vanilla Outsider: True Sleep** for Minecraft 1.20.1 wil
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.0.1+1.20.1] - 2026-10-27
+
+### Fixed
+- Fixed an issue where waking up from sleep unconditionally reset the weather cycle on clear nights, wiping the countdown to natural rain. Sleeping on a clear night now preserves natural weather progression, while sleeping during rain or thunderstorms properly clears the skies.
+
 ## [1.0.0+1.20.1] - 2026-10-12
 
 ### Added

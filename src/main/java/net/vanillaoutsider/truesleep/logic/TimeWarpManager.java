@@ -266,7 +266,9 @@ public class TimeWarpManager {
             );
 
             wakeUpCallback.run();
-            resetWeatherCycle(level);
+            if (level.getGameRules().getBoolean(GameRules.RULE_WEATHER_CYCLE) && (level.isRaining() || level.isThundering())) {
+                resetWeatherCycle(level);
+            }
         }
     }
 
