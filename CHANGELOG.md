@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.32+26.1.2] - 2026-10-27
+
+### Fixed
+- Fixed an issue where waking up from sleep unconditionally reset the weather cycle on clear nights, wiping the countdown to natural rain. Sleeping on a clear night now preserves natural weather progression, while sleeping during rain or thunderstorms properly clears the skies.
+
+---
+
 ## [1.3.31+26.1.2] - 2026-10-11
 
 ### Changed
