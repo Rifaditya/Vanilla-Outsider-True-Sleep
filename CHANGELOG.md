@@ -4,6 +4,13 @@ All notable changes to **Vanilla Outsider: True Sleep** for Minecraft 1.21.1 wil
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.0.3+1.21.1] - 2026-10-28
+
+### Changed
+- **Universal Brigadier Command Suite Migration ([BL-TS-010])**: Migrated command registration to centralized `UniversalCommandRegistry` and `ModCommandDispatcher` from DasikLibrary 1.4.0+1.21.1.
+- **Saturated Arithmetic & Reactive Bridging**: Integrated `GameRuleCommandBridge` providing two-way synchronization between active server GameRules and disk configuration with non-blocking saturated warnings on extreme boundary inputs.
+- **Boilerplate Reduction**: Purged manual command boilerplate and individual setters, reducing codebase complexity by over 65% while maintaining complete backward compatibility across all 11 simulation and stasis settings.
+
 ## [1.0.2+1.21.1] - 2026-10-28
 
 ### Added

@@ -28,7 +28,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modImplementation "net.dasik.social:dasik-library:1.1.0+1.21.1"
+    modImplementation "net.dasik.social:dasik-library:${project.dasik_library_version}"
 
     modCompileOnly "com.terraformersmc:modmenu:11.0.1"
     modCompileOnly("dev.isxander:yet-another-config-lib:3.5.0+1.21-fabric") {
