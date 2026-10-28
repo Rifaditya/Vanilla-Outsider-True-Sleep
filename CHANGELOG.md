@@ -4,6 +4,11 @@ All notable changes to **Vanilla Outsider: True Sleep** for Minecraft 1.21.11 wi
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.0.2+1.21.11] - 2026-10-28
+
+### Added
+- **5-Pillar Automated Testing Harness ([BL-TS-009])**: Introduced comprehensive headless testing suite spanning Chaos Property Fuzzing (20,000+ iterations), Virtual Concurrency Simulator (50 worker threads), Zero-Mock Brigadier AST Verification, Time Warp Simulation, and Bytecode Sidedness Contracts.
+
 ## [1.0.1+1.21.11] - 2026-10-27
 
 ### Fixed
