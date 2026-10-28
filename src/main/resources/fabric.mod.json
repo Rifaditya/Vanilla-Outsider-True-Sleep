@@ -20,7 +20,7 @@
             "net.vanillaoutsider.truesleep.TrueSleep"
         ],
         "modmenu": [
-            "net.vanillaoutsider.truesleep.config.ModMenuIntegration"
+            "net.vanillaoutsider.truesleep.client.config.ModMenuIntegration"
         ]
     },
     "mixins": [

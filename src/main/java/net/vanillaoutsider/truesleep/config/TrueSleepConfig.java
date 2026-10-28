@@ -14,7 +14,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class TrueSleepConfig {
-    private static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("truesleep.json");
+    private static Path resolveConfigPath() {
+        try {
+            if (FabricLoader.getInstance() != null && FabricLoader.getInstance().getConfigDir() != null) {
+                return FabricLoader.getInstance().getConfigDir().resolve("truesleep.json");
+            }
+        } catch (Throwable ignored) {
+        }
+        return Path.of("config", "truesleep.json");
+    }
+
+    private static final Path CONFIG_PATH = resolveConfigPath();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static TrueSleepConfig INSTANCE = new TrueSleepConfig();
 
