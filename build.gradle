@@ -14,6 +14,7 @@ repositories {
 	maven { url "https://maven.shedaniel.me/" }
 	maven { url "https://maven.terraformersmc.com/releases/" }
 	maven { url "https://maven.isxander.dev/releases" }
+	mavenCentral()
     mavenLocal()
 }
 
@@ -34,6 +35,10 @@ dependencies {
 
     compileOnly "com.terraformersmc:modmenu:18.0.0-beta.1"
     runtimeOnly "com.terraformersmc:modmenu:18.0.0-beta.1"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.10.2"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.10.2"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.10.2"
 }
 
 processResources {
@@ -42,6 +47,10 @@ processResources {
 	filesMatching("fabric.mod.json") {
 		expand "version": inputs.properties.version
 	}
+}
+
+test {
+	useJUnitPlatform()
 }
 
 tasks.withType(JavaCompile).configureEach {
