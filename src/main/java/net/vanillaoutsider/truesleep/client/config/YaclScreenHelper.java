@@ -1,5 +1,5 @@
 // Copyright (C) 2026 Dasik (Rifaditya) | GNU GPLv3
-package net.vanillaoutsider.truesleep.config;
+package net.vanillaoutsider.truesleep.client.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import dev.isxander.yacl3.api.*;
@@ -9,6 +9,7 @@ import dev.isxander.yacl3.api.controller.IntegerFieldControllerBuilder;
 import net.dasik.social.api.config.DasikSupportHelper;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.vanillaoutsider.truesleep.config.TrueSleepConfig;
 
 public class YaclScreenHelper {
     public static ConfigScreenFactory<?> createScreen() {

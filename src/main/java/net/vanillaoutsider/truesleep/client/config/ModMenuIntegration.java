@@ -1,5 +1,5 @@
 // Copyright (C) 2026 Dasik (Rifaditya) | GNU GPLv3
-package net.vanillaoutsider.truesleep.config;
+package net.vanillaoutsider.truesleep.client.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
@@ -10,7 +10,7 @@ public class ModMenuIntegration implements ModMenuApi {
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
         return GuiHelper.getOptionalYaclFactory(
                 "vanilla-outsider-true-sleep",
-                "net.vanillaoutsider.truesleep.config.YaclScreenHelper",
+                "net.vanillaoutsider.truesleep.client.config.YaclScreenHelper",
                 "createScreen"
         );
     }
