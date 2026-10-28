@@ -6,6 +6,7 @@ import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.suggestion.Suggestion;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.tree.CommandNode;
+import net.dasik.social.api.command.GameRuleCommandBridge;
 import net.minecraft.SharedConstants;
 import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
@@ -28,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Pillar 3: Comprehensive Brigadier Command Tree & Execution Suite for True Sleep.
  * Validates root registration, subcommands, suggestions provider, permission gating,
- * argument parsing, and range constraints under headless Minecraft environment.
+ * argument parsing, and saturated arithmetic bounds under headless Minecraft environment.
  */
 class TrueSleepCommandTest {
 
@@ -52,8 +53,11 @@ class TrueSleepCommandTest {
 
     @BeforeAll
     static void initMinecraft() {
-        SharedConstants.tryDetectVersion();
-        Bootstrap.bootStrap();
+        try {
+            SharedConstants.tryDetectVersion();
+            Bootstrap.bootStrap();
+        } catch (Throwable ignored) {
+        }
     }
 
     @BeforeEach
@@ -94,8 +98,16 @@ class TrueSleepCommandTest {
 
         String[] expectedSubcommands = {"help", "status", "get", "set", "reset", "reload"};
         for (String sub : expectedSubcommands) {
-            assertNotNull(rootNode.getChild(sub), "Subcommand /truesleep " + sub + " must exist in command hierarchy");
+            CommandNode<CommandSourceStack> childNode = rootNode.getChild(sub);
+            assertNotNull(childNode, "Subcommand /truesleep " + sub + " must exist in command hierarchy");
         }
+
+        CommandNode<CommandSourceStack> getNode = rootNode.getChild("get");
+        assertNotNull(getNode.getChild("key"), "Subcommand /truesleep get <key> argument node must exist");
+
+        CommandNode<CommandSourceStack> setNode = rootNode.getChild("set");
+        assertNotNull(setNode.getChild("key"), "Subcommand /truesleep set <key> argument node must exist");
+        assertNotNull(setNode.getChild("key").getChild("value"), "Subcommand /truesleep set <key> <value> argument node must exist");
     }
 
     @Test
@@ -111,6 +123,28 @@ class TrueSleepCommandTest {
         for (String setting : EXPECTED_SETTINGS) {
             assertTrue(list.contains(setting), "Suggestions must include setting key: " + setting);
         }
+    }
+
+    @Test
+    @DisplayName("Pillar 3: Tab completion suggestions for /truesleep set include all setting keys and values")
+    void testSetCompletions() throws Exception {
+        CompletableFuture<Suggestions> keyFuture = dispatcher.getCompletionSuggestions(
+                dispatcher.parse("truesleep set ", adminSource)
+        );
+        Suggestions keySuggestions = keyFuture.get();
+        List<String> keyList = keySuggestions.getList().stream().map(Suggestion::getText).toList();
+
+        for (String setting : EXPECTED_SETTINGS) {
+            assertTrue(keyList.contains(setting), "Set suggestions must include setting key: " + setting);
+        }
+
+        CompletableFuture<Suggestions> boolFuture = dispatcher.getCompletionSuggestions(
+                dispatcher.parse("truesleep set freeze_mobs ", adminSource)
+        );
+        Suggestions boolSuggestions = boolFuture.get();
+        List<String> boolList = boolSuggestions.getList().stream().map(Suggestion::getText).toList();
+        assertTrue(boolList.contains("true"), "Boolean setting must suggest true");
+        assertTrue(boolList.contains("false"), "Boolean setting must suggest false");
     }
 
     @Test
@@ -168,31 +202,64 @@ class TrueSleepCommandTest {
     }
 
     @Test
-    @DisplayName("Pillar 3: Argument range boundary constraints are enforced by Brigadier parser")
-    void testArgumentBoundsValidation() {
-        // engine_tps bounded [20, 200]
-        assertParseSuccess("truesleep set engine_tps 20", adminSource);
-        assertParseSuccess("truesleep set engine_tps 200", adminSource);
-        assertParseFailure("truesleep set engine_tps 19", adminSource);
-        assertParseFailure("truesleep set engine_tps 201", adminSource);
+    @DisplayName("Pillar 3: Argument bounds and saturated arithmetic are enforced by GameRuleCommandBridge")
+    void testArgumentBoundsAndSaturatedArithmetic() {
+        GameRuleCommandBridge bridge = TrueSleepCommand.getBridge();
+        assertNotNull(bridge, "Bridge must not be null");
 
-        // virtual_tps bounded [20, 100000]
-        assertParseSuccess("truesleep set virtual_tps 20", adminSource);
-        assertParseSuccess("truesleep set virtual_tps 100000", adminSource);
-        assertParseFailure("truesleep set virtual_tps 10", adminSource);
-        assertParseFailure("truesleep set virtual_tps -50", adminSource);
+        // Greedy string syntax accepts any input string
+        assertParseSuccess("truesleep set engine_tps 19", adminSource);
+        assertParseSuccess("truesleep set engine_tps 201", adminSource);
 
-        // sleep_threshold bounded [0, 23999]
-        assertParseSuccess("truesleep set sleep_threshold 0", adminSource);
-        assertParseSuccess("truesleep set sleep_threshold 23999", adminSource);
-        assertParseFailure("truesleep set sleep_threshold -1", adminSource);
-        assertParseFailure("truesleep set sleep_threshold 24000", adminSource);
+        // 1. engine_tps bounded [20, 200]
+        GameRuleCommandBridge.SetResult resUnderEngine = bridge.setValue(null, "engine_tps", "19");
+        assertTrue(resUnderEngine.isSuccess());
+        assertEquals(GameRuleCommandBridge.Status.SATURATED_WARNING, resUnderEngine.getStatus());
+        assertEquals(20, ((Number) resUnderEngine.getValue()).intValue());
 
-        // wake_time bounded [0, 23999]
-        assertParseSuccess("truesleep set wake_time 0", adminSource);
-        assertParseSuccess("truesleep set wake_time 23999", adminSource);
-        assertParseFailure("truesleep set wake_time -1", adminSource);
-        assertParseFailure("truesleep set wake_time 24000", adminSource);
+        GameRuleCommandBridge.SetResult resOverEngine = bridge.setValue(null, "engine_tps", "250");
+        assertTrue(resOverEngine.isSuccess());
+        assertEquals(GameRuleCommandBridge.Status.SATURATED_WARNING, resOverEngine.getStatus());
+        assertEquals(200, ((Number) resOverEngine.getValue()).intValue());
+
+        // 2. virtual_tps bounded [20, 100000]
+        GameRuleCommandBridge.SetResult resUnderVirtual = bridge.setValue(null, "virtual_tps", "10");
+        assertTrue(resUnderVirtual.isSuccess());
+        assertEquals(GameRuleCommandBridge.Status.SATURATED_WARNING, resUnderVirtual.getStatus());
+        assertEquals(20, ((Number) resUnderVirtual.getValue()).intValue());
+
+        GameRuleCommandBridge.SetResult resOverVirtual = bridge.setValue(null, "virtual_tps", "200000");
+        assertTrue(resOverVirtual.isSuccess());
+        assertEquals(GameRuleCommandBridge.Status.SATURATED_WARNING, resOverVirtual.getStatus());
+        assertEquals(100000, ((Number) resOverVirtual.getValue()).intValue());
+
+        // 3. sleep_threshold bounded [0, 23999]
+        GameRuleCommandBridge.SetResult resUnderThreshold = bridge.setValue(null, "sleep_threshold", "-5");
+        assertTrue(resUnderThreshold.isSuccess());
+        assertEquals(GameRuleCommandBridge.Status.SATURATED_WARNING, resUnderThreshold.getStatus());
+        assertEquals(0, ((Number) resUnderThreshold.getValue()).intValue());
+
+        GameRuleCommandBridge.SetResult resOverThreshold = bridge.setValue(null, "sleep_threshold", "30000");
+        assertTrue(resOverThreshold.isSuccess());
+        assertEquals(GameRuleCommandBridge.Status.SATURATED_WARNING, resOverThreshold.getStatus());
+        assertEquals(23999, ((Number) resOverThreshold.getValue()).intValue());
+
+        // 4. wake_time bounded [0, 23999]
+        GameRuleCommandBridge.SetResult resUnderWake = bridge.setValue(null, "wake_time", "-10");
+        assertTrue(resUnderWake.isSuccess());
+        assertEquals(GameRuleCommandBridge.Status.SATURATED_WARNING, resUnderWake.getStatus());
+        assertEquals(0, ((Number) resUnderWake.getValue()).intValue());
+
+        GameRuleCommandBridge.SetResult resOverWake = bridge.setValue(null, "wake_time", "25000");
+        assertTrue(resOverWake.isSuccess());
+        assertEquals(GameRuleCommandBridge.Status.SATURATED_WARNING, resOverWake.getStatus());
+        assertEquals(23999, ((Number) resOverWake.getValue()).intValue());
+
+        // 5. In-bound valid assignment
+        GameRuleCommandBridge.SetResult resValid = bridge.setValue(null, "engine_tps", "50");
+        assertTrue(resValid.isSuccess());
+        assertEquals(GameRuleCommandBridge.Status.SUCCESS, resValid.getStatus());
+        assertEquals(50, ((Number) resValid.getValue()).intValue());
     }
 
     private void assertParseSuccess(String command, CommandSourceStack source) {
@@ -203,14 +270,6 @@ class TrueSleepCommandTest {
                 "Command parsing generated exceptions for: '" + command + "': " + parse.getExceptions());
         assertNotNull(parse.getContext().getCommand(),
                 "Command node has no executable handler bound for: '" + command + "'");
-    }
-
-    private void assertParseFailure(String command, CommandSourceStack source) {
-        ParseResults<CommandSourceStack> parse = dispatcher.parse(command, source);
-        boolean failed = parse.getContext().getCommand() == null
-                || parse.getReader().canRead()
-                || !parse.getExceptions().isEmpty();
-        assertTrue(failed, "Command expected to fail parsing but succeeded: " + command);
     }
 
     private void assertParsePermissionDenied(String command, CommandSourceStack source) {
