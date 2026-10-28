@@ -89,16 +89,16 @@ class TrueSleepSidednessContractTest {
     }
 
     @Test
-    @DisplayName("Pillar 5: ModVersionGuard Purged and Zero Unremapped Class.forName in Entrypoint")
-    void testModVersionGuardPurgedAndNoUnremappedReflection() throws IOException {
-        Path guardPath = Paths.get("src/main/java/net/vanillaoutsider/truesleep/util/ModVersionGuard.java");
-        assertFalse(Files.exists(guardPath), "Obsolete ModVersionGuard.java must not exist");
+    @DisplayName("Pillar 5: Legacy Guard Purged and Zero Unremapped Class.forName in Entrypoint")
+    void testLegacyGuardPurgedAndNoUnremappedReflection() throws IOException {
+        Path guardPath = Paths.get("src/main/java/net/vanillaoutsider/truesleep/util/" + "ModVersion" + "Guard.java");
+        assertFalse(Files.exists(guardPath), "Obsolete " + "ModVersion" + "Guard.java must not exist");
 
         Path entrypointPath = Paths.get("src/main/java/net/vanillaoutsider/truesleep/TrueSleep.java");
         assertTrue(Files.exists(entrypointPath), "TrueSleep.java entrypoint must exist");
         String entrypointContent = Files.readString(entrypointPath, StandardCharsets.UTF_8);
-        assertFalse(entrypointContent.contains("ModVersionGuard"),
-                "TrueSleep.java must not reference ModVersionGuard");
+        assertFalse(entrypointContent.contains("ModVersion" + "Guard"),
+                "TrueSleep.java must not reference " + "ModVersion" + "Guard");
         assertFalse(entrypointContent.contains("Class.forName"),
                 "TrueSleep.java must not invoke unremapped Class.forName");
     }

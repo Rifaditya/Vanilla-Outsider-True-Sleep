@@ -2,7 +2,7 @@
 package net.vanillaoutsider.truesleep;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.dasik.social.api.command.ModCommandDispatcher;
 import net.vanillaoutsider.truesleep.command.TrueSleepCommand;
 import net.vanillaoutsider.truesleep.config.TrueSleepRules;
 import org.slf4j.Logger;
@@ -16,6 +16,7 @@ public class TrueSleep implements ModInitializer {
     public void onInitialize() {
         LOGGER.info("Initializing True Sleep (Time Warp)...");
         TrueSleepRules.init();
-        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> TrueSleepCommand.register(dispatcher));
+        ModCommandDispatcher.init();
+        ModCommandDispatcher.registerSuite(MOD_ID, TrueSleepCommand::configure);
     }
 }
