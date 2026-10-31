@@ -1,2 +1,4 @@
 *.html linguist-detectable=false
 docs/** linguist-documentation
+build/** linguist-generated
+build/** linguist-vendored
