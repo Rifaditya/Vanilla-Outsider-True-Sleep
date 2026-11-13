@@ -98,48 +98,6 @@ afterEvaluate {
                         copy {
                             from sourcesJar
                             into archiveDir
-            // Central Release Hub Archives Sync
-            File hubCandidate = projectDir
-            File hubDir = null
-            while (hubCandidate != null) {
-                File checkDir = new File(hubCandidate, "minecraft-mod-release-hub")
-                if (checkDir.exists()) {
-                    hubDir = checkDir
-                    break
-                }
-                hubCandidate = hubCandidate.parentFile
-            }
-            if (hubDir == null) {
-                File fallback = new File("E:/Minecraft Project/minecraft-mod-release-hub")
-                if (fallback.exists()) hubDir = fallback
-            }
-            if (hubDir != null && hubDir.exists()) {
-                File hubConfigFile = new File(hubDir, "config/platform_projects.json")
-                if (hubConfigFile.exists()) {
-                    try {
-                        def hubJson = new groovy.json.JsonSlurper().parse(hubConfigFile)
-                        def curPath = projectDir.canonicalPath.replace('\\', '/').toLowerCase()
-                        def matchedMod = hubJson.find { name, data ->
-                            data.root_dir && curPath.contains(data.root_dir.replace('\\', '/').toLowerCase())
-                        }?.key
-                        if (matchedMod) {
-                            File targetArchiveDir = new File(hubDir, "archives/${matchedMod}")
-                            if (!targetArchiveDir.exists()) {
-                                targetArchiveDir.mkdirs()
-                            }
-                            def targetFileToCopy = (tasks.findByName('remapJar') ?: tasks.findByName('jar')).archiveFile.get().asFile
-                            copy {
-                                from targetFileToCopy
-                                into targetArchiveDir
-                            }
-                            println "[HUB-ARCHIVE] Successfully copied ${targetFileToCopy.name} to release hub archives: ${targetArchiveDir.canonicalPath}"
-                        }
-                    } catch (Exception e) {
-                        println "[HUB-ARCHIVE] Note: Could not copy to release hub: ${e.message}"
-                    }
-                }
-            }
-
                         }
                     }
                     println "[AUTO-ARCHIVE] Successfully copied ${jarFile.name} to central Archive directory: ${archiveDir.canonicalPath}"
@@ -158,6 +116,62 @@ afterEvaluate {
                             into modrinthProfileMods
                         }
                         println "[MODRINTH-SYNC] Deployed ${jarFile.name} to Modrinth profile mods folder."
+                    }
+
+                    // Central Release Hub Archives Sync
+                    File hubCandidate = projectDir
+                    File hubDir = null
+                    while (hubCandidate != null) {
+                        File checkDir = new File(hubCandidate, "minecraft-mod-release-hub")
+                        if (checkDir.exists()) {
+                            hubDir = checkDir
+                            break
+                        }
+                        hubCandidate = hubCandidate.parentFile
+                    }
+                    if (hubDir == null) {
+                        File fallback = new File("E:/Minecraft Project/minecraft-mod-release-hub")
+                        if (fallback.exists()) hubDir = fallback
+                    }
+                    if (hubDir != null && hubDir.exists()) {
+                        File hubConfigFile = new File(hubDir, "config/platform_projects.json")
+                        if (hubConfigFile.exists()) {
+                            try {
+                                def hubJson = new groovy.json.JsonSlurper().parse(hubConfigFile)
+                                def curPath = projectDir.canonicalPath.replace('\\', '/').toLowerCase()
+                                def matchedMod = hubJson.find { name, data ->
+                                    data.root_dir && curPath.contains(data.root_dir.replace('\\', '/').toLowerCase())
+                                }?.key
+                                if (matchedMod) {
+                                    File targetArchiveDir = new File(hubDir, "archives/${matchedMod}")
+                                    if (!targetArchiveDir.exists()) {
+                                        targetArchiveDir.mkdirs()
+                                    }
+                                    def targetFileToCopy = (tasks.findByName('remapJar') ?: tasks.findByName('jar')).archiveFile.get().asFile
+                                    copy {
+                                        from targetFileToCopy
+                                        into targetArchiveDir
+                                    }
+                                    println "[HUB-ARCHIVE] Successfully copied ${targetFileToCopy.name} to release hub archives: ${targetArchiveDir.canonicalPath}"
+                                }
+                            } catch (Exception e) {
+                                println "[HUB-ARCHIVE] Note: Could not copy to release hub: ${e.message}"
+                            }
+                        }
+                    }
+
+                    // External Vault Archive (OS-guarded for headless CI)
+                    if (file("D:/Minecraft Mod Archive Jars").exists()) {
+                        def fnLower = jarFile.name.toLowerCase()
+                        if (!fnLower.endsWith("-dev.jar") && !fnLower.endsWith("-sources.jar") && !fnLower.endsWith("-common.jar") && !fnLower.endsWith("-all.jar") && !fnLower.endsWith("-javadoc.jar")) {
+                            def vaultDir = file("D:/Minecraft Mod Archive Jars/True Sleep")
+                            vaultDir.mkdirs()
+                            copy {
+                                from jarFile
+                                into vaultDir
+                            }
+                            println "[DEPLOY-POINT-3] Copied ${jarFile.name} to external vault: ${vaultDir.canonicalPath}"
+                        }
                     }
                 }
             }
